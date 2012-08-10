@@ -6,7 +6,7 @@ class Bop::Publication < ActiveRecord::Base
 protected
 
   def render_page
-    self.content = page.render()
+    self.rendered_content = page.render()
   end
 
 end
