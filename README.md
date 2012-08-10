@@ -74,7 +74,7 @@ authors to turn them into bop extensions instead.
 ## Copyright
 
 Copyright William Ross for Spanner Ltd, 2012
-Released under the same terms as ruby and/or rails.
+Released under the MIT license: See LICENSE.
 
 
 
