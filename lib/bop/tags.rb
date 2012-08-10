@@ -17,6 +17,6 @@ module Bop
       end
     end
 
-    Liquid::Template.register_tag('yield', Yield)
+    Liquid::Template.register_tag('yield', Bop::Tags::Yield)
   end
 end

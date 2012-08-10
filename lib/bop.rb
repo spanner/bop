@@ -1,6 +1,8 @@
 require "bop/engine"
 require "bop/tags"
 require "bop/glue"
+require "bop/block_type"
+require "bop/renderer"
 
 module Bop
   class BopError < StandardError; end
@@ -11,8 +13,7 @@ module Bop
   module ClassMethods
     def has_pages
       include InstanceMethods
-
-      has_many :pages, :class_name => "Bop::Page"
+      has_many :pages, :class_name => "Bop::Page", :as => "anchor"
       after_save :ensure_root_page
     end
   end

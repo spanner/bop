@@ -5,10 +5,11 @@ class CreateBopTables < ActiveRecord::Migration
       t.string :slug
       t.string :route
       t.string :ancestry
-      t.integer :race_id
       t.integer :template_id
       t.integer :asset_id
       t.integer :user_id
+      t.integer :anchor_id
+      t.integer :anchor_type
       t.timestamps
     end
 
@@ -39,7 +40,7 @@ class CreateBopTables < ActiveRecord::Migration
     end
 
     create_table :bop_placed_blocks do |t|
-      t.string :bucket
+      t.string :space_name
       t.integer :block_id
       t.integer :page_id
       t.timestamps

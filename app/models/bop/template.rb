@@ -4,8 +4,15 @@ class Bop::Template < ActiveRecord::Base
   belongs_to :user
   has_many :pages
 
-  def compiled
-    @template ||= Liquid::Template.parse(content)
+  def render(context)
+    self.renderer.render(context)
   end
 
+  def renderer
+    @renderer ||= render_class.new.prepare(content)
+  end
+  
+  def render_class
+    @render_class ||= Bop::Renderer.get(markup_type || 'liquid')
+  end
 end
