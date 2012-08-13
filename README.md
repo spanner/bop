@@ -1,7 +1,7 @@
 # Bop
 
 *Blocks on Pages*. Very simple, very lovely html5 CMS that you can plug into any Rails app. Bop is designed
-from the ground up as an engine: for standalone CMS you need `bopulate`, which is an equally minimal
+from the ground up as an engine: for standalone CMS you need `bopsy`, which is an equally minimal
 multi-domain hosting package designed for the lazy that doesn't exist yet.
 
 Bop includes modern html5 editing tools, asset-management, content reuse, and drag and drop editing of

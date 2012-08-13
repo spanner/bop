@@ -1,5 +1,6 @@
 # At the moment block types are just parameterised template-finders.
 #
+
 module Bop
   class Renderer
     attr_reader :name
@@ -48,5 +49,19 @@ module Bop
     Renderer.register 'liquid', self
   end
 
+
+  class SimpleRenderer < Bop::Renderer
+    include ActionView::Helpers::TextHelper
+    
+    def prepare(template)
+      @template = template
+    end
+  
+    def render(context)
+      simple_format(@template)
+    end
+    
+    Renderer.register 'simple', self
+  end
 
 end
