@@ -15,3 +15,11 @@ gem "jquery-rails"
 
 # To use debugger
 # gem 'debugger'
+
+group :test, :development do
+  gem 'paperclip'
+  gem 'combustion', '~> 0.3.1'
+  gem 'factory_girl_rails'
+  gem "rspec-rails", "~> 2.0"
+  gem 'awesome_print'
+end

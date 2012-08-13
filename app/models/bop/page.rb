@@ -17,9 +17,9 @@ class Bop::Page < ActiveRecord::Base
   before_save :receive_context
   after_save :contextualize_children
 
-  validate :title, :presence => true
+  validates :title, :presence => true
   # this needs scoping
-  validate :slug, :uniqueness => true, :presence => true
+  validates :slug, :uniqueness => true, :presence => true
 
   def inherited_template
     template || parent && parent.inherited_template
