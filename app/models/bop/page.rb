@@ -4,7 +4,6 @@ class Bop::Page < ActiveRecord::Base
   attr_accessible :title, :slug, :template_id, :race_id, :asset_id
 
   belongs_to :anchor, :polymorphic => true
-  belongs_to :race
   belongs_to :template
   belongs_to :user
   belongs_to :asset
@@ -17,9 +16,9 @@ class Bop::Page < ActiveRecord::Base
   before_save :receive_context
   after_save :contextualize_children
 
+  # local_slug_uniqueness is a custom validator defined below
   validate :title, :presence => true
-  # this needs scoping
-  validate :slug, :uniqueness => true, :presence => true
+  validate :slug, :local_slug_uniqueness => true, :presence => true
 
   def inherited_template
     template || parent && parent.inherited_template
@@ -86,4 +85,10 @@ protected
     end
   end
 
+end
+
+class LocalSlugUniquenessValidator < ActiveModel::EachValidator
+  def validate_each(record, attribute, value)
+     record.errors.add(attribute, :taken) if record.siblings.find_by_slug(record.slug)
+  end
 end
