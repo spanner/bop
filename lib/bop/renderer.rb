@@ -50,18 +50,18 @@ module Bop
   end
 
 
-  class SimpleRenderer < Bop::Renderer
-    include ActionView::Helpers::TextHelper
-    
-    def prepare(template)
-      @template = template
-    end
-  
-    def render(context)
-      simple_format(@template)
-    end
-    
-    Renderer.register 'simple', self
-  end
+  # class SimpleRenderer < Bop::Renderer
+  #   include ActionView::Helpers::TextHelper
+  #   
+  #   def prepare(template)
+  #     @template = template
+  #   end
+  # 
+  #   def render(context)
+  #     simple_format(@template)
+  #   end
+  #   
+  #   Renderer.register 'simple', self
+  # end
 
 end

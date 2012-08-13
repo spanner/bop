@@ -17,8 +17,8 @@ class Bop::Page < ActiveRecord::Base
   after_save :contextualize_children
 
   # local_slug_uniqueness is a custom validator defined below
+  validates :slug, :presence => true, :local_slug_uniqueness => true
   validates :title, :presence => true
-  validates :slug, :local_slug_uniqueness => true, :presence => true
 
   def inherited_template
     template || parent && parent.inherited_template
@@ -87,8 +87,3 @@ protected
 
 end
 
-class LocalSlugUniquenessValidator < ActiveModel::EachValidator
-  def validate_each(record, attribute, value)
-     record.errors.add(attribute, :taken) if record.siblings.find_by_slug(record.slug)
-  end
-end
