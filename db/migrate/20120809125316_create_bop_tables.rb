@@ -9,7 +9,7 @@ class CreateBopTables < ActiveRecord::Migration
       t.integer :asset_id
       t.integer :user_id
       t.integer :anchor_id
-      t.integer :anchor_type
+      t.string :anchor_type
       t.timestamps
     end
 

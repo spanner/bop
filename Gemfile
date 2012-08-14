@@ -17,6 +17,7 @@ gem "jquery-rails"
 # gem 'debugger'
 
 group :test, :development do
+  gem 'haml'
   gem 'paperclip'
   gem 'combustion', '~> 0.3.1'
   gem "rspec-rails", "~> 2.0"

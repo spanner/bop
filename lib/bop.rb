@@ -22,20 +22,11 @@ module Bop
   end
 
   module InstanceMethods
-    def root_page!
-      raise Bop::MissingRootPageError unless page = root_page
-      page
-    end
 
     def root_page
       find_page("")
     end
-
-    def find_page!(route)
-      raise Bop::MissingPageError unless page = find_page(route)
-      page
-    end
-
+    
     def find_page(route)
       pages.find_by_route(route)
     end
@@ -44,7 +35,7 @@ module Bop
     
     def ensure_root_page
       unless root_page
-        pages.create(:title => "Home", :slug => "")
+        root = pages.create(:title => "Home", :slug => "", :anchor => self)
       end
     end
   

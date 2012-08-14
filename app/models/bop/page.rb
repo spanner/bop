@@ -1,7 +1,7 @@
 require 'ancestry'
 
 class Bop::Page < ActiveRecord::Base
-  attr_accessible :title, :slug, :template_id, :race_id, :asset_id
+  attr_accessible :title, :slug, :template_id, :race_id, :asset_id, :anchor
 
   belongs_to :anchor, :polymorphic => true
   belongs_to :template
@@ -42,7 +42,6 @@ class Bop::Page < ActiveRecord::Base
     inherited_template.render(context.merge(additional_context))
   end
   
-  # Fixed
   def context
     @context ||= {
       'page' => self,

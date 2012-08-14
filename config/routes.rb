@@ -8,5 +8,5 @@ Bop::Engine.routes.draw do
 end
 
 Rails.application.routes.draw do
-  match '*path' => 'bop/pages#show_path', :as => :path, :defaults => {:format => 'html'}
+  match '*path' => 'bop/publications#show', :as => :path, :defaults => {:format => 'html'}
 end
