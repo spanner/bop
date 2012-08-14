@@ -12,13 +12,23 @@ class Bop::Page < ActiveRecord::Base
   has_many :blocks, :through => :placed_blocks
   has_many :publications
 
-  before_validation :ensure_slug
   before_save :receive_context
-  after_save :contextualize_children
+  after_save :update_children
 
-  # local_slug_uniqueness is a custom validator defined below
-  validates :slug, :presence => true, :local_slug_uniqueness => true
+  # local_slug_uniqueness is a custom validator defined in lib/bop
+  validates :slug, :local_slug_uniqueness => true, :presence_unless_root => true
   validates :title, :presence => true
+  
+  scope :except, lambda {|these|
+    these = [these].flatten
+    placeholders = these.map{"?"}.join(',')
+    where(["NOT #{self.table_name}.id IN(#{placeholders})", *these.map(&:id)])
+  }
+
+  # Override the standard ancestry method so that siblings don't include self.
+  def siblings
+    self.base_class.except(self).scoped :conditions => sibling_conditions
+  end
 
   def inherited_template
     template || parent && parent.inherited_template
@@ -51,8 +61,8 @@ class Bop::Page < ActiveRecord::Base
     }
   end
   
-  def publish
-    publications.create
+  def publish!
+    publications.create(:rendered_content => self.render)
   end
   
   def published?
@@ -62,28 +72,35 @@ class Bop::Page < ActiveRecord::Base
   def latest
     publications.first
   end
-
-protected
-
-  def ensure_slug
-    self.slug ||= title.parameterize
+  
+  def root?
+    !parent
   end
 
+private
+  def update_context
+    receive_context
+    save!
+  end
+  
   def receive_context
-    if parent
+    if root?
+      self.slug = ""
+      self.route = ""
+    else
+      self.slug ||= title.parameterize
       self.anchor = parent.anchor
       self.route = (ancestors + [self]).map(&:slug).join('/')
-    else
-      self.route = ""
     end
   end
 
-  def contextualize_children
-    children.each do |child|
-      child.receive_context
-      child.save
+  def update_children
+    self.class.transaction do
+      children.each do |child|
+        child.send :update_context
+        child.save
+      end
     end
   end
-
 end
 

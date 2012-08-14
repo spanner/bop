@@ -2,75 +2,104 @@ require 'spec_helper'
 
 describe Bop::Page do
   
-  before do
-    @page = FactoryGirl.create(:page)
+  before :each do
+    @page = FactoryGirl.create(:root_page)
     @child = FactoryGirl.create(:child, :parent => @page)
     @grandchild = FactoryGirl.create(:grandchild, :parent => @child)
-    @sibling = FactoryGirl.build(:sibling)
   end
-  
-  describe 'should test ancestry' do
+
+  describe 'should set ancestry' do
     it "so a new child page gets the right ancestors and path" do
-      @grandchild.ancestry.should eq "#{@page.id}/#{@child.id}"
+      @grandchild.ancestors.should eq [@page, @child]
     end
     it "moving the page to a different parent sets its ancestry correctly" do
-      @sibling.slug = "sibling"
-      @sibling.save!
-      @grandchild.parent = @sibling
-      @grandchild.ancestry.should eq "#{@sibling.id}"
+      sibling = FactoryGirl.create(:sibling, :parent => @page)
+      @grandchild.parent = sibling
+      @grandchild.save
+      @grandchild.ancestors.should eq [@page, sibling]
+    end
+  end
+  
+  describe 'propagation of context' do
+    it "should call descendants to revise context" do
+      ggchild = FactoryGirl.create(:greatgrandchild, :parent => @grandchild)
+      @child.stub(:children).and_return([@grandchild])
+      @grandchild.stub(:children).and_return([ggchild])
+      @grandchild.should_receive :update_context
+      ggchild.should_receive :update_context
+      @child.slug = "different"
+      @child.save
     end
   end
   
   describe 'inheritance of context' do
-    it "new child page has its route set" do
-      @grandchild.route.should eq "#{@page.slug}/#{@child.slug}/#{@grandchild.slug}"
+    it "should derive its route from the parent" do
+      @grandchild.route.should eq "/#{@child.slug}/#{@grandchild.slug}"
     end
-    it "new child page inherits the anchor from its parent" do
-      @page.anchor.should_not eq nil
+    it "should inherit the anchor from its parent" do
+      @child.stub(:parent).and_return(@page)
+      @child.send :receive_context
+      @child.anchor.should_not be_nil
       @child.anchor.should eq @page.anchor
     end
-  end
-  
-  describe 'propogation of context' do
-    it "change the slug of a grandparent page and all its descendants should have their routes updated" do
-      @page.slug = "new"
-      @page.save!
-      @child.route.should eq "new/child"
-      @grandchild.route.should eq "new/child/grandchild"
+    it "should update its route when receive_context is called" do
+      @child.stub(:children).and_return([@grandchild])
+      @child.slug = "different_again"
+      @child.save
+      @grandchild.route.should == "/#{@child.slug}/#{@grandchild.slug}"
     end
   end
   
+  describe 'siblings' do
+    it "should not include self" do
+      sibling = FactoryGirl.create(:sibling, :parent => @page)
+      sibling.siblings.should_not include(sibling)
+    end
+  end
+
   describe 'validation' do
     it "not valid without a title" do
-      @page.should be_valid
-      @page.title = nil
-      @page.should_not be_valid
+      @child.should be_valid
+      @child.title = nil
+      @child.should_not be_valid
     end
     it "not valid with a slug that is already in use by one of its siblings" do
-      expect{ @sibling.save! }.to raise_error
+      sibling = FactoryGirl.create(:sibling, :parent => @page)
+      sibling.slug = @child.slug
+      sibling.should_not be_valid
+      expect{ sibling.save! }.to raise_error
     end
   end
   
   describe 'rendering' do
     it "should have a template" do
-      @page.template_id.should_not eq nil
+      @page.template_id.should_not be_nil
     end
     it "should have an inherited template if none of its own" do
-      @child.template_id == nil
+      @child.inherited_template.should eq @child.template
+      @child.template_id = nil
       @child.inherited_template.should eq @page.template
     end
     it "should provide context" do
-      #####
-      
+      thing = FactoryGirl.create(:thing)
+      @child.stub(:anchor).and_return(thing)
+      @child.context.should == {
+        'page' => @child,
+        'thing' => thing,
+        'asset' => nil
+      }
     end
     it "should render correctly" do
-      #####
+      @child.render.should == %{<h1>#{@child.title} is fancy</h1>}
     end
   end
   
   describe 'publication' do
     it "should save a render snapshot" do
-      ####
+      @child.should_receive(:render).and_return("It's alive!")
+      published = @child.publish!
+      published.should be_a Bop::Publication
+      published.rendered_content.should == "It's alive!"
     end
   end
   

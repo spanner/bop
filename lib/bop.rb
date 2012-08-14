@@ -3,12 +3,15 @@ require "bop/tags"
 require "bop/glue"
 require "bop/block_type"
 require "bop/renderer"
+require "bop/validators"
 
 module Bop
   class BopError < StandardError; end
   class MissingRootPageError < BopError; end
   class MissingPageError < BopError; end
   class MissingTemplateError < BopError; end
+
+  mattr_accessor :anchor
 
   module ClassMethods
     def has_pages
@@ -48,8 +51,3 @@ module Bop
   end
 end
 
-class LocalSlugUniquenessValidator < ActiveModel::EachValidator
-  def validate_each(record, attribute, value)
-    record.errors.add(attribute, :taken) if record.siblings.find_by_slug(record.slug)
-  end
-end

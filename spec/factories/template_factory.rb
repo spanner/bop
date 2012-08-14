@@ -2,10 +2,16 @@ FactoryGirl.define do
 
   factory :template, :class => "Bop::Template" do
     markup_type "liquid"
-    content "{{foo}} is a {{bar}}"
+    content "{{foo}}"
+    
+    factory :basic_template do
+      title "basic"
+      content "<h1>{{page.title}}</h1>"
+    end
+    
+    factory :fancy_template do
+      title "fancy"
+      content "<h1>{{page.title}} is fancy</h1>"
+    end
   end
-  factory :basic_template, :class => "Bop::Template" do
-    title "basic"
-  end
-
 end

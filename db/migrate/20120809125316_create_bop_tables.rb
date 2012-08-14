@@ -34,7 +34,7 @@ class CreateBopTables < ActiveRecord::Migration
 
     create_table :bop_assets do |t|
       t.string :title
-      t.has_attached_file :file
+      t.attachment :file
       t.integer :user_id
       t.timestamps
     end
