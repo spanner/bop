@@ -8,7 +8,7 @@ FactoryGirl.define do
     factory :root_page do
       title "Root"
       slug ""
-      after(:create) { |page| 
+      after(:create) { |page|
         page.anchor = FactoryGirl.create(:thing)
         page.save
       }

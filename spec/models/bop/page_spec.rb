@@ -3,9 +3,9 @@ require 'spec_helper'
 describe Bop::Page do
   
   before :each do
-    @page = FactoryGirl.create(:root_page)
-    @child = FactoryGirl.create(:child, :parent => @page)
-    @grandchild = FactoryGirl.create(:grandchild, :parent => @child)
+    @page = create(:root_page)
+    @child = create(:child, :parent => @page)
+    @grandchild = create(:grandchild, :parent => @child)
   end
 
   describe 'should set ancestry' do
@@ -13,7 +13,7 @@ describe Bop::Page do
       @grandchild.ancestors.should eq [@page, @child]
     end
     it "moving the page to a different parent sets its ancestry correctly" do
-      sibling = FactoryGirl.create(:sibling, :parent => @page)
+      sibling = create(:sibling, :parent => @page)
       @grandchild.parent = sibling
       @grandchild.save
       @grandchild.ancestors.should eq [@page, sibling]
@@ -22,7 +22,7 @@ describe Bop::Page do
   
   describe 'propagation of context' do
     it "should call descendants to revise context" do
-      ggchild = FactoryGirl.create(:greatgrandchild, :parent => @grandchild)
+      ggchild = create(:greatgrandchild, :parent => @grandchild)
       @child.stub(:children).and_return([@grandchild])
       @grandchild.stub(:children).and_return([ggchild])
       @grandchild.should_receive :update_context
@@ -52,7 +52,7 @@ describe Bop::Page do
   
   describe 'siblings' do
     it "should not include self" do
-      sibling = FactoryGirl.create(:sibling, :parent => @page)
+      sibling = create(:sibling, :parent => @page)
       sibling.siblings.should_not include(sibling)
     end
   end
@@ -64,7 +64,7 @@ describe Bop::Page do
       @child.should_not be_valid
     end
     it "not valid with a slug that is already in use by one of its siblings" do
-      sibling = FactoryGirl.create(:sibling, :parent => @page)
+      sibling = create(:sibling, :parent => @page)
       sibling.slug = @child.slug
       sibling.should_not be_valid
       expect{ sibling.save! }.to raise_error
@@ -81,7 +81,7 @@ describe Bop::Page do
       @child.inherited_template.should eq @page.template
     end
     it "should provide context" do
-      thing = FactoryGirl.create(:thing)
+      thing = create(:thing)
       @child.stub(:anchor).and_return(thing)
       @child.context.should == {
         'page' => @child,

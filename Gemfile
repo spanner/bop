@@ -19,7 +19,8 @@ gem "jquery-rails"
 group :test, :development do
   gem 'paperclip'
   gem 'combustion', '~> 0.3.1'
-  gem 'factory_girl_rails'
   gem "rspec-rails", "~> 2.0"
+  gem 'factory_girl_rails'
+  gem 'shoulda-matchers'
   gem 'awesome_print'
 end

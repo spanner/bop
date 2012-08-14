@@ -19,7 +19,7 @@ class Bop::Page < ActiveRecord::Base
   validates :slug, :local_slug_uniqueness => true, :presence_unless_root => true
   validates :title, :presence => true
   
-  scope :except, lambda {|these|
+  scope :other_than, lambda {|these|
     these = [these].flatten
     placeholders = these.map{"?"}.join(',')
     where(["NOT #{self.table_name}.id IN(#{placeholders})", *these.map(&:id)])
@@ -27,7 +27,7 @@ class Bop::Page < ActiveRecord::Base
 
   # Override the standard ancestry method so that siblings don't include self.
   def siblings
-    self.base_class.except(self).scoped :conditions => sibling_conditions
+    self.base_class.other_than(self).scoped :conditions => sibling_conditions
   end
 
   def inherited_template

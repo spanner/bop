@@ -11,7 +11,7 @@ module Bop
   class MissingPageError < BopError; end
   class MissingTemplateError < BopError; end
 
-  mattr_accessor :anchor
+  mattr_accessor :scope
 
   module ClassMethods
     def has_pages
