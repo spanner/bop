@@ -1,6 +1,15 @@
 module Bop
-  class PagesController < ApplicationController
+  class PagesController < BaseController
+
+
+    def publish
+      
+    end
     
+    def revert
+      
+    end
+
 
   protected
   

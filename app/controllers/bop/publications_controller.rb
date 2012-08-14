@@ -1,8 +1,13 @@
 module Bop
   class PublicationsController < ApplicationController
-    
+
     def index
-      
+      if @anchor = Bop.scope
+        # list of latest updates, in various formats including RSS
+        render
+      else
+        # render bop/home
+      end
     end
 
     def show
