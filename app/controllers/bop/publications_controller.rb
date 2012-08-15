@@ -1,5 +1,5 @@
 module Bop
-  class PublicationsController < ApplicationController
+  class PublicationsController < EngineController
 
     def index
       if @anchor = Bop.scope
@@ -20,7 +20,7 @@ module Bop
     end
 
   protected
-  
+
     def normalize_path(path)
       "/#{path}".gsub(/\/{2,}/, "/")
     end
