@@ -7,9 +7,6 @@ gemspec
 
 # jquery-rails is used by the dummy application
 gem "jquery-rails"
-gem 'devise'
-gem 'cancan'
-gem 'haml'
 
 # Declare any dependencies that are still in development here instead of in
 # your gemspec. These might include edge Rails or gems from your path or
@@ -20,6 +17,10 @@ gem 'haml'
 # gem 'debugger'
 
 group :test, :development do
+  gem 'devise'
+  gem 'cancan'
+  gem 'haml'
+  gem 'paperclip'
   gem 'combustion', '~> 0.3.1'
   gem "rspec-rails", "~> 2.0"
   gem 'factory_girl_rails'

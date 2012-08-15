@@ -7,9 +7,10 @@ require "bop/validators"
 
 module Bop
   class BopError < StandardError; end
-  class MissingRootPageError < BopError; end
-  class MissingPageError < BopError; end
-  class MissingTemplateError < BopError; end
+  class RootPageNotFound < BopError; end
+  class PageNotFound < BopError; end
+  class TemplateNotFound < BopError; end
+  class MarkupNotFound < BopError; end
 
   mattr_accessor :scope
 
