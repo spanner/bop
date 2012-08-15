@@ -19,8 +19,8 @@ class Bop::Block < ActiveRecord::Base
     Bop::BlockType.get(type)
   end
   
-  def renderer
-    Bop::Renderer.get(markup_type || 'liquid').prepare(content)
+  def renderer(tpl)
+    Bop::Renderer.get(markup_type || 'liquid').prepare(tpl)
   end
 
   def template(view="show")
@@ -28,6 +28,18 @@ class Bop::Block < ActiveRecord::Base
   end
 
   def render(context, view="show")
-    template(view).render(context)
+    # set context so that the content of this block is available
+    # use the renderer to render the template
+    # yield content to the template with another custom tag
+    ap view
+    block_template = template(view)
+    self.renderer(block_template).render(context)
+  end
+  
+  def to_liquid
+    {
+      'title' => title,
+      'content' => content
+    }
   end
 end

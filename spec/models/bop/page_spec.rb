@@ -120,7 +120,7 @@ describe Bop::Page do
 
     # check that the page renders correctly    
     it "should" do
-      ap @block_1.template()
+      @block_1.template()
       @page.render.should == %{<h1>#{@page.title}</h1>#{@block_1.content}#{@block_2.content}}
     end
     
