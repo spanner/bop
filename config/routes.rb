@@ -1,5 +1,8 @@
 Bop::Engine.routes.draw do
-  resources :pages
+  resources :pages do
+    get "publish", :on => :member, :as => :publish
+    get "revert", :on => :member, :as => :revert
+  end
   resources :templates
   resources :blocks
   resources :block_properties

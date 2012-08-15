@@ -1,7 +1,13 @@
 class Bop::PagesController < Bop::EngineController
+  respond_to :html, :json
 
   before_filter :authenticate_user!
-  load_and_authorize_resource :class => "Bop::Page"
+  
+  #todo: These will be replaced with a load_and_authorize_resource call when cancan is hooked up
+  before_filter :get_page, :only => [:edit, :show, :destroy, :publish, :revert]
+  before_filter :build_page, :only => [:new, :create]
+  before_filter :get_pages, :only => [:index]
+  before_filter :update_page, :only => [:update, :create]
 
   def index
     respond_with @pages
@@ -12,15 +18,30 @@ class Bop::PagesController < Bop::EngineController
   end
 
   def publish
-  
+    
   end
 
   def revert
-  
+    
   end
 
 protected
 
+  def get_page
+    @page = @base.pages.find(params[:id])
+  end
 
+  def get_pages
+    @root_page = @base.root_page
+    @pages = @base.pages
+  end
+
+  def build_page
+    @pages = @base.pages.build(:parent => params[:parent_id])
+  end
+  
+  def update_page
+    @page.update_attributes(params[:page])
+  end
 
 end
