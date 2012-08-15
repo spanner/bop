@@ -42,6 +42,17 @@ class Bop::Page < ActiveRecord::Base
     inherited_template.render(context.merge(additional_context))
   end
   
+  # this needs checking and testing
+  def blocks_for(space)
+    logger.warn ">>> blocks in space"
+    blocks.in_space(space)
+  end
+  
+  # this needs writing
+  def place_block(block, space)
+    placed_block = placed_blocks.find_or_create_by_block_id(block.id, :space_name => space)
+  end
+  
   def context
     @context ||= {
       'page' => self,

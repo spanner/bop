@@ -10,12 +10,17 @@ class Bop::Block < ActiveRecord::Base
   validate :title, :presence => true
   validate :content, :presence => true
 
+  # only works when appended to page.blocks (to bring in the joining table)
+  scope :in_space, lambda { |space|
+    where(["bop_placed_blocks.space_name = ?", space])
+  }
+  
   def block_type
     Bop::BlockType.get(type)
   end
   
   def renderer
-    Bop::Renderer.get(markup_type || 'liquid')
+    Bop::Renderer.get(markup_type || 'liquid').prepare(content)
   end
 
   def template(view="show")

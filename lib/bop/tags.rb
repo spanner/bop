@@ -4,15 +4,19 @@ module Bop
   module Tags
     
     class Yield < Liquid::Tag
-      def initialize(tag_name, bucket, tokens)
+      def initialize(tag_name, space, tokens)
          super
-         @bucket = bucket || "main"
+         @space = space || "main"
       end
 
       def render(context)
         if page = context[:page]
           block_context = context.dup.merge(:block => self)
-          page.blocks_for(@bucket.downcase).map{ |block| block.render(block_context) }
+          output = ""
+          page.blocks_for(@space.downcase).each do |block|
+            output << block.render(block_context)
+          end
+          output
         end
       end
     end

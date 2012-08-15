@@ -12,15 +12,16 @@ module Bop
     end
   
     def template(name)
+      @templates ||= {}
       unless @templates[name]
         # Here we will need to support various file types and should probably just hook into ActionView. That's going to be fun.
-        tpl = null
-        [Bop::Engine.root, Rails.root].each do |root|
-          if !tpl && File.exist(root + "app/views/bop/block_types/#{name}.liquid")
+        tpl = nil
+        [Rails.root, Bop::Engine.root].each do |root|
+          if !tpl && File.exist?(root + "app/views/bop/block_types/#{name}.liquid")
             tpl = File.read(root + "app/views/bop/block_types/#{name}.liquid")
           end
         end
-        raise Bop::MissingTemplateError unless @templates[name] = tpl
+        raise Bop::TemplateNotFound unless @templates[name] = tpl
       end
       @templates[name]
     end

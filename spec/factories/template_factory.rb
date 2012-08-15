@@ -13,5 +13,10 @@ FactoryGirl.define do
       title "fancy"
       content "<h1>{{page.title}} is fancy</h1>"
     end
+
+    factory :template_with_spaces do
+      title "Spaced"
+      content "<h1>{{page.title}}</h1>{{ yield first }}{{ yield second }}"
+    end
   end
 end

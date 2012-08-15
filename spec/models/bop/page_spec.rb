@@ -103,4 +103,28 @@ describe Bop::Page do
     end
   end
   
+  describe 'rendering spaces' do
+    before do
+      # create a template with spaces on it
+      @template = FactoryGirl.create(:template_with_spaces)
+      
+      # create some blocks
+      @block_1 = FactoryGirl.create(:block)
+      @block_2 = FactoryGirl.create(:block)
+      
+      # put those blocks on the page in those spaces
+      @page.template = @template
+      @page.place_block(@block_1, "first")
+      @page.place_block(@block_2, "second")
+    end
+
+    # check that the page renders correctly    
+    it "should" do
+      ap @block_1.template()
+      @page.render.should == %{<h1>#{@page.title}</h1>#{@block_1.content}#{@block_2.content}}
+    end
+    
+  end
+  
+  
 end

@@ -4,8 +4,4 @@ class Bop::PlacedBlock < ActiveRecord::Base
   belongs_to :page
   belongs_to :block
 
-  scope :in_bucket, lambda { |bucket|
-  
-  }
-
 end
