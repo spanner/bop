@@ -1,8 +1,2 @@
-%ul
-  %li
-    = @root_page.title
-    %ul
-      - @root_page.children.each do |page|
-        %li
-          = page.title
-
+#pagetree
+  = render :partial => "page", :object => @root_page
