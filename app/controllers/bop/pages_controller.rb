@@ -17,12 +17,25 @@ class Bop::PagesController < Bop::EngineController
     respond_with @page
   end
 
-  def publish
-    
+  def new
+    respond_with @page
   end
 
-  def revert
-    
+  def create
+    respond_with @page
+  end
+
+  def edit
+    respond_with @page
+  end
+
+  def update
+    respond_with @page
+  end
+
+  def publish
+    publication = @page.publish!
+    redirect_to @page.route
   end
 
 protected
