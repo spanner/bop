@@ -119,7 +119,7 @@ describe Bop::Page do
     end
 
     # check that the page renders correctly    
-    it "should" do
+    it "should render correctly" do
       @page.render.should == %{<h1>#{@page.title}</h1><h2>#{@block_1.title}</h2>\n#{@block_1.content}<h2>#{@block_2.title}</h2>\n#{@block_2.content}}
     end
     
