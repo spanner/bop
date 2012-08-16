@@ -16,7 +16,7 @@ FactoryGirl.define do
 
     factory :template_with_spaces do
       title "Spaced"
-      content "<h1>{{page.title}}</h1>{% yield first %}{% yield second %}"
+      content "<h1>{{page.title}}</h1>{% yield first%}{% yield second%}"
     end
   end
 end

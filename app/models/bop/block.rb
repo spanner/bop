@@ -16,11 +16,11 @@ class Bop::Block < ActiveRecord::Base
   }
   
   def block_type
-    Bop::BlockType.get(type)
+    Bop::BlockType.get(block_type_name)
   end
   
   def renderer(tpl)
-    Bop::Renderer.get(markup_type || 'liquid').prepare(tpl)
+    Bop::Renderer.get(markup_type || 'liquid').new.prepare(tpl)
   end
 
   def template(view="show")
@@ -31,8 +31,8 @@ class Bop::Block < ActiveRecord::Base
     # set context so that the content of this block is available
     # use the renderer to render the template
     # yield content to the template with another custom tag
-    ap view
     block_template = template(view)
+    block_context = context.dup.merge("block" => self)
     self.renderer(block_template).render(context)
   end
   

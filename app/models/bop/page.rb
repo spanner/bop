@@ -44,7 +44,6 @@ class Bop::Page < ActiveRecord::Base
   
   # this needs checking and testing
   def blocks_for(space)
-    logger.warn ">>> blocks in space"
     blocks.in_space(space)
   end
   
@@ -67,6 +66,7 @@ class Bop::Page < ActiveRecord::Base
   
   def as_json(options={})
     {
+      'id' => id,
       'title' => title
     }
   end

@@ -56,7 +56,7 @@ describe Bop::Page do
       sibling.siblings.should_not include(sibling)
     end
   end
-
+  
   describe 'validation' do
     it "not valid without a title" do
       @child.should be_valid
@@ -120,8 +120,7 @@ describe Bop::Page do
 
     # check that the page renders correctly    
     it "should" do
-      @block_1.template()
-      @page.render.should == %{<h1>#{@page.title}</h1>#{@block_1.content}#{@block_2.content}}
+      @page.render.should == %{<h1>#{@page.title}</h1><h2>#{@block_1.title}</h2>\n#{@block_1.content}<h2>#{@block_2.title}</h2>\n#{@block_2.content}}
     end
     
   end
