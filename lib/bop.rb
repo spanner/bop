@@ -12,7 +12,8 @@ module Bop
   class PageNotFound < BopError; end
   class TemplateNotFound < BopError; end
   class MarkupNotFound < BopError; end
-
+  class BlockTypeNotFound < BopError; end
+  
   mattr_accessor :scope
 
   module ClassMethods

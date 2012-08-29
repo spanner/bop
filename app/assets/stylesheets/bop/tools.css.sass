@@ -1,18 +1,42 @@
+$menuwidth: 600px
+$menuheight: 54px
+
 #pagetree
   .page
     margin-left: 40px
-    
+
 #bop
   position: fixed
   bottom: 0
-  left: 0
-  width: 100%
-  height: 50px
-  background-color: rgba(117,119,123, 0.6)
+  left: -$menuwidth
+  height: $menuheight
+  width: $menuwidth + 88px
   color: white
-  .section
-    width: 200px
-    margin-right: 20px
-    float: left
-  h1
-    margin: 0
+  #boptag
+    display: block
+    position: absolute
+    right: 0
+    top: 0
+    width: 88px
+    height: $menuheight
+    background:
+      image: image-url('bop/boptag.png')
+      position: left bottom
+      repeat: no-repeat
+  #bopmenus
+    display: block
+    position: relative
+    width: 600px
+    height: 45px
+    margin-top: 9px
+    background-color: #e53f90
+    .section
+      width: 180px
+      margin-right: 20px
+      float: left
+    h2
+      margin: 0
+
+
+section.bop
+  border: 1px dotted #e53f90

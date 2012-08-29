@@ -26,7 +26,7 @@ class CreateBopTables < ActiveRecord::Migration
       t.string :title
       t.text :content
       t.string :markup_type
-      t.string :type
+      t.string :block_type
       t.integer :asset_id
       t.integer :user_id
       t.timestamps

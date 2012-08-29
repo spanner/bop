@@ -25,6 +25,12 @@ class Bop::Page < ActiveRecord::Base
     where(["NOT #{self.table_name}.id IN(#{placeholders})", *these.map(&:id)])
   }
 
+  def blocks_in(space="main")
+    # the :through association to blocks already joins to bop_placed_blocks so we can add a condition 
+    # on that table. It's a bit fragile but it does work.
+    blocks.where(["bop_placed_blocks.space_name = ?", space])
+  end
+
   # Override the standard ancestry method so that siblings don't include self.
   def siblings
     self.base_class.other_than(self).scoped :conditions => sibling_conditions
@@ -61,7 +67,7 @@ class Bop::Page < ActiveRecord::Base
   end
   
   def publish!
-    publications.create(:rendered_content => self.render)
+    publications.create(:title => self.title, :rendered_content => self.render)
   end
   
   def published?
@@ -77,6 +83,7 @@ class Bop::Page < ActiveRecord::Base
   end
 
 private
+
   def update_context
     receive_context
     save!
