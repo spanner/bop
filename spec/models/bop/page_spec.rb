@@ -56,7 +56,7 @@ describe Bop::Page do
       sibling.siblings.should_not include(sibling)
     end
   end
-
+  
   describe 'validation' do
     it "not valid without a title" do
       @child.should be_valid
@@ -102,5 +102,28 @@ describe Bop::Page do
       published.rendered_content.should == "It's alive!"
     end
   end
+  
+  describe 'rendering spaces' do
+    before do
+      # create a template with spaces on it
+      @template = FactoryGirl.create(:template_with_spaces)
+      
+      # create some blocks
+      @block_1 = FactoryGirl.create(:block)
+      @block_2 = FactoryGirl.create(:block)
+      
+      # put those blocks on the page in those spaces
+      @page.template = @template
+      @page.place_block(@block_1, "first")
+      @page.place_block(@block_2, "second")
+    end
+
+    # check that the page renders correctly    
+    it "should render correctly" do
+      @page.render.should == %{<h1>#{@page.title}</h1><h2>#{@block_1.title}</h2>\n#{@block_1.content}<h2>#{@block_2.title}</h2>\n#{@block_2.content}}
+    end
+    
+  end
+  
   
 end

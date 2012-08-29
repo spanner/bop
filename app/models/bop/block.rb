@@ -9,19 +9,13 @@ class Bop::Block < ActiveRecord::Base
 
   validate :title, :presence => true
   validate :content, :presence => true
-
+  
   def block_type
-    Bop::BlockType.get(read_attribute(:block_type))
+    @block_type ||= Bop::BlockType.get(block_type_name)
   end
   
-  def block_type=(block_type)
-    block_type = Bop::BlockType.get(block_type) unless block_type.is_a? Bop::BlockType
-    raise Bop::BlockTypeNotFound unless block_type
-    write_attribute(:block_type, block_type) 
-  end
-  
-  def renderer
-    Bop::Renderer.get(markup_type || 'liquid')
+  def renderer(tpl)
+    Bop::Renderer.get(markup_type || 'liquid').new.prepare(tpl)
   end
 
   def template(view="show")
@@ -29,6 +23,15 @@ class Bop::Block < ActiveRecord::Base
   end
 
   def render(context, view="show")
-    template(view).render(context)
+    block_template = template(view)
+    block_context = context.dup.merge("block" => self)
+    self.renderer(block_template).render(block_context)
+  end
+  
+  def to_liquid
+    {
+      'title' => title,
+      'content' => content
+    }
   end
 end

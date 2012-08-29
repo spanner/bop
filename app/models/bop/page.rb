@@ -26,8 +26,8 @@ class Bop::Page < ActiveRecord::Base
   }
 
   def blocks_in(space="main")
-    # the :through association to blocks already joins to bop_placed_blocks so we can add a condition 
-    # on that table. It's a bit fragile but it does work.
+    # the :through association to blocks already joins to bop_placed_blocks 
+    # so we can add a condition on that table. It's a bit fragile but it works.
     blocks.where(["bop_placed_blocks.space_name = ?", space])
   end
 
@@ -48,6 +48,16 @@ class Bop::Page < ActiveRecord::Base
     inherited_template.render(context.merge(additional_context))
   end
   
+  # this needs checking and testing
+  def blocks_for(space)
+    blocks.in_space(space)
+  end
+  
+  # this needs writing
+  def place_block(block, space)
+    placed_block = placed_blocks.find_or_create_by_block_id(block.id, :space_name => space)
+  end
+  
   def context
     @context ||= {
       'page' => self,
@@ -62,6 +72,7 @@ class Bop::Page < ActiveRecord::Base
   
   def as_json(options={})
     {
+      'id' => id,
       'title' => title
     }
   end
