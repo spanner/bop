@@ -9,7 +9,3 @@ Bop::Engine.routes.draw do
   resources :placed_blocks
   resource :publications
 end
-
-Rails.application.routes.draw do
-  match '*path' => 'bop/publications#show', :as => :path, :defaults => {:format => 'html'}
-end

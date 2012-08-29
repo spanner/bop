@@ -85,7 +85,7 @@ private
   def receive_context
     if root?
       self.slug = ""
-      self.route = ""
+      self.route = "/"
     else
       self.slug ||= title.parameterize
       self.anchor = parent.anchor

@@ -1,4 +1,5 @@
 require "bop/engine"
+require "bop/routing"
 require "bop/tags"
 require "bop/glue"
 require "bop/block_type"
