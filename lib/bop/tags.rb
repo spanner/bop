@@ -4,6 +4,8 @@ module Bop
   module Tags
     
     class Yield < Liquid::Tag
+      include ActionView::Helpers::TagHelper
+      
       def initialize(tag_name, space_name, tokens)
          super
          space_name = "main" if !space_name || space_name.blank?
@@ -12,11 +14,10 @@ module Bop
 
       def render(context)
         if page = Bop::Page.find(context["page"]["id"])
-          Rails.logger.warn "!!  rendering space '#{@space}' for page #{page.inspect}"
-          page.blocks_in(@space.downcase).each_with_object("") do |block, output|
-            Rails.logger.warn "->  block #{block.inspect}"
-            output << block.render(context)
+          output = page.blocks_in(@space.downcase).each_with_object(''.html_safe) do |block, op|
+            op << content_tag :section, block.render(context), :class => 'block'
           end
+          content_tag :section, output, :class => 'space'
         end
       end
     end

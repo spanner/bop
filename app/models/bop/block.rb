@@ -25,7 +25,7 @@ class Bop::Block < ActiveRecord::Base
   def render(context, view="show")
     block_template = template(view)
     block_context = context.dup.merge("block" => self)
-    self.renderer(block_template).render(block_context)
+    self.renderer(block_template).render(block_context).html_safe
   end
   
   def to_liquid
