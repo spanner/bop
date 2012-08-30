@@ -28,6 +28,10 @@ jQuery ($) ->
         @_container.removeClass('showing')
 
 
-    
+  $.fn.bop_menu = ->
+    @each ->
+      new Bop.Menu(@)
+  
+ 
   $.namespace "Bop", (target, top) ->
     target.Menu = Menu
