@@ -27,7 +27,7 @@ module Bop
   module InstanceMethods
 
     def root_page
-      find_page("")
+      find_page("/")
     end
     
     def find_page(route)

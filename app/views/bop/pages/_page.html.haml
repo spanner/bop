@@ -1,4 +1,5 @@
 .page
-  %h3= page.title
-  = render :partial => "page", :collection => page.children
+  %h3
+    = link_to_unless_current page.title, page_url(page)
+  = render :partial => "bop/pages/page", :collection => page.children
       

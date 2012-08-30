@@ -18,6 +18,12 @@ module Bop
     
     def set_context
       @base = Bop.scope
+      @root_page = @base.root_page
     end
+    
+    def normalize_path(path)
+      "/#{path}".gsub(/\/{2,}/, "/")
+    end
+    
   end
 end

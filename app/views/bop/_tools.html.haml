@@ -1,13 +1,18 @@
 #bop
-  #bopmenus
-    .section
-      %h2
-        pages
-    .section
-      %h2
-        templates
-    .section
-      %h2
-        blocks
-  %a#boptag{:href => "#"}
-    &nbsp;
+  .pagetree
+    = render :partial => 'bop/pages/pagetree'
+    
+  .admin
+    %p
+      = link_to "pages", '#'
+      \|
+      = link_to "templates", '#'
+      \|
+      = link_to "blocks", '#'
+      \|
+      = link_to "assets", '#'
+      \|
+      = link_to "users", '#'
+      
+  %a.boptag{:href => "#"}
+    BOP

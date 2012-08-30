@@ -41,7 +41,12 @@ class Bop::PagesController < Bop::EngineController
 protected
 
   def get_page
-    @page = @base.pages.find(params[:id])
+    if params[:path]
+      @path = normalize_path(params[:path])
+      @page = @base.find_page(@path)
+    else
+      @page = @base.pages.find(params[:id])
+    end
   end
 
   def get_pages

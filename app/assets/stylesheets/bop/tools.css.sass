@@ -1,42 +1,52 @@
-$menuwidth: 600px
-$menuheight: 54px
+@import compass/css3
 
-#pagetree
-  .page
-    margin-left: 40px
+$closedwidth: 88px
+$closedheight: 54px
+$openwidth: 300px
+$openheight: 500px
+$menubg: #e53f90
+
+.pagetree
 
 #bop
   position: fixed
-  bottom: 0
-  left: -$menuwidth
-  height: $menuheight
-  width: $menuwidth + 88px
+  bottom: $closedheight - $openheight
+  left: $closedwidth - $openwidth
+  height: $openheight
+  width: $openwidth
   color: white
-  #boptag
+  background:
+    color: $menubg
+    image: image-url('bop/bg.jpg')
+    position: right top
+    repeat: no-repeat
+  &.showing
+    +box-shadow
+  a
+    color: white
+  a.boptag
     display: block
     position: absolute
     right: 0
     top: 0
-    width: 88px
-    height: $menuheight
-    background:
-      image: image-url('bop/boptag.png')
-      position: left bottom
-      repeat: no-repeat
-  #bopmenus
-    display: block
+    width: $closedwidth
+    height: $closedheight
+    text-indent: $closedwidth
+    overflow: hidden
+  .pagetree
     position: relative
-    width: 600px
-    height: 45px
-    margin-top: 9px
-    background-color: #e53f90
-    .section
-      width: 180px
-      margin-right: 20px
-      float: left
-    h2
-      margin: 0
-
-
+    width: $openwidth
+    height: $openheight - 30px
+    overflow: auto
+    .page
+      margin-left: 20px
+      h3
+        font-size: 1em
+    
+  .admin
+    position: absolute
+    left: 20px
+    bottom: 5px
+  
 section.bop
   border: 1px dotted #e53f90

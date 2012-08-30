@@ -1,0 +1,6 @@
+= content_for :title do
+  = @base.title
+  \::
+  = @page.title
+
+= @page.render.html_safe

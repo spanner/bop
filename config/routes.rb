@@ -7,5 +7,7 @@ Bop::Engine.routes.draw do
   resources :blocks
   resources :block_properties
   resources :placed_blocks
-  resource :publications
+  resources :publications
+  
+  match "*path" => 'pages#show', :as => :current, :defaults => {:format => 'html'}
 end

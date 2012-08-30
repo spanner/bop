@@ -11,18 +11,12 @@ module Bop
     end
 
     def show
-      @anchor = Bop.scope
       @path = normalize_path(params[:path])
-      @page = @anchor.find_page(@path)
+      @page = @base.find_page(@path)
       @publication = @page.latest if @page
       raise Bop::PageNotFound unless @publication
       render
     end
 
-  protected
-
-    def normalize_path(path)
-      "/#{path}".gsub(/\/{2,}/, "/")
-    end
   end
 end
