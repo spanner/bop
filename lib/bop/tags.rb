@@ -15,7 +15,7 @@ module Bop
       def render(context)
         if page = Bop::Page.find(context["page"]["id"])
           output = page.blocks_in(@space.downcase).each_with_object(''.html_safe) do |block, op|
-            op << content_tag :section, block.render(context), :class => 'block'
+            op << content_tag(:section, block.render(context), :class => 'block')
           end
           content_tag :section, output, :class => 'space'
         end

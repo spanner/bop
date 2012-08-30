@@ -16,13 +16,13 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*"] + ["Rakefile", "README.md", "LICENSE"]
 
   s.add_dependency "rails", '~> 3.2.0'
-  # s.add_dependency "jquery-rails"
 
   s.add_dependency 'ancestry'
   s.add_dependency 'liquid'
   # s.add_dependency 'radius'
   s.add_dependency 'redcarpet'
   s.add_dependency 'paperclip'
+  s.add_dependency 'haml_coffee_assets'
 
   s.add_development_dependency "sqlite3"
 end

@@ -1,5 +1,12 @@
+#= require bop/module
+#= require hamlcoffee
+#= require_tree ./templates
+#= require remote_model/model
+#= require remote_model/bindings
+#= require_tree ./bop/models
+
 jQuery ($) ->
-  
+
   class BopMenu
     constructor: (element) ->
       @_container = $(element)
