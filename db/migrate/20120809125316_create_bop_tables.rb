@@ -23,7 +23,6 @@ class CreateBopTables < ActiveRecord::Migration
     end
 
     create_table :bop_blocks do |t|
-      t.string :title
       t.text :content
       t.string :markup_type
       t.string :block_type_name

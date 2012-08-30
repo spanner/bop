@@ -12,7 +12,7 @@
 # There are several kinds of work going on here:
 #
 # * Collection-handling and a universal callback system are provided by the `Module` base class in core.js
-# * RESTing is handled by the RemoteModel class here, which is the base for all our model classes.
+# * RESTing is handled by the Model class here, which is the base for all our model classes.
 # * DOM-binding is handled by a mixed bag of jquery and OO code in `binding.js
 # * Map-interface primitives are defined in `map_interface.js` and bound to callbacks in our model classes.
 #
@@ -23,7 +23,7 @@ jQuery ($) ->
   # Remote models are a thin and fairly dumb extension into the foreground of your Rails models. The usual 
   # structure of a remote model is like this:
   #
-  #   class Widget extends RemoteModel
+  #   class Widget extends Model
   #     ...declare properties
   #     ...override and extend as required
   #
@@ -32,7 +32,7 @@ jQuery ($) ->
   #
   # By inheriting from the base Module class we get standard callback-binding and collection-maintenance.
   #
-  class RemoteModel extends Bop.Module
+  class Model extends Bop.Module
     @_klasses = {}
     @_observers = []
     @_fields = ['id']
@@ -170,7 +170,7 @@ jQuery ($) ->
     # but it will be.
     #
     @url: ->
-      "/races/#{$.race_id}/#{@_plural}"
+      "/bop/pages/#{$.page_id}/#{@_plural}"
 
     # As in rails, build will return a new, unpersisted object of this class.
     @build: () ->
@@ -412,7 +412,7 @@ jQuery ($) ->
         @_attributes[key] = value
         
       else if @constructor._associations.indexOf(key) isnt -1
-        associate = RemoteModel.klassFor(key).get(value)
+        associate = Model.klassFor(key).get(value)
         @_associates[key] = associate
         
       else if @constructor._dependencies.indexOf(key) isnt -1
@@ -426,7 +426,7 @@ jQuery ($) ->
             @trigger "set_#{key}", i
           
         @_dependents[key].clear()
-        klass = RemoteModel.klassForPlural(key)
+        klass = Model.klassForPlural(key)
         $.each value, (i, associate) =>
           associate = klass.get(associate) unless associate.klass? is klass
           associate.set @className(), @
@@ -527,7 +527,7 @@ jQuery ($) ->
     # This is called immediately after a new instance is built.
     # It is generally used to set up listeners that will locate the new item on the map and show its editing form.
     place: () =>
-      trigger "place", @
+      @trigger "place", @
 
     # ### Instance display
     #
@@ -600,4 +600,4 @@ jQuery ($) ->
 
 
   $.namespace "Bop", (target, top) ->
-    target.RemoteModel = RemoteModel
+    target.Model = Model

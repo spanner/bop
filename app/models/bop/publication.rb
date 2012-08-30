@@ -12,7 +12,7 @@ protected
 
   def clone_page
     self.title = page.title
-    self.rendered_content = page.render
+    self.rendered_content = page.render(:wrapped => false)
   end
   
   def notify_page

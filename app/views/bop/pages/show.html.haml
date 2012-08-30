@@ -3,4 +3,8 @@
   \::
   = @page.title
 
-= @page.render.html_safe
+= content_for :head do
+  = javascript_include_tag "bop"
+
+.page.editable{:'data-bop-page' => @page.id}
+  = @page.render.html_safe

@@ -3,4 +3,10 @@ class Bop::Asset < ActiveRecord::Base
   
   has_attached_file :file
   
+  def as_json(options={})
+    {
+      :id => id
+    }
+  end
+  
 end

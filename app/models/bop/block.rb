@@ -28,9 +28,18 @@ class Bop::Block < ActiveRecord::Base
     self.renderer(block_template).render(block_context).html_safe
   end
   
+  def as_json(options={})
+    {
+      :id => id,
+      :content => content,
+      :markup_type => markup_type,
+      :block_type => block_type.name,
+      :asset => asset.as_json(options)
+    }
+  end
+  
   def to_liquid
     {
-      'title' => title,
       'content' => content
     }
   end

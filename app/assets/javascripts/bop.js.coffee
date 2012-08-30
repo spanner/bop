@@ -1,9 +1,8 @@
 #= require bop/module
-#= require hamlcoffee
-#= require_tree ./templates
-#= require remote_model/model
-#= require remote_model/bindings
-#= require_tree ./bop/models
+#= require bop/bindings
+#= require bop/model
+#= require bop/block
+#= require bop/menu
 
 jQuery ($) ->
   $.easing.glide = (x, t, b, c, d) ->
@@ -13,37 +12,17 @@ jQuery ($) ->
     s ?= 1.70158;
     c*((t=t/d-1)*t*((s+1)*t + s) + 1) + b
 
-  class BopMenu
-    constructor: (element) ->
-      @_container = $(element)
-      @_tag = @_container.find('.boptag')
-      @_tree = @_container.find('.pagetree')
-      @_showing = @_container.hasClass('showing')
-      @_tag.click @toggle
-      @_closed_state = 
-        left: @_tag.width() - @_container.width()
-        bottom: @_tag.height() - @_container.height()
-      @_open_state = 
-        left: 0
-        bottom: 0
-      
-    toggle: (e) =>
-      e.preventDefault()
-      if @_showing then @hide() else @show()
-    
-    show: =>
-      @_showing = true
-      @_container.addClass('showing').animate @_open_state, 'slow', 'glide'
-
-    hide: =>
-      @_showing = false
-      @_container.animate @_closed_state, 'fast', 'glide', () =>
-        @_container.removeClass('showing')
-
-  $.fn.bop_tools = ->
+  $.fn.bop_menu = ->
     @each ->
-      new BopMenu(@)
+      new Bop.Menu(@)
+  
+  $.fn.bop_block = ->
+    @each ->
+      $(@).set_bindings new Bop.Block
+        id: $(@).attr('data-bop-block')
 
 
 $ ->
-  $('#boptools').bop_tools()
+  $.page_id = $('[data-bop-page]').attr('data-bop-page')
+  $('#boptools').bop_menu()
+  $('[data-bop-block]').bop_block()

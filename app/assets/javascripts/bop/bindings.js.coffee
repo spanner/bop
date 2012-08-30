@@ -50,7 +50,7 @@ jQuery ($) ->
       @_children = new google.maps.MVCArray()
       @_collection = null
       @_sort_field = null
-      @klass = Bop.RemoteModel.klassFor(klassname)
+      @klass = Bop.Model.klassFor(klassname)
       @bind @klass
       @render()
       # After the render so that the value can be set
@@ -154,24 +154,25 @@ jQuery ($) ->
               #   delete,     backspace,    alphanumerics,    number pad,        punctuation
               if (kc is 8) or (kc is 46) or (47 < kc < 91) or (96 < kc < 112) or (kc > 145)
                 object.set property, observer.val()
+            observer.bind 'change', (e) ->
+              object.set property, observer.val()
           when "SELECT"
             observer.bind 'change', (e) ->
               object.set property, observer.val()
     @
 
   $.fn.updateWith = (attribute, value) ->
-    object_given = value and typeof value is "object"
     @each ->
       observer = $(@)
       switch attribute
         when "value"
-          value = value.id() if object_given
+          value = value.id() if typeof value is "object"
           observer.val value
         when "text"
-          value = value.name() if object_given
+          value = value.name() if typeof value is "object"
           observer.text value
         when "html"
-          value = value.name() if object_given
+          value = value.name() if typeof value is "object"
           observer.html value
         else
           observer.attr attribute, value

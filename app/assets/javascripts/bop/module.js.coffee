@@ -6,6 +6,10 @@ jQuery ($) ->
     target = target[item] or= {} for item in name.split '.'
     block target, top
 
+  $.fn.find_including_self = (selector) ->
+    selection = @.find(selector)
+    selection.push @ if @is(selector)
+    selection
 
   # ## Module
   #
@@ -80,7 +84,7 @@ jQuery ($) ->
     # These are much more widely used, eg to propagate commands between objects and to populate
     # and respond to interface elements.
     #
-    # Note that yet another kind of callback is defined in RemoteModel on an object's associated hasMany collection. 
+    # Note that yet another kind of callback is defined in Model on an object's associated hasMany collection. 
     # Those also involve MVCArray hooks, but they use them in the same way as instances do here, to trigger callbacks 
     # on the holding object.
 
