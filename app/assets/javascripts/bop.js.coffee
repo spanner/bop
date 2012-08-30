@@ -27,7 +27,8 @@ jQuery ($) ->
         left: 0
         bottom: 0
       
-    toggle: =>
+    toggle: (e) =>
+      e.preventDefault()
       if @_showing then @hide() else @show()
     
     show: =>
@@ -39,10 +40,10 @@ jQuery ($) ->
       @_container.animate @_closed_state, 'fast', 'glide', () =>
         @_container.removeClass('showing')
 
-  $.fn.bop_menu = ->
+  $.fn.bop_tools = ->
     @each ->
       new BopMenu(@)
 
 
 $ ->
-  $('#bop').bop_menu()
+  $('#boptools').bop_tools()

@@ -1,18 +1,37 @@
-#bop
-  .pagetree
-    = render :partial => 'bop/pages/pagetree'
+- if current_user
+  #bopstatus
+    - if @publication
+      = link_to t(:edit_page), page_url(@publication.page)
+
+    - elsif @page
+      - if @page.published?
+        = link_to t(:published_page), @page.route
+      - else
+        = t(:never_published)
+
+      - if @page.publishable?
+        - if @page.published?
+          = t(:page_changed)
+        = button_to t(:publish_now), publish_page_url(@page)
+          
+  
+
+  #boptools
+    .pagetree
+      = render :partial => 'bop/pages/pagetree'
     
-  .admin
-    %p
-      = link_to "pages", '#'
-      \|
-      = link_to "templates", '#'
-      \|
-      = link_to "blocks", '#'
-      \|
-      = link_to "assets", '#'
-      \|
-      = link_to "users", '#'
+    .admin
+      %p
+        = link_to t(:pages), '#'
+        \|
+        = link_to t(:templates), '#'
+        \|
+        = link_to t(:blocks), '#'
+        \|
+        = link_to t(:assets), '#'
+        \|
+        = link_to t(:users), '#'
       
-  %a.boptag{:href => "#"}
-    BOP
+    %a.boptag{:href => "#"}
+      = t(:bop)
+

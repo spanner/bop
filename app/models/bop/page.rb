@@ -78,11 +78,19 @@ class Bop::Page < ActiveRecord::Base
   end
   
   def publish!
-    publications.create(:title => self.title, :rendered_content => self.render)
+    publications.create
   end
   
   def published?
     publications.any?
+  end
+  
+  def publishable?
+    updated_at > last_published_at
+  end
+  
+  def last_published_at
+    published_at || DateTime.new(0)
   end
   
   def latest
@@ -91,6 +99,10 @@ class Bop::Page < ActiveRecord::Base
   
   def root?
     !parent
+  end
+  
+  def relative_route
+    route.sub /^\//, ""
   end
 
 private

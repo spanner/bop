@@ -1,0 +1,12 @@
+en:
+  bop: "BOP"
+  pages: "Pages"
+  templates: "Templates"
+  blocks: "Blocks"
+  assets: "Assets"
+  users: "Users"
+  publish_now: "Publish page now"
+  published_page: "This page has been published"
+  edit_page: "Edit page"
+  never_published: "This page has never been published"
+  page_changed: "but it has changed since that time"
