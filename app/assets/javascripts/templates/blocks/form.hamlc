@@ -1,6 +1,47 @@
 %section.block
+  .toolbar{:style => 'display:none'}
+    %header
+      %ul.commands
+        %li.command{:"data-wysihtml5-command" => "bold"}
+        %li.command{:"data-wysihtml5-command" => "italic"}
+        %li.command{:"data-wysihtml5-command" => "insertUnorderedList"}
+        %li.command{:"data-wysihtml5-command" => "insertOrderedList"}
+        %li.command{:"data-wysihtml5-command" => "createLink"}
+        %li.command{:"data-wysihtml5-command" => "insertImage"}
+        %li.command{:"data-wysihtml5-command" => "formatBlock", :"data-wysihtml5-command-value" => "h1"}
+        %li.command{:"data-wysihtml5-command" => "formatBlock", :"data-wysihtml5-command-value" => "h2"}
+        %li.command.fore-color{:"data-wysihtml5-command-group" => "foreColor"}
+          %ul
+            %li{:"data-wysihtml5-command" => "foreColor", :"data-wysihtml5-command-value" => "silver"}
+            %li{:"data-wysihtml5-command" => "foreColor", :"data-wysihtml5-command-value" => "gray"}
+            %li{:"data-wysihtml5-command" => "foreColor", :"data-wysihtml5-command-value" => "maroon"}
+            %li{:"data-wysihtml5-command" => "foreColor", :"data-wysihtml5-command-value" => "red"}
+            %li{:"data-wysihtml5-command" => "foreColor", :"data-wysihtml5-command-value" => "purple"}
+            %li{:"data-wysihtml5-command" => "foreColor", :"data-wysihtml5-command-value" => "green"}
+            %li{:"data-wysihtml5-command" => "foreColor", :"data-wysihtml5-command-value" => "olive"}
+            %li{:"data-wysihtml5-command" => "foreColor", :"data-wysihtml5-command-value" => "navy"}
+            %li{:"data-wysihtml5-command" => "foreColor", :"data-wysihtml5-command-value" => "blue"}
+    %div{:"data-wysihtml5-dialog" => "createLink", :style => "display: none"}
+      %label
+        Link:
+        %input{:"data-wysihtml5-dialog-field" => "href", :value => "http://"}
+        %a{:"data-wysihtml5-dialog-action" => "save"} OK
+        %a{:"data-wysihtml5-dialog-action" => "cancel"} cancel
+    / %a{:"data-wysihtml5-command" => "bold"} bold
+    / %a{:"data-wysihtml5-command" => "italic"} italic
+    / %a{:"data-wysihtml5-command" => "foreColor", :"data-wysihtml5-command-value" => "red"} red
+    / %a{:"data-wysihtml5-command" => "foreColor", :"data-wysihtml5-command-value" => "green"} green
+    / %a{:"data-wysihtml5-command" => "foreColor", :"data-wysihtml5-command-value" => "blue"} blue
+    / %a{:"data-wysihtml5-command" => "createLink"} insert link
+    / %div{:"data-wysihtml5-dialog" => "createLink", :style => "display:none"}
+    /   %label
+    /     Link:
+    /     %input{:"data-wysihtml5-dialog-field" => "href", :value => "http://", :class => "text"}
+    /   %a{:"data-wysihtml5-dialog-action" => "save"} save
+    /   %a{:"data-wysihtml5-dialog-action" => "cancel"} cancel
   %form
-    %textarea{:name => 'text', :placeholder => 'Click to edit', :"data-bind" => "value: content"} 
+    %textarea{:name => 'text', :placeholder => 'Click to edit', :"data-bind" => "value: content"}
     .buttons
       %input{:type => 'submit', :value => "Save"}
+      
       

@@ -1,36 +1,5 @@
 @import compass/css3
-
-$closedwidth: 88px
-$closedheight: 54px
-$openwidth: 300px
-$openheight: 500px
-$menubg: #e53f90
-
-$coolgrey0: #f2f0ed
-$coolgrey1: #e2e1dd
-$coolgrey2: #d6d6d4
-$coolgrey3: #cacac8
-$coolgrey4: #bdbdbd
-$coolgrey5: #b3b3b3
-$coolgrey6: #afafaf
-$coolgrey7: #9a9b9d
-$coolgrey8: #8c8d8e
-$coolgrey9: #747679
-$coolgrey10: #616265
-$coolgrey11: #4d4e53
-
-$blue: #7489b8
-$green: #7c9781
-$midgreen: #9bbfa1
-$brightgreen: #00af68
-$palegreen: #d7e7da
-$rubine: #d1005d
-
-$dark: $coolgrey11
-$mid: $coolgrey8
-$pale: $coolgrey4
-$verypale: $coolgrey2
-$palest: $coolgrey0
+@import definitions
 
 #boptools
   position: fixed
@@ -88,6 +57,211 @@ section.block
   border: 1px dotted blue
   padding: 10px
   margin: 10px
+  #wysihtml5-editor-toolbar
+    position: relative
+
+  header
+    display: block
+    border-radius: 4px
+    width: 100%
+    background: #eee
+    position: relative
+    z-index: 1
+    text-align: center
+    background-image: linear-gradient(bottom, rgb(238, 238, 238) 0%, rgb(255, 255, 255) 100%)
+    background-image: -o-linear-gradient(bottom, rgb(238, 238, 238) 0%, rgb(255, 255, 255) 100%)
+    background-image: -moz-linear-gradient(bottom, rgb(238, 238, 238) 0%, rgb(255, 255, 255) 100%)
+    background-image: -webkit-linear-gradient(bottom, rgb(238, 238, 238) 0%, rgb(255, 255, 255) 100%)
+    background-image: -ms-linear-gradient(bottom, rgb(238, 238, 238) 0%, rgb(255, 255, 255) 100%)
+    box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.3)
+    font-size: 0
+    text-align: center
+  .commands
+    border-left: 1px solid #ddd
+    display: inline-block
+    -webkit-padding-start: 0
+  $tool_button_height: 26px
+  $tool_button_width: 40px
+  [data-wysihtml5-command], [data-wysihtml5-action], .fore-color
+    position: relative
+    border-right: 1px solid #ddd
+    border-left: 1px solid #fff
+    list-style: none
+    font-size: 12px
+    display: inline-block
+    cursor: pointer
+    height: $tool_button_height
+    width: $tool_button_width
+
+  [data-wysihtml5-command]::after, [data-wysihtml5-action]::after, .fore-color::after
+    content: ""
+    background-image: url(/assets/bop/spr_toolbar_icons_r1.png)
+    background-repeat: no-repeat
+    position: absolute
+    left: 0
+    right: 0
+    top: 0
+    bottom: 0
+
+  [data-wysihtml5-command]:hover, [data-wysihtml5-action]:hover, .fore-color:hover
+    background-image: linear-gradient(bottom, rgb(229, 240, 226) 0%, rgb(255, 255, 255) 100%)
+    background-image: -o-linear-gradient(bottom, rgb(229, 240, 226) 0%, rgb(255, 255, 255) 100%)
+    background-image: -moz-linear-gradient(bottom, rgb(229, 240, 226) 0%, rgb(255, 255, 255) 100%)
+    background-image: -webkit-linear-gradient(bottom, rgb(229, 240, 226) 0%, rgb(255, 255, 255) 100%)
+    background-image: -ms-linear-gradient(bottom, rgb(229, 240, 226) 0%, rgb(255, 255, 255) 100%)
+
+  [data-wysihtml5-command="bold"]::after
+    background-position: ($tool_button_width/2 - 10px) center
+
+  [data-wysihtml5-command="italic"]::after
+    background-position: ($tool_button_width/2 - 82px) center
+
+  [data-wysihtml5-command="insertUnorderedList"]::after
+    background-position: ($tool_button_width/2 - 149px) center
+
+  [data-wysihtml5-command="insertOrderedList"]::after
+    background-position: ($tool_button_width/2 - 231px) center
+
+  [data-wysihtml5-command="formatBlock"]
+    &[data-wysihtml5-command-value="h1"]::after
+      background-position: ($tool_button_width/2 - 378px) center
+    &[data-wysihtml5-command-value="h2"]::after
+      background-position: ($tool_button_width/2 - 462px) center
+
+  [data-wysihtml5-command="createLink"]::after
+    background-position: ($tool_button_width/2 - 305px) center
+
+  [data-wysihtml5-command="insertImage"]::after
+    background-position: ($tool_button_width/2 - 547px) center
+
+  .fore-color::after
+    background-position: ($tool_button_width/2 - 775px) center
+
+  [data-wysihtml5-command="insertSpeech"]::after
+    background-position: ($tool_button_width/2 - 630px) center
+
+  [data-wysihtml5-action="change_view"]::after
+    background-position: ($tool_button_width/2 - 704px) center
+
+  .fore-color
+    ul
+      display: none
+      position: absolute
+      z-index: 2
+      top: $tool_button_height
+      right: -1px
+      left: -1px
+      border: 1px solid #ccc
+      border-top: 0
+      background: #fff
+      overflow: hidden
+    li
+      display: block
+      left: -$tool_button_width
+      width: $tool_button_width - 6px
+      margin: 3px
+      z-index: 3
+      border: 0
+      height: 15px
+      &::after
+        display: none
+    &:hover ul
+      display: block
+    [data-wysihtml5-command-value="silver"]
+      background: silver !important
+    [data-wysihtml5-command-value="gray"]
+      background: gray !important
+    [data-wysihtml5-command-value="maroon"]
+      background: maroon !important
+    [data-wysihtml5-command-value="red"]
+      background: red !important
+    [data-wysihtml5-command-value="purple"]
+      background: purple !important
+    [data-wysihtml5-command-value="green"]
+      background: green !important
+    [data-wysihtml5-command-value="olive"]
+      background: olive !important
+    [data-wysihtml5-command-value="navy"]
+      background: navy !important
+    [data-wysihtml5-command-value="blue"]
+      background: blue !important
+    .wysihtml5-command-active
+      outline: 1px solid #666
+      outline-offset: 1px
+
+  .wysihtml5-commands-disabled ul
+    display: none
+
+  .wysihtml5-action-active, .wysihtml5-command-active
+    box-shadow: inset 0 1px 6px rgba(0, 0, 0, 0.2)
+    background: #eee !important
+
+  .wysihtml5-commands-disabled
+    [data-wysihtml5-command], .fore-color
+      opacity: 0.4
+      cursor: default
+      background-image: none !important
+
+  [data-wysihtml5-dialog]
+    color: #333
+    font-size: 14px
+    text-align: left
+    border-radius: 4px
+    -ms-box-sizing: border-box
+    -webkit-box-sizing: border-box
+    -moz-box-sizing: border-box
+    box-sizing: border-box
+    border: 1px solid #ccc
+    padding: 5px 10px
+    background: #FFFBE0
+    position: relative
+    text-align: center
+    input
+      color: #333
+      border: 1px solid #ccc
+      padding: 3px
+      width: 50%
+      min-width: 100px
+      &:focus
+        outline: 0
+        border: 1px solid #666
+
+  [data-wysihtml5-dialog-action]
+    padding: 4px
+    color: #fff
+    cursor: pointer
+
+  [data-wysihtml5-dialog-action="save"]
+    background: #007200
+
+  [data-wysihtml5-dialog-action="cancel"]
+    background: #999
+
+  section
+    position: absolute
+    width: 810px
+    top: 139px
+    bottom: 0
+  
+  textarea
+    width: 100%
+    background: transparent
+    height: 200px
+    border: 0
+    padding: 10px
+    resize: none
+    white-space: pre
+    border-top-left-radius: 4px
+    border-top-right-radius: 4px
+    word-wrap: normal
+    -ms-box-sizing: border-box
+    -webkit-box-sizing: border-box
+    -moz-box-sizing: border-box
+    box-sizing: border-box
+    &:focus
+      box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.3)
+      background: rgba(255, 255, 255, 0.4)
+      outline: 0
 
 a.editor, a.remover
   position: absolute

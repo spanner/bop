@@ -139,12 +139,14 @@ jQuery ($) ->
     @each ->
       observer = $(@)
       bindings = binds ? observer.attr('data-bind')
+
       observer.attr('data-bind', null)
       for binding in bindings.split(/;\s*/)
         [attribute, property] = binding.split(/:\s+/)
         
         # get attributes from object
         object.bindProperty @, property, attribute
+        observer.updateWith attribute, object.get(property)
         
         # send attributes to object, if we're editable
         switch @tagName
