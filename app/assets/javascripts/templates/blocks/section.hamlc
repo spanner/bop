@@ -1,1 +1,2 @@
-<section class="block">New block</section>
+%section.block{:'data-bind' => 'html: content'}
+  

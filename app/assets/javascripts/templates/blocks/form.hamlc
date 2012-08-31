@@ -1,1 +1,6 @@
-<p>Edit view!</p>
+%section.block
+  %form
+    %textarea{:name => 'text', :placeholder => 'Click to edit', :"data-bind" => "value: content"} 
+    .buttons
+      %input{:type => 'submit', :value => "Save"}
+      

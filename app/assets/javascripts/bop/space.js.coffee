@@ -5,7 +5,7 @@ jQuery ($) ->
       @_container = $(element)
       @_name = @_container.attr('[data-bop-space]')
       @_container.find('[data-bop-block]').bop_block(@)
-      @_adder = $('<a href="#" class="adder">Add block</a>').appendTo(@_container).click(@addBlock)
+      @_adder = $('<a href="#" class="adder">Add block</a>').appendTo(@_container).click @addBlock
       
     addBlock: =>
       block = new Bop.Block
