@@ -10,8 +10,12 @@ jQuery ($) ->
     display: () =>
       # make contentEditable
       super
+      @_editor = $('<a href="#" class="editor">edit</a>').prependTo(@element()).click @edit
       @_remover = $('<a href="#" class="remover">remove</a>').prependTo(@element()).click @destroy
-
+    
+    edit: () =>
+      @_form = @template('form')
+      @_element.hide().after(@_form)
 
   $.fn.bop_block = (space) ->
     @each ->

@@ -1,6 +1,6 @@
 #= require hamlcoffee
-#= require parser_rules/simple
-#= require wysihtml5
+#= require bop/lib/parser_rules/simple
+#= require bop/lib/wysihtml5
 #= require_tree ./templates
 #= require bop/lib/module
 #= require bop/lib/bindings

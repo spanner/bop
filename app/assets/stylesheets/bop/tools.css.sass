@@ -89,28 +89,37 @@ section.block
   padding: 10px
   margin: 10px
 
-a.remover
+a.editor, a.remover
   position: absolute
   top: 5px
-  right: 5px
   width: 24px
   height: 24px
   text-indent: 24px
   overflow: hidden
   background: 
-    image: image-url('minisymbols.png')
+    image: image-url('bop/minisymbols.png')
     repeat: no-repeat
-    position: 0 -502px
-  &:hover
-    background-position: 0 -574px
-  &:active
-    background-position: 0 -550px
   &.waiting
     color: $mid
     background:
       image: image-url('spinner.gif')
       position: 0 0
 
-    
+a.remover
+  right: 5px
+  background-position: 0 -502px
+  &:hover
+    background-position: 0 -574px
+  &:active
+    background-position: 0 -550px
+
+a.editor
+  right: 30px
+  background-position: 0 -694px
+  &:hover
+    background-position: 0 -742px
+  &:active
+    background-position: 0 -766px
+  
     
     

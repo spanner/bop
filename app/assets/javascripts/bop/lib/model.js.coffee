@@ -249,7 +249,7 @@ jQuery ($) ->
       @is_remote = true
       data ?= {}
       @_id = data['id']
-      @_element = data['element']
+      @_element = $(data['element']) if data['element']?
       @_observers = []
       @_open = false
       @_showing = false
