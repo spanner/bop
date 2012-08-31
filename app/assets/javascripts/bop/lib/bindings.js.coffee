@@ -157,7 +157,9 @@ jQuery ($) ->
               if (kc is 8) or (kc is 46) or (47 < kc < 91) or (96 < kc < 112) or (kc > 145)
                 object.set property, observer.val()
             observer.bind 'change', (e) ->
+              console.log "changed"
               object.set property, observer.val()
+              
           when "SELECT"
             observer.bind 'change', (e) ->
               object.set property, observer.val()
