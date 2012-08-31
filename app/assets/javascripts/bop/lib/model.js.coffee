@@ -57,6 +57,13 @@ jQuery ($) ->
         @_plural = "#{key}s"    #!
         @_klasses[key] = @
       @_singular
+    
+    # The default tag type that will be found or templated for each instance.
+    #
+    @tagName: (tag)->
+      if tag?
+        @_tag_name = tag
+      @_tag_name ?= "section"
 
     # *plural(key)*
     #
@@ -242,6 +249,7 @@ jQuery ($) ->
       @is_remote = true
       data ?= {}
       @_id = data['id']
+      @_element = data['element']
       @_observers = []
       @_open = false
       @_showing = false
@@ -258,6 +266,17 @@ jQuery ($) ->
     #
     id: () =>
       @_id ?= $.makeGuid()
+
+    # Element is the DOM node to which this instance is chiefly bound. It can also be bound to  
+    # other nodes. In the case of a new instance we don't usually have a node to bind to, so we
+    # template one. The choice of template is determined by the tagName() of this class, which defaults
+    # to section.
+    #
+    element: () =>
+      unless @_element?
+        @_element ?= @template(@klass.tagName())
+        @_element.set_bindings(@)
+      @_element
 
     # *className* returns the singular name of the class of this instance.
     #
@@ -286,13 +305,18 @@ jQuery ($) ->
     # 
     refresh: (data) =>
       if data?
+        
+        console.log "refresh", @, data.id
+        
         @source_data = data
       
         # Here we may be overwriting a temporary id with a real one.
         @_id = data.id
         delete data.id
         @persisted = @_id?
-      
+
+        console.log "persisted", @persisted
+
         # Associates and attributes are prepared.
         @_attributes ?= {}
         @_associates ?= {}
@@ -317,7 +341,7 @@ jQuery ($) ->
     # deleted or just an associated id.
     #
     fetch: (options) =>
-      if @persisted?
+      if @persisted
         $.ajax 
           url: @resourceUrl()
           dataType: 'json',
@@ -369,7 +393,8 @@ jQuery ($) ->
     # its local representation, which will cause the removal of any associated DOM nodes.
 
     destroy: =>
-      if @persisted?
+      console.log "destroying", @
+      if @persisted
         $.ajax
           url: @resourceUrl()
           dataType: 'json'
@@ -528,6 +553,7 @@ jQuery ($) ->
     # It is generally used to set up listeners that will locate the new item on the map and show its editing form.
     place: () =>
       @trigger "place", @
+      @display()
 
     # ### Instance display
     #
@@ -571,10 +597,14 @@ jQuery ($) ->
       @
 
     # *remove* gets rid of this object, its observing dom elements and (through callbacks) any associates set up also to go.
+    # It does not remove it from the database (unless there is a delete callback with that effect)
     #
     remove: (e) =>
+      console.log "remove", @
       e.preventDefault() if e
       $(@_observers).remove()
+      $(@_element).slideUp () ->
+        $(@).remove()
       @trigger "delete"
       delete @
       @

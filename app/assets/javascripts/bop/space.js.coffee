@@ -6,12 +6,12 @@ jQuery ($) ->
       @_name = @_container.attr('[data-bop-space]')
       @_container.find('[data-bop-block]').bop_block(@)
       @_adder = $('<a href="#" class="adder">Add block</a>').appendTo(@_container).click(@addBlock)
-
+      
     addBlock: =>
-      console.log "addBlock", @
-      new Bop.Block
+      block = new Bop.Block
         space: @
-
+      @_adder.before(block.element())
+      
 
   $.fn.bop_space = (page) ->
     @each ->

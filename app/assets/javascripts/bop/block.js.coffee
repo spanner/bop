@@ -6,18 +6,18 @@ jQuery ($) ->
     place: () =>
       # display default values from template?
       super
-      console.log "new block placed", @
-
+      
     display: () =>
       # make contentEditable
       super
-      console.log "new block displayed"
+      @_remover = $('<a href="#" class="remover">remove</a>').prependTo(@element()).click @destroy
 
 
   $.fn.bop_block = (space) ->
     @each ->
-      $(@).set_bindings new Bop.Block
+      new Bop.Block
         id: $(@).attr('data-bop-block')
+        element: @
         space: space
 
 

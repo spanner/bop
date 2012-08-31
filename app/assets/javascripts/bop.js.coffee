@@ -1,6 +1,10 @@
-#= require bop/module
-#= require bop/bindings
-#= require bop/model
+#= require hamlcoffee
+#= require parser_rules/simple
+#= require wysihtml5
+#= require_tree ./templates
+#= require bop/lib/module
+#= require bop/lib/bindings
+#= require bop/lib/model
 #= require bop/page
 #= require bop/space
 #= require bop/block
@@ -18,5 +22,5 @@ jQuery ($) ->
 
 
 $ ->
-  $('#boptools').bop_menu()
   $('[data-bop-page]').bop_page()
+  $('#boptools').bop_menu()

@@ -6,7 +6,31 @@ $openwidth: 300px
 $openheight: 500px
 $menubg: #e53f90
 
-.pagetree
+$coolgrey0: #f2f0ed
+$coolgrey1: #e2e1dd
+$coolgrey2: #d6d6d4
+$coolgrey3: #cacac8
+$coolgrey4: #bdbdbd
+$coolgrey5: #b3b3b3
+$coolgrey6: #afafaf
+$coolgrey7: #9a9b9d
+$coolgrey8: #8c8d8e
+$coolgrey9: #747679
+$coolgrey10: #616265
+$coolgrey11: #4d4e53
+
+$blue: #7489b8
+$green: #7c9781
+$midgreen: #9bbfa1
+$brightgreen: #00af68
+$palegreen: #d7e7da
+$rubine: #d1005d
+
+$dark: $coolgrey11
+$mid: $coolgrey8
+$pale: $coolgrey4
+$verypale: $coolgrey2
+$palest: $coolgrey0
 
 #boptools
   position: fixed
@@ -56,9 +80,37 @@ $menubg: #e53f90
   background-color: white
   
 section.space
+  position: relative
   border: 1px dotted #e53f90
-  padding: 10px
   
 section.block
+  position: relative
   border: 1px dotted blue
   padding: 10px
+  margin: 10px
+
+a.remover
+  position: absolute
+  top: 5px
+  right: 5px
+  width: 24px
+  height: 24px
+  text-indent: 24px
+  overflow: hidden
+  background: 
+    image: image-url('minisymbols.png')
+    repeat: no-repeat
+    position: 0 -502px
+  &:hover
+    background-position: 0 -574px
+  &:active
+    background-position: 0 -550px
+  &.waiting
+    color: $mid
+    background:
+      image: image-url('spinner.gif')
+      position: 0 0
+
+    
+    
+    
