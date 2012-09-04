@@ -12,7 +12,7 @@ module Bop
 
     def show
       @path = normalize_path(params[:path])
-      @page = @base.find_page(@path)
+      @page = Bop.find_page(@path)
       @publication = @page.latest if @page
       raise Bop::PageNotFound unless @publication
       render

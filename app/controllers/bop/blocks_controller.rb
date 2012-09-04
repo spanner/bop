@@ -36,7 +36,7 @@ class Bop::BlocksController < Bop::EngineController
 protected
 
   def get_page
-    @page = @base.pages.find(params[:page_id])
+    @page = Bop.pages.find(params[:page_id])
   end
 
   def get_block

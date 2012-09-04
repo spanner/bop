@@ -10,3 +10,9 @@ en:
   edit_page: "Edit page"
   never_published: "This page has never been published"
   page_changed: "but it has changed since that time"
+  page_not_found: "Page not found"
+  site_not_published: "Sorry: this site has not been published."
+  sorry_no_page: "Sorry: the address you have requested does not exist."
+  sorry_no_users: "Sorry! Bop cannot load because this site has no %{plural} to own and edit pages, and %{plural} are outside Bop's area so we don't know how to make them. Please create a %{singular} and then come back to log in."
+  start_editing_pages: 'If this is a new site, perhaps you want to <a href="%{url}">start making pages</a>.'
+  user_not_found: "Bop needs an owner"
