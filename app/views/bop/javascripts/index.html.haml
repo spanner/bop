@@ -1,0 +1,6 @@
+%h1
+  Javascripts
+%ul
+  - Bop::Javascript.all.each do |js|
+    %li
+      = link_to "#{js.title}.js", javascript_url(js)

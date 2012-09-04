@@ -31,5 +31,3 @@
     %textarea{:name => 'text', :placeholder => 'Click to edit', :"data-bind" => "value: content"}
     .buttons
       %input{:type => 'submit', :value => "Save"}
-      
-      
