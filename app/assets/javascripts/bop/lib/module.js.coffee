@@ -45,13 +45,13 @@ jQuery ($) ->
     ## Collections
     # 
     # As it is loaded, each instance is remembered in two ways: in the `@_instances` lookup hash
-    # and in the @_collection observable (for which we're using google's MVCArray, since it's already there).
+    # and in the @_collection observableArray
     # This gives us limited but useful collection-monitoring bahaviour for lists and select boxes.
     #
     # This only works properly with classes that have an #id method.
     #
     @collection: () ->
-      @_collection or= new google.maps.MVCArray()
+      @_collection or= new ObservableArray()
     
     @remember: (instance) ->
       if instance.id
@@ -130,13 +130,62 @@ jQuery ($) ->
     # This sets up collection bindings, so that the addition or removal of an item can fire class-level callbacks.
     # They're very simple and only used for updating lists, usually in menus or select boxes.
     #
-    # All we do here is hook into the observable properties of google's MVCArray. The instance callbacks have
+    # All we do here is hook into the observable properties of the array. The instance callbacks have
     # access to a much more comprehensive event-triggering system.
     #
     @bindCollection: (binder) ->
       binder.bind(@_collection, @_sort_field)
 
 
+  # ### ObservedArray
+  #
+  # This is a minimal array with event bindings that mirrors the google MVCArray interface 
+  # (except that we call oa.bind rather than setting a map listener, of course).
+  #
+  class ObservableArray extends Module
+    constructor: (arr) ->
+      @_array = arr ? []
+    
+    getArray: () =>
+      @_array
+      
+    insertAt: (i, something) =>
+      @_array.splice(i, 0, something)
+      @trigger 'insert_at', i, something
+      console.log "insert_at", i, something
+      something
+
+    setAt: (i, something) =>
+      @_array.splice(i, 1, something)
+      @trigger 'set_at', i, something
+      console.log "set_at", i, something
+      something
+      
+    getAt: (i) =>
+      @_array[i]
+    
+    removeAt: (i) =>
+      something = @_array.splice(i, 1)[0]
+      @trigger 'remove_at', i, something
+      console.log "remove_at", i, something
+      something
+    
+    push: (something) =>
+      @insertAt @_array.length, something
+
+    pull: () =>
+      @removeAt @_array.length - 1
+    
+    unshift: (something) =>
+      @insertAt 0, something
+      
+    shift: () =>
+      something = @removeAt 0
+      
+
+
+
 
   $.namespace "Bop", (target, top) ->
     target.Module = Module
+    target.ObservableArray = ObservableArray

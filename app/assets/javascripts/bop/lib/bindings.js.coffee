@@ -47,7 +47,7 @@ jQuery ($) ->
   
   class CollectionBinding
     constructor: (klassname, @container, @object) ->
-      @_children = new google.maps.MVCArray()
+      @_children = new Bop.ObservableArray()
       @_collection = null
       @_sort_field = null
       @klass = Bop.Model.klassFor(klassname)
@@ -60,9 +60,9 @@ jQuery ($) ->
     bind: (klass) =>
       @_collection = klass.collection()
       @_sort_field = klass._sort_field
-      google.maps.event.addListener @_collection, 'insert_at', @insertAt
-      google.maps.event.addListener @_collection, 'set_at', @setAt
-      google.maps.event.addListener @_collection, 'remove_at', @removeAt
+      @_collection.bind 'insert_at', @insertAt
+      @_collection.bind 'set_at', @setAt
+      @_collection.bind 'remove_at', @removeAt
     
     render: () =>
       @_collection.forEach (instance) =>

@@ -442,12 +442,12 @@ jQuery ($) ->
         
       else if @constructor._dependencies.indexOf(key) isnt -1
         unless @_dependents[key]?
-          @_dependents[key] = new google.maps.MVCArray
-          google.maps.event.addListener @_dependents[key], "insert_at", (i) =>
+          @_dependents[key] = new Bop.ObservableArray()
+          @_dependents[key].bind "insert_at", (i) =>
             @trigger "add_#{key}", i
-          google.maps.event.addListener @_dependents[key], "remove_at", (i) =>
+          @_dependents[key].bind "remove_at", (i) =>
             @trigger "remove_#{key}", i
-          google.maps.event.addListener @_dependents[key], "set_at", (i) =>
+          @_dependents[key].bind "set_at", (i) =>
             @trigger "set_#{key}", i
           
         @_dependents[key].clear()
@@ -536,8 +536,11 @@ jQuery ($) ->
     # NB Mike: this requires the haml_coffee_assets gem and a set of template .hamlc files in /app/assets/javascripts/templates/
     #
     template: (filename) =>
-      if Templates["#{@pluralName()}/#{filename}"]?
-        tpl = $(Templates["#{@pluralName()}/#{filename}"](@templateData()))
+      if JST["#{@pluralName()}/#{filename}"]?
+        tpl = $( JST["#{@pluralName()}/#{filename}"](@templateData()) )
+        
+        console.log "template", tpl
+        
         tpl = tpl.activate()
         tpl = tpl.set_bindings(@)
         tpl
