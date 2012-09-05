@@ -1,11 +1,8 @@
 #= require hamlcoffee
+#= require bop/lib/module
 #= require bop/lib/rails_glue
 #= require bop/lib/parser_rules/advanced
 #= require bop/lib/wysihtml5
-#= require_tree ./templates
-#= require bop/lib/module
-#= require bop/lib/bindings
-#= require bop/lib/model
 #= require bop/page
 #= require bop/space
 #= require bop/block

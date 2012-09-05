@@ -11,6 +11,12 @@ jQuery ($) ->
     selection.push @ if @is(selector)
     selection
 
+  $.ajaxError = (jqXHR, textStatus, errorThrown) =>
+    console.log "...error!", jqXHR, textStatus, errorThrown
+    trigger "error", textStatus, errorThrown
+    return
+  
+  
   # ## Module
   #
   # This is our base class. It defines utility methods to handle instance collections and bindings, so that all our 
