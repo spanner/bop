@@ -1,9 +1,10 @@
 require 'ancestry'
 
 class Bop::Page < ActiveRecord::Base
-  attr_accessible :title, :slug, :template_id, :asset_id, :anchor
+  attr_accessible :title, :slug, :template_id, :asset_id, :anchor, :site_id, :tree_id
 
-  belongs_to :anchor, :polymorphic => true
+  belongs_to :site
+  belongs_to :tree
   belongs_to :template
   belongs_to :user
   belongs_to :asset
@@ -59,8 +60,8 @@ class Bop::Page < ActiveRecord::Base
   def context
     @context ||= {
       'page' => self,
-      'asset' => inherited_asset,
-      anchor.class.to_s.underscore => anchor
+      'site' => site,
+      'asset' => inherited_asset
     }
   end
   
@@ -113,11 +114,14 @@ private
   def receive_context
     if root?
       self.slug = ""
-      self.route = "/"
+      self.route = tree.mount_point + "/"
+      self.site = tree.site
     else
       self.slug ||= title.parameterize
-      self.anchor = parent.anchor
-      self.route = (ancestors + [self]).map(&:slug).join('/')
+      self.tree = parent.tree
+      self.site = parent.site
+      descent = (ancestors + [self]).map(&:slug).compact.join('/')
+      self.route = tree.mount_point + descent
     end
   end
 

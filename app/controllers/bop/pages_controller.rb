@@ -44,19 +44,19 @@ protected
   def get_page
     if params[:path]
       @path = normalize_path(params[:path])
-      @page = Bop.find_page(@path)
+      @page = @site.find_page(@path)
     else
-      @page = Bop.pages.find(params[:id])
+      @page = @site.pages.find(params[:id])
     end
   end
 
   def get_pages
-    @root_page = Bop.root_page
-    @pages = Bop.pages
+    @root_page = @site.root_page
+    @pages = @site.pages
   end
 
   def build_page
-    @page = Bop.build_page(:parent => params[:parent_id])
+    @page = @site.build_page(:parent => params[:parent_id])
   end
   
   def update_page

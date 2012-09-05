@@ -9,6 +9,7 @@ require "bop/validators"
 module Bop
   class BopError < StandardError; end
   class ConfigurationError < BopError; end
+  class SiteNotFound < BopError; end
   class RootPageNotFound < BopError; end
   class PageNotFound < BopError; end
   class AdminNotFound < BopError; end
@@ -29,39 +30,20 @@ module Bop
     def scoped?
       !!scope
     end
-  
-    def pages
-      if scoped?
-        scope.pages
-      else
-        Bop::Page.scoped
-      end
-    end
-  
-    def root_page
-      @root ||= find_page("/") || create_page(:title => "Home")
-    end
-  
-    def find_page(path)
-      pages.find_by_route(path)
-    end
     
-    def build_page(attributes)
+    def site
       if scoped?
-        pages.build(attributes)
+        scope.find_or_create_site
       else
-        Bop::Page.new(attributes)
+        # subdomain match and other parameters could be applied here
+        Bop::Site.find_or_create_by_name("Default")
       end
     end
 
-    def create_page(attributes)
-      if scoped?
-        pages.create(attributes)
-      else
-        Bop::Page.create(attributes)
-      end
+    def root_page
+      site.root_page
     end
-
+  
     def owner_class
       if scoped?
         @owner_class ||= scope.class.owner_class || "User".constantize

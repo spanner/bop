@@ -12,8 +12,10 @@ en:
   pages: "Pages"
   publish_now: "Publish page now"
   published_page: "This page has been published"
+  site_not_found: "Site missing"
   site_not_published: "Sorry: this site has not been published."
   sorry_no_page: "Sorry: the address you have requested does not exist."
+  sorry_no_site: "Sorry: no site could be found."
   sorry_no_users: "Sorry! Bop cannot load because this site has no %{plural} to own and edit pages, and %{plural} are outside Bop's area so we don't know how to make them. Please create a %{singular} and then come back to log in."
   start_editing_pages: 'If this is a new site, perhaps you want to <a href="%{url}">start making pages</a>.'
   templates: "Templates"

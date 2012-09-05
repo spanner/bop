@@ -12,8 +12,7 @@ module Bop
       def has_pages(options={})
         include BoppedInstanceMethods
         extend BoppedClassMethods
-        has_many :pages, :class_name => "Bop::Page", :as => "anchor"
-        after_save :ensure_root_page
+        has_one :site, :class_name => "Bop::Site", :as => "anchor"
         @owner_class = options[:belonging_to]
       end
     end
@@ -30,20 +29,16 @@ module Bop
 
     module BoppedInstanceMethods
 
+      def find_or_create_site
+        site ||= create_site
+      end
+
       def root_page
-        find_page("/")
+        find_or_create_site.find_page("/")
       end
 
       def find_page(route)
-        pages.find_by_route(route)
-      end
-
-    protected
-
-      def ensure_root_page
-        unless root_page
-          root = pages.create(:title => "Home", :slug => "", :anchor => self)
-        end
+        find_or_create_site.find_page(route)
       end
 
     end
