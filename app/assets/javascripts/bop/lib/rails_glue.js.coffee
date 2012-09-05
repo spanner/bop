@@ -16,20 +16,21 @@ jQuery ($) ->
       .on 'ajax:error', (event, xhr, status) ->
         $(@).removeClass('waiting').addClass('erratic')
         $.ajax_error(event, xhr, status)
-      .on 'ajax:success', (event, response, status) ->
+      .on 'ajax:success', (event, response, status, xhr) ->
+        $(@).removeClass('waiting')
         callback?(response)
     @
 
   $.fn.remote_form = (callback) ->
     @
       .on 'ajax:beforeSend', (event, xhr, settings) ->
-        console.log "beforeSend", @
         $(@).addClass('waiting')
         xhr.setRequestHeader('X-PJAX', 'true')
       .on 'ajax:error', (event, xhr, status) ->
         $(@).removeClass('waiting').addClass('erratic')
         $.ajax_error(event, xhr, status)
       .on 'ajax:success', (event, response, status) ->
+        $(@).removeClass('waiting')
         callback?(response)
     @
 
