@@ -17,20 +17,25 @@ jQuery ($) ->
       @_container = new_container
       @_container.find('a.cancel').click(@revert)
     
+    activateForm: (form) =>
+      
+      
+    element: () =>
+      @_container
+
     revert: () =>
       e.preventDefault() if e
       unless @_container is @_original_container
         @_container.remove() 
         @_container = @_original_container
       @_container.show()
-      
-    element: () =>
-      @_container
 
     new: () =>
       @_form = @_container.find('form.new_block')
       @_form.remote_form(@create)
       @_form.find('a.cancel').click(@abandon)
+      toolbar = @_form.find('.toolbar')
+      @_form.find('textarea').html_editable()
       @_container.addClass('editing')
     
     abandon: (e) =>
@@ -49,10 +54,11 @@ jQuery ($) ->
       @_editor = $("<a href='/bop/pages/#{$.page_id}/blocks/#{@_id}/edit' class='editor' data-type='html'>edit</a>").prependTo(@_container).remote_link(@edit)
       @_remover = $("<a href='#' class='remover' data-remote='true' data-method='delete' data-type='html'>remove</a>").prependTo(@_container).remote_link(@destroy)
       
-    edit: (reponse) =>
-      @replaceProvisionallyWith(reponse)
+    edit: (response) =>
+      @replaceProvisionallyWith(response)
       @_form = @_container.find('form.edit_block')
       @_form.remote_form(@update)
+      @_form.find('textarea').html_editable()
       @_container.addClass('editing')
 
     update: (response) =>
