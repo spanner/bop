@@ -11,7 +11,7 @@ $ ->
     editor = CodeMirror.fromTextArea @,
       mode: mode
       lineNumbers: true
-      theme: "blackboard"
+      theme: "ambiance"
     $(formatter).click () ->
       from = editor.getCursor(true)
       to = editor.getCursor(false)
