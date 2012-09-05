@@ -23,5 +23,25 @@ module Bop
     end
 
     Liquid::Template.register_tag('yield', Bop::Tags::Yield)
+
+
+
+
+
+
+    class Stylesheet < Liquid::Tag
+      def initialize(tag_name, slug, tokens)
+         super
+         @stylesheet = Bop.site.stylesheets.find_by_title(slug)
+      end
+
+      def render(context)
+        %{<link href="#{bop_stylesheet_path(@stylesheet)}" media="screen" rel="stylesheet" type="text/css" />}
+      end
+    end
+
+    Liquid::Template.register_tag('stylesheet', Bop::Tags::Stylesheet)
+
   end
 end
+

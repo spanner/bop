@@ -1,5 +1,10 @@
-= form_for @javascript do |f|
-  = f.label :title
-  = f.text_field :title
+= content_for :title do
+  - if @base
+    = @base.title
+    \::
+  Editing javascript
+
+= form_for @javascript, :html => { :class => "editor" } do |f|
   = f.text_area :content, :"data-mode" => "javascript"
-  = f.submit
+  = f.text_field :title, :class => "title"
+  = f.submit "Save"

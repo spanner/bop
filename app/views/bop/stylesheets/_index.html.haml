@@ -1,8 +1,6 @@
-= @site.inspect
-%h1
-  Stylesheets
 %ul
   - @stylesheets.each do |s|
     %li
       = link_to "#{s.title}.css", stylesheet_url(s)
-  = link_to "new stylesheet", new_stylesheet_url
+= link_to "new stylesheet", new_stylesheet_url
+  

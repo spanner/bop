@@ -4,5 +4,9 @@
     \::
   = @page.title
 
+/ = content_for :head do
+/   - @site.javascripts.each do |js|
+/     = js.render()
+
 .page.editable{:'data-bop-page' => @page.id}
   = @page.render.html_safe
