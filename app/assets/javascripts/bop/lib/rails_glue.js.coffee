@@ -23,6 +23,7 @@ jQuery ($) ->
   $.fn.remote_form = (callback) ->
     @
       .on 'ajax:beforeSend', (event, xhr, settings) ->
+        console.log "beforeSend", @
         $(@).addClass('waiting')
         xhr.setRequestHeader('X-PJAX', 'true')
       .on 'ajax:error', (event, xhr, status) ->
@@ -47,13 +48,6 @@ jQuery ($) ->
         toolbar: toolbar.attr('id'),
         parserRules: wysihtml5ParserRules
       toolbar.show()
-      
-      console.log "textarea", textarea
-      console.log "toolbar", toolbar
-      console.log "editor", editor
-      
-      editor.on "change", () =>
-        console.log "change"
 
 
 

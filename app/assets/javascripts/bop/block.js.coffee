@@ -32,11 +32,12 @@ jQuery ($) ->
 
     new: () =>
       @_form = @_container.find('form.new_block')
-      @_form.remote_form(@create)
       @_form.find('a.cancel').click(@abandon)
-      toolbar = @_form.find('.toolbar')
-      @_form.find('textarea').html_editable()
+      toolbar = @_form.siblings('.toolbar')
+      @_form.find('textarea').html_editable(toolbar)
       @_container.addClass('editing')
+      console.log "remote_forming", @_form
+      @_form.remote_form(@create)
     
     abandon: (e) =>
       e.preventDefault() if e
