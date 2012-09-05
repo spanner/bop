@@ -1,0 +1,6 @@
+%h1
+  Stylesheets
+%ul
+  - Bop::Stylesheet.all.each do |s|
+    %li
+      = link_to "#{s.title}.css", stylesheet_url(s)

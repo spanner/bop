@@ -1,0 +1,4 @@
+= form_for @javascript do |f|
+  = f.label :title
+  = f.text_field :title
+  = f.text_area :content, :"data-mode" => "javascript"
