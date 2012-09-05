@@ -1,10 +1,8 @@
 #= require hamlcoffee
+#= require bop/lib/module
+#= require bop/lib/rails_glue
 #= require bop/lib/parser_rules/advanced
 #= require bop/lib/wysihtml5
-#= require_tree ./templates
-#= require bop/lib/module
-#= require bop/lib/bindings
-#= require bop/lib/model
 #= require bop/lib/codemirror/codemirror
 #= require bop/lib/codemirror/css
 #= require bop/lib/codemirror/javascript
@@ -22,7 +20,6 @@ jQuery ($) ->
   $.easing.boing = (x, t, b, c, d, s) ->
     s ?= 1.70158;
     c*((t=t/d-1)*t*((s+1)*t + s) + 1) + b
-
 
 $ ->
   $('[data-bop-page]').bop_page()

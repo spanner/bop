@@ -1,6 +1,6 @@
 jQuery ($) ->
 
-  class Menu
+  class Menu extends Bop.Module
     constructor: (element) ->
       @_container = $(element)
       @_tag = @_container.find('.boptag')

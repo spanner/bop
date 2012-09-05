@@ -1,7 +1,7 @@
 require 'ancestry'
 
 class Bop::Page < ActiveRecord::Base
-  attr_accessible :title, :slug, :template_id, :race_id, :asset_id, :anchor
+  attr_accessible :title, :slug, :template_id, :asset_id, :anchor
 
   belongs_to :anchor, :polymorphic => true
   belongs_to :template
@@ -31,13 +31,13 @@ class Bop::Page < ActiveRecord::Base
     blocks.where(["bop_placed_blocks.space_name = ?", space])
   end
 
-  # Override the standard ancestry method so that siblings don't include self.
+  # Override the usual ancestry method so that siblings don't include self, because that's silly.
   def siblings
     self.base_class.other_than(self).scoped :conditions => sibling_conditions
   end
 
-  def inherited_template
-    template || parent && parent.inherited_template
+  def find_template
+    template || (parent && parent.find_template) || Bop::Template.find_or_create_by_title_and_content("Default","<h1>{{page.title}}</h1>{% yield %}")
   end
 
   def inherited_asset
@@ -45,15 +45,13 @@ class Bop::Page < ActiveRecord::Base
   end
 
   def render(additional_context={})
-    inherited_template.render(context.merge(additional_context))
+    find_template.render(context.merge(additional_context))
   end
   
-  # this needs checking and testing
   def blocks_for(space)
     blocks.in_space(space)
   end
   
-  # this needs writing
   def place_block(block, space)
     placed_block = placed_blocks.find_or_create_by_block_id(block.id, :space_name => space)
   end

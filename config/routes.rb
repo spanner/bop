@@ -13,5 +13,6 @@ Bop::Engine.routes.draw do
     get "revert", :on => :member, :as => :revert
   end
   
-  # match "*path" => 'pages#show', :as => :unpublished, :defaults => {:format => 'html'}
+  match "/" => 'pages#index', :as => :dashboard, :defaults => {:format => 'html'}
+  match "*path" => 'pages#show', :as => :unpublished, :defaults => {:format => 'html'}
 end

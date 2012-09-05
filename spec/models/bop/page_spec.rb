@@ -76,9 +76,9 @@ describe Bop::Page do
       @page.template_id.should_not be_nil
     end
     it "should have an inherited template if none of its own" do
-      @child.inherited_template.should eq @child.template
+      @child.find_template.should eq @child.template
       @child.template_id = nil
-      @child.inherited_template.should eq @page.template
+      @child.find_template.should eq @page.template
     end
     it "should provide context" do
       thing = create(:thing)

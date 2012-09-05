@@ -1,4 +1,4 @@
-%section.block
+%section.block{:'data-bop-block' => @block.id}
   .toolbar{:style => 'display:none'}
     %header
       %ul.commands
@@ -27,12 +27,13 @@
         %input{:"data-wysihtml5-dialog-field" => "href", :value => "http://"}
         %a{:"data-wysihtml5-dialog-action" => "save"} OK
         %a{:"data-wysihtml5-dialog-action" => "cancel"} cancel
-  %form
-    %textarea{:name => 'text', :placeholder => 'Click to edit', :"data-bind" => "value: content"}
+
+  = form_for [@page, @block] do |f|
+    = f.text_area :content, :placeholder => t(:block_placeholder)
     .buttons
-      %input{:type => 'submit', :value => "Save"}
-      or
+      = f.submit "Save"
+      = t :or
       %a.cancel{:href => "#"}
-        cancel
-      
-      
+        = t :cancel
+    
+    

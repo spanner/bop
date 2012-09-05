@@ -1,6 +1,7 @@
 class Bop::PagesController < Bop::EngineController
   respond_to :html, :json
 
+  before_filter :ensure_admin_user
   before_filter :authenticate_user!
   
   #todo: These will be replaced with a load_and_authorize_resource call when cancan is hooked up
@@ -43,23 +44,27 @@ protected
   def get_page
     if params[:path]
       @path = normalize_path(params[:path])
-      @page = @base.find_page(@path)
+      @page = Bop.find_page(@path)
     else
-      @page = @base.pages.find(params[:id])
+      @page = Bop.pages.find(params[:id])
     end
   end
 
   def get_pages
-    @root_page = @base.root_page
-    @pages = @base.pages
+    @root_page = Bop.root_page
+    @pages = Bop.pages
   end
 
   def build_page
-    @pages = @base.pages.build(:parent => params[:parent_id])
+    @page = Bop.build_page(:parent => params[:parent_id])
   end
   
   def update_page
     @page.update_attributes(params[:page])
+  end
+  
+  def ensure_admin_user
+    raise Bop::AdminNotFound unless Bop.owner_class.any?
   end
 
 end

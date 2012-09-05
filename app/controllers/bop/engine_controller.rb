@@ -2,7 +2,7 @@ module Bop
   class EngineController < ::ApplicationController
     rescue_from "ActiveRecord::RecordNotFound", :with => :rescue_not_found
     rescue_from "Bop::PageNotFound", :with => :rescue_not_found
-    rescue_from "Bop::RootPageNotFound", :with => :rescue_root_page
+    rescue_from "Bop::AdminNotFound", :with => :rescue_no_admin
     before_filter :set_context
   
   protected
@@ -10,15 +10,14 @@ module Bop
     def rescue_not_found
       render :template => 'bop/pages/not_found', :status => :not_found
     end
-
-    def rescue_root_page
-      # do something in admin to set up root page
-      rescue_not_found
-    end
     
+    def rescue_no_admin
+      render :template => 'bop/users/not_found', :status => :not_found
+    end
+
     def set_context
       @base = Bop.scope
-      @root_page = @base.root_page
+      @root_page = Bop.root_page
     end
     
     def normalize_path(path)

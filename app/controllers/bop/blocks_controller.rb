@@ -1,5 +1,5 @@
 class Bop::BlocksController < Bop::EngineController
-  respond_to :html, :json
+  respond_to :html, :json, :js
 
   before_filter :authenticate_user!
   
@@ -8,6 +8,9 @@ class Bop::BlocksController < Bop::EngineController
   before_filter :get_block, :only => [:edit, :show, :destroy, :publish, :revert]
   before_filter :build_block, :only => [:new, :create]
   before_filter :update_block, :only => [:update, :create]
+  
+  layout :set_layout
+  
 
   def new
     respond_with @block
@@ -32,11 +35,11 @@ class Bop::BlocksController < Bop::EngineController
   def destroy
     respond_with @block.destroy
   end
-
+  
 protected
 
   def get_page
-    @page = @base.pages.find(params[:page_id])
+    @page = Bop.pages.find(params[:page_id])
   end
 
   def get_block
@@ -44,11 +47,21 @@ protected
   end
 
   def build_block
-    @blocks = @page.blocks.build(:parent => params[:parent_id])
+    @block = @page.blocks.build
   end
 
   def update_block
     @block.update_attributes(params[:block])
+  end
+
+private
+
+  def set_layout
+    if request.headers['X-PJAX']
+      false
+    else
+      "bop"
+    end
   end
 
 end

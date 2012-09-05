@@ -1,2 +1,11 @@
-%h1
-  404!
+.404
+  %h1
+    = t :page_not_found
+
+  - if Bop::Publication.any?
+    %p
+      = t :sorry_no_page
+  - else
+    %p
+      = t :site_not_published
+      = t(:start_editing_pages, :url => dashboard_url).html_safe
