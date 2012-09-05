@@ -1,0 +1,22 @@
+Bop::Engine.routes.draw do
+  resources :publications, :only => [:show, :index]
+
+  resources :javascripts
+  resources :stylesheets
+  resources :pages do
+    resources :blocks
+    resources :publications
+  resources :templates
+    
+    # These will go soon in favour of publication crud
+    post "publish", :on => :member, :as => :publish
+    get "revert", :on => :member, :as => :revert
+  end
+  
+<<<<<<< HEAD
+  match "/" => 'pages#index', :as => :dashboard, :defaults => {:format => 'html'}
+  match "*path" => 'pages#show', :as => :unpublished, :defaults => {:format => 'html'}
+=======
+  # match "*path" => 'pages#show', :as => :unpublished, :defaults => {:format => 'html'}
+>>>>>>> dbadfda527feeb50875bce3b6bec10431f81f58e
+end
