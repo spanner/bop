@@ -1,6 +1,7 @@
 = content_for :title do
-  = @base.title
-  \::
+  - if @base
+    = @base.title
+    \::
   = @publication.title
 
 .publication

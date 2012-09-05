@@ -9,10 +9,7 @@
       - else
         = t(:never_published)
 
-      - if @page.publishable?
-        - if @page.published?
-          = t(:page_changed)
-        = button_to t(:publish_now), publish_page_url(@page)
+      = button_to t(:publish_now), publish_page_url(@page)
           
   
 
