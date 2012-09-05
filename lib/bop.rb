@@ -89,7 +89,7 @@ module Bop
   module BoppedInstanceMethods
 
     def find_or_create_site
-      site ||= create_site
+      self.site ||= self.create_site
     end
 
     def root_page

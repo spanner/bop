@@ -16,13 +16,13 @@ class TreesAndSites < ActiveRecord::Migration
       t.timestamps
     end
     
-    add_column :pages, :site_id, :integer
-    add_column :pages, :tree_id, :integer
-    add_column :stylesheets, :site_id, :integer
-    add_column :javascripts, :site_id, :integer
-    add_column :templates, :site_id, :integer
+    add_column :bop_pages, :site_id, :integer
+    add_column :bop_pages, :tree_id, :integer
+    add_column :bop_stylesheets, :site_id, :integer
+    add_column :bop_javascripts, :site_id, :integer
+    add_column :bop_templates, :site_id, :integer
     
-    remove_column :pages, :anchor_type
-    remove_column :pages, :anchor_id
+    remove_column :bop_pages, :anchor_type
+    remove_column :bop_pages, :anchor_id
   end
 end
