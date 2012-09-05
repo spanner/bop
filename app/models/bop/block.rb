@@ -1,17 +1,19 @@
 class Bop::Block < ActiveRecord::Base
-  attr_accessible :title, :content, :type, :aset_id
+  attr_accessible :title, :content, :type, :asset_id
 
   belongs_to :user
   belongs_to :asset
   has_many :block_properties
   has_many :placed_blocks
   has_many :pages, :through => :placed_blocks
-
-  validate :title, :presence => true
-  validate :content, :presence => true
-  
+    
   def block_type
-    @block_type ||= Bop::BlockType.get(block_type_name)
+    @block_type ||= Bop::BlockType.get(block_type_name || 'text')
+  end
+  
+  def place_on_page(page, space)
+    space ||= 'main'
+    placed_blocks.create(:page => page, :space_name => space)
   end
   
   def renderer(tpl)
@@ -43,4 +45,5 @@ class Bop::Block < ActiveRecord::Base
       'content' => content
     }
   end
+    
 end

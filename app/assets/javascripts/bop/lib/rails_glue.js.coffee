@@ -16,7 +16,8 @@ jQuery ($) ->
       .on 'ajax:error', (event, xhr, status) ->
         $(@).removeClass('waiting').addClass('erratic')
         $.ajax_error(event, xhr, status)
-      .on 'ajax:success', (event, response, status) ->
+      .on 'ajax:success', (event, response, status, xhr) ->
+        $(@).removeClass('waiting')
         callback?(response)
     @
 
@@ -29,6 +30,7 @@ jQuery ($) ->
         $(@).removeClass('waiting').addClass('erratic')
         $.ajax_error(event, xhr, status)
       .on 'ajax:success', (event, response, status) ->
+        $(@).removeClass('waiting')
         callback?(response)
     @
 
@@ -47,13 +49,6 @@ jQuery ($) ->
         toolbar: toolbar.attr('id'),
         parserRules: wysihtml5ParserRules
       toolbar.show()
-      
-      console.log "textarea", textarea
-      console.log "toolbar", toolbar
-      console.log "editor", editor
-      
-      editor.on "change", () =>
-        console.log "change"
 
 
 

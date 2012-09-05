@@ -5,35 +5,38 @@ class Bop::BlocksController < Bop::EngineController
   
   #todo: These will be replaced with a load_and_authorize_resource call when cancan is hooked up
   before_filter :get_page
+  before_filter :get_space
   before_filter :get_block, :only => [:edit, :show, :destroy, :publish, :revert]
   before_filter :build_block, :only => [:new, :create]
-  before_filter :update_block, :only => [:update, :create]
   
   layout :set_layout
   
 
   def new
-    respond_with @block
+    respond_with @page, @block
   end
 
   def create
-    respond_with @block
+    @block.save!
+    @block.place_on_page(@page, @space)
+    respond_with @page, @block
   end
 
   def show
-    respond_with @block
+    respond_with @page, @block
   end
 
   def edit
-    respond_with @block
+    respond_with @page, @block
   end
 
   def update
-    respond_with @block
+    @block.update_attributes(params[:block])
+    respond_with @page, @block
   end
   
   def destroy
-    respond_with @block.destroy
+    head(:ok) if @block.destroy
   end
   
 protected
@@ -41,17 +44,17 @@ protected
   def get_page
     @page = Bop.site.pages.find(params[:page_id])
   end
+  
+  def get_space
+    @space = params[:space] || 'main'
+  end
 
   def get_block
     @block = @page.blocks.find(params[:id])
   end
 
   def build_block
-    @block = @page.blocks.build
-  end
-
-  def update_block
-    @block.update_attributes(params[:block])
+    @block = @page.blocks.build(params[:block])
   end
 
 private

@@ -28,7 +28,8 @@
         %a{:"data-wysihtml5-dialog-action" => "save"} OK
         %a{:"data-wysihtml5-dialog-action" => "cancel"} cancel
 
-  = form_for [@page, @block] do |f|
+  = form_for [@page, @block], :remote => true, :html => {:'data-type' => 'html'} do |f|
+    = hidden_field_tag :space, @space
     = f.text_area :content, :placeholder => t(:block_placeholder)
     .buttons
       = f.submit "Save"

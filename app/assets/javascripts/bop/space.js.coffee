@@ -5,7 +5,7 @@ jQuery ($) ->
       @_container = $(element)
       @_name = @_container.attr('data-bop-space')
       @_container.find('[data-bop-block]').bop_block(@)
-      @_adder = $("<div class='holder'><a href='/bop/pages/#{$.page_id}/blocks/new' class='adder' data-remote='true' data-type='html'>Add block</a></div>").appendTo(@_container).remote_link(@addBlock)
+      @_adder = $("<div class='holder'><a href='/bop/pages/#{$.page_id}/blocks/new?space=#{@_name}' class='adder' data-remote='true' data-type='html'>Add block</a></div>").appendTo(@_container).remote_link(@addBlock)
       
     element: () =>
       @_container
