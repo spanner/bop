@@ -1,7 +1,7 @@
 module Bop
   class StylesheetsController < EngineController
     respond_to :html
-    
+    before_filter :get_stylesheets, :only => :index
     before_filter :get_stylesheet, :only => [:show, :update]
   
     def index
@@ -16,6 +16,10 @@ module Bop
 
     def get_stylesheet
       @stylesheet = Stylesheet.find(params[:id])
+    end
+
+    def get_stylesheets
+      @stylesheets = @site.stylesheets
     end
 
   end
