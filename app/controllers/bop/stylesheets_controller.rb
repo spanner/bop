@@ -1,22 +1,22 @@
 module Bop
   class StylesheetsController < EngineController
     respond_to :html
+    
+    before_filter :get_stylesheet, :only => [:show, :update]
   
     def index
-      if @anchor = Bop.scope
-        render
-      end
+      respond_with @stylesheets      
     end
   
     def show
-      @stylesheet = Stylesheet.find(params[:id])
       respond_with @stylesheet
     end
     
   protected
 
-    def update_stylesheet
-      @stylesheet.update_attributes(params[:id])
+    def get_stylesheet
+      @stylesheet = Stylesheet.find(params[:id])
     end
+
   end
 end

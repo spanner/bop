@@ -1,6 +1,7 @@
 %h1
   Stylesheets
 %ul
-  - Bop::Stylesheet.all.each do |s|
+  - @stylesheets.each do |s|
     %li
       = link_to "#{s.title}.css", stylesheet_url(s)
+  = link_to "new stylesheet", new_stylesheet_url
