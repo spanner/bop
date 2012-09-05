@@ -36,7 +36,7 @@ class Bop::BlocksController < Bop::EngineController
   end
   
   def destroy
-    respond_with @block.destroy
+    head(:ok) if @block.destroy
   end
   
 protected

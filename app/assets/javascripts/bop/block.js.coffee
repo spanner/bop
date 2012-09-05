@@ -17,9 +17,6 @@ jQuery ($) ->
       @_container = new_container
       @_container.find('a.cancel').click(@revert)
     
-    activateForm: (form) =>
-      
-      
     element: () =>
       @_container
 
@@ -51,7 +48,7 @@ jQuery ($) ->
     show: () =>
       @_container.removeClass('editing')
       @_editor = $("<a href='/bop/pages/#{$.page_id}/blocks/#{@_id}/edit' class='editor' data-remote='true' data-type='html'>edit</a>").prependTo(@_container).remote_link(@edit)
-      @_remover = $("<a href='#' class='remover' data-remote='true' data-method='delete' data-remote='true' data-type='html'>remove</a>").prependTo(@_container).remote_link(@destroy)
+      @_remover = $("<a href='/bop/pages/#{$.page_id}/blocks/#{@_id}' class='remover' data-remote='true' data-method='delete' data-remote='true' data-type='html'>remove</a>").prependTo(@_container).remote_link(@destroy)
       
     edit: (response) =>
       @replaceProvisionallyWith(response)
