@@ -1,0 +1,9 @@
+= form_for t do |f|
+  .editor
+    .half
+      = f.label :head
+      = f.text_area :head, :"data-mode" => "htmlmixed"
+    .half
+      = f.label :body
+      = f.text_area :body, :"data-mode" => "htmlmixed"
+  = f.submit :class => "editor_submit"
