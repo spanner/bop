@@ -1,6 +1,6 @@
 module Bop
   class PublicationsController < EngineController
-    layout "bop/content"
+    layout "bop/published"
     
     def show
       @path = normalize_path(params[:path])
