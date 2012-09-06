@@ -1,22 +1,33 @@
 module Bop
   class JavascriptsController < EngineController
+    layout "editor"
+    
     respond_to :html
-  
+    before_filter :get_javascripts, :only => :index
+    before_filter :get_javascript, :only => [:show, :update]
+    
     def index
-      if @anchor = Bop.scope
-        render
-      end
+      render :partial => 'index', :collection => @javascripts      
     end
   
     def show
-      @javascript = Javascript.find(params[:id])
+      respond_with @javascript
+    end
+    
+    def update
+      @javascript.update_attributes(params[:javascript])
       respond_with @javascript
     end
     
   protected
 
-    def update_javascript
-      @javascript.update_attributes(params[:id])
+    def get_javascript
+      @javascript = Javascript.find(params[:id])
     end
+
+    def get_javascripts
+      @javascripts = @site.javascripts
+    end
+
   end
 end

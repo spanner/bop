@@ -6,12 +6,14 @@
 
 $ ->
   $('textarea').each () ->
-    formatter = $('<a href="#" data-function="autoFormat">Autoformat</a>').insertAfter(@)
+    formatter = $('<a href="#" data-function="autoFormat">Pretty</a>').insertAfter(@)
     mode = $(@).attr("data-mode")
+    theme = "monokai"
     editor = CodeMirror.fromTextArea @,
       mode: mode
       lineNumbers: true
-      theme: "ambiance"
+      theme: theme
+    $('body').addClass("cm-s-#{theme}")
     $(formatter).click () ->
       from = editor.getCursor(true)
       to = editor.getCursor(false)

@@ -16,7 +16,7 @@
   #boptools
     .pagetree
       = render :partial => 'bop/pages/pagetree'
-    
+    .files
     .admin
       %p
         = link_to t(:pages), '#'
@@ -29,7 +29,9 @@
         \|
         = link_to t(:users), '#'
         \|
-        = link_to t(:stylesheets), '#'
+        = link_to t(:stylesheets), stylesheets_url, :remote => true, :class => "design"
+        \|
+        = link_to t(:javascripts), javascripts_url, :remote => true, :class => "design"
       
     %a.boptag{:href => "#"}
       = t(:bop)

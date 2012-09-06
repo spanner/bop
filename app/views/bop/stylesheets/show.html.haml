@@ -1,5 +1,8 @@
-= form_for @stylesheet do |f|
-  = f.label :title
-  = f.text_field :title
+= content_for :title do
+  Editing stylesheet
+
+= form_for @stylesheet, :html => { :class => "editor" } do |f|
   = f.text_area :content, :"data-mode" => "css"
-  = f.submit
+  = f.text_field :title, :class => "title"
+  = f.submit, "Save"
+  

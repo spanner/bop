@@ -13,6 +13,7 @@
     image: image-url('bop/bg.jpg')
     position: right top
     repeat: no-repeat
+  z-index: 999
   &.showing
     +box-shadow
   a
@@ -35,6 +36,12 @@
       margin-left: 20px
       h3
         font-size: 1em
+  .files
+    position: absolute
+    top: 50px
+    left: 20px
+    right: 10px
+    bottom: 60px
     
   .admin
     position: absolute

@@ -1,14 +1,21 @@
 module Bop
   class StylesheetsController < EngineController
-    respond_to :html
+    layout "editor"
+    
+    respond_to :html, :css
     before_filter :get_stylesheets, :only => :index
     before_filter :get_stylesheet, :only => [:show, :update]
-  
+    
     def index
-      respond_with @stylesheets      
+      render :partial => 'index', :collection => @stylesheets      
     end
   
     def show
+      respond_with @stylesheet
+    end
+    
+    def update
+      @stylesheet.update_attributes(params[:stylesheet])
       respond_with @stylesheet
     end
     
@@ -21,6 +28,8 @@ module Bop
     def get_stylesheets
       @stylesheets = @site.stylesheets
     end
+    
+    
 
   end
 end
