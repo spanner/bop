@@ -5,10 +5,10 @@
 #= require bop/lib/parser_rules/advanced
 #= require bop/lib/wysihtml5
 #= require bop/codemirror
-#= require bop/page
 #= require bop/space
 #= require bop/block
 #= require bop/menu
+#= require bop/pagetree
 #= require_self
 
 jQuery ($) ->
@@ -26,6 +26,8 @@ jQuery ($) ->
       $('head').append("<link rel=\"stylesheet\" href=\"#{path}\" type=\"text/css\" />");
 
 $ ->
-  $('[data-bop-page]').bop_page()
+  $.page_id = $('body').attr('data-bop-page')
+  $('[data-bop-space]').bop_space()
   $('#bop_tools').bop_menu()
+  $('.pagetree').bop_page_tree()
   

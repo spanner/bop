@@ -143,6 +143,75 @@ jQuery ($) ->
       binder.bind(@_collection, @_sort_field)
 
 
+
+
+
+
+
+
+
+
+  class Editable extends Module
+    constructor: (element) ->
+      @_container = $(element)
+      @_id = @_container.attr('data-bop-id')
+      if @_id? then @show() else @new()
+
+    replaceWith: (element) =>
+      new_container = $(element)
+      @_container.after(new_container).remove()
+      @_container = new_container
+
+    replaceProvisionallyWith: (element) =>
+      new_container = $(element)
+      @_original_container = @_container
+      @_container.after(new_container).hide()
+      @_container = new_container
+      @_container.find('a.cancel').click(@revert)
+    
+    element: () =>
+      @_container
+
+    revert: (e) =>
+      e.preventDefault() if e
+      unless @_container is @_original_container
+        @_container.remove() 
+        @_container = @_original_container
+      @_container
+      
+    new: () =>
+      @_form = @_container.find('form')
+      @_form.find('a.cancel').click(@abandon)
+      @_form.remote_form(@create)
+    
+    abandon: (e) =>
+      e.preventDefault() if e
+      @_container.slideUp () =>
+        @_container.remove()
+        delete @
+        
+    create: (response) =>
+      @replaceWith(response)
+      @_id = @_container.attr('data-bop-id')
+      @show()
+
+    show: () =>
+      @_container.children('a.editor').remote_link(@edit)
+      @_container.children('a.remover').remote_link(@destroy)
+      
+    edit: (response) =>
+      @replaceProvisionallyWith(response)
+      @_form = @_container.find('form')
+      @_form.remote_form(@update)
+
+    update: (response) =>
+      @replaceWith(response)
+      @show()
+      
+    destroy: () =>
+      @_container.slideUp()
+
+
   # ### ObservedArray
   #
   # This is a minimal array with event bindings that mirrors the google MVCArray interface 
@@ -192,6 +261,9 @@ jQuery ($) ->
 
 
 
+
+
   $.namespace "Bop", (target, top) ->
     target.Module = Module
     target.ObservableArray = ObservableArray
+    target.Editable = Editable

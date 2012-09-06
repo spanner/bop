@@ -1,0 +1,8 @@
+= form_for @page, :remote => true, :html => {:'data-type' => 'html'} do |f|
+  = f.hidden_field :parent_id
+  = f.text_field :slug, :placeholder => t(:path)
+  %br
+  = f.submit t(:save)
+  = t :or
+  = link_to t(:cancel), '#', :class => 'cancel'
+  

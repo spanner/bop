@@ -1,7 +1,7 @@
 require 'ancestry'
 
 class Bop::Page < ActiveRecord::Base
-  attr_accessible :title, :slug, :template_id, :asset_id, :anchor, :site_id, :tree_id
+  attr_accessible :title, :slug, :template_id, :asset_id, :anchor, :site_id, :tree_id, :parent_id
 
   belongs_to :site
   belongs_to :tree
@@ -14,11 +14,11 @@ class Bop::Page < ActiveRecord::Base
   has_many :publications
 
   before_save :receive_context
+  before_save :slugify_slug
   after_save :update_children
 
-  # local_slug_uniqueness is a custom validator defined in lib/bop
+  # custom validators are defined in lib/bop/validators
   validates :slug, :local_slug_uniqueness => true, :presence_unless_root => true
-  validates :title, :presence => true
   
   scope :other_than, lambda {|these|
     these = [these].flatten
@@ -131,12 +131,17 @@ private
       self.route = tree.mount_point + "/"
       self.site = tree.site
     else
-      ensure_presence_and_uniqueness_of(:slug, title.parameterize, self.site.pages.other_than(self))
+      self.title = slug unless title?
       self.tree = parent.tree
       self.site = parent.site
+      ensure_presence_and_uniqueness_of(:slug, title.parameterize, self.siblings)
       descent = (ancestors + [self]).map(&:slug).compact.join('/')
       self.route = tree.mount_point + descent
     end
+  end
+  
+  def slugify_slug
+    self.slug = self.slug.parameterize if self.slug_changed?
   end
 
   def update_children

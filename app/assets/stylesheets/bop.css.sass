@@ -35,10 +35,22 @@ body.bop_page
     width: $openwidth
     height: $openheight - 30px
     overflow: auto
+    font-size: 1em
+    margin-left: 20px
+    margin-top: 40px
     .page
-      margin-left: 20px
-      h3
-        font-size: 1em
+      position: relative
+      .link
+        display: inline-block
+        height: 18px
+        line-height: 18px
+      .page
+        padding-left: 20px
+        background:
+          image: image-url('bop/descent.png')
+          repeat: no-repeat
+          position: 0 0
+    
   .files
     position: absolute
     top: 50px
@@ -51,6 +63,16 @@ body.bop_page
     left: 20px
     bottom: 5px
 
+  a.adder
+    background-position: 0 -120px
+    &:hover, &:active
+      background-position: 0 -144px
+
+  a.remover
+    background-position: 0 -624px
+    &:hover, &:active
+      background-position: 0 -648px
+ 
 #bop_status
   position: fixed
   bottom: 10px
@@ -61,9 +83,18 @@ body.bop_page
 section.space
   position: relative
   
-section.block
+article.block
   position: relative
   margin: 10px
+  .controls
+    position: absolute
+    top: 5px
+    right: 5px
+    height: 24px
+    background-color: white
+    padding: 10px
+    +border-radius
+  
   #wysihtml5-editor-toolbar
     position: relative
 
@@ -87,8 +118,7 @@ section.block
     border-left: 1px solid #ddd
     display: inline-block
     -webkit-padding-start: 0
-  $tool_button_height: 26px
-  $tool_button_width: 40px
+
   [data-wysihtml5-command], [data-wysihtml5-action], .fore-color
     position: relative
     border-right: 1px solid #ddd
@@ -270,24 +300,34 @@ section.block
       background: rgba(255, 255, 255, 0.4)
       outline: 0
 
-a.editor, a.remover
-  position: absolute
-  top: 5px
-  width: 24px
-  height: 24px
+a.adder, a.editor, a.remover
+  display: inline-block
   text-indent: 24px
-  overflow: hidden
   background: 
     image: image-url('bop/minisymbols.png')
     repeat: no-repeat
+    position: 0 -24px
+  &.icon
+    width: 20px
+    height: 20px
+    overflow: hidden
   &.waiting
     color: $mid
     background:
       image: image-url('bop/spinner.gif')
       position: 0 0
 
+a.adder
+  color: $blue
+  background-position: 0 -24px
+  &:hover
+    background-position: 0 -72px
+    color: $hover
+  &:active
+    background-position: 0 -96px
+    color: $active
+
 a.remover
-  right: 5px
   background-position: 0 -502px
   &:hover
     background-position: 0 -574px
@@ -295,24 +335,9 @@ a.remover
     background-position: 0 -550px
 
 a.editor
-  right: 30px
   background-position: 0 -694px
   &:hover
     background-position: 0 -742px
   &:active
     background-position: 0 -766px
   
-a.adder
-  display: block
-  padding-left: 28px
-  color: $blue
-  background: 
-    image: image-url('bop/minisymbols.png')
-    repeat: no-repeat
-    position: 0 -24px
-  &:hover
-    background-position: 0 -72px
-  &:active
-    background-position: 0 -96px
-  
-    

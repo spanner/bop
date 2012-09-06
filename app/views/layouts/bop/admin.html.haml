@@ -1,0 +1,14 @@
+!!!
+%html
+  %head
+    %title 
+      = yield :title
+    = stylesheet_link_tag "application", :media => "all"
+    = stylesheet_link_tag "bop/tools"
+    = javascript_include_tag "application"
+    = yield :head
+    = csrf_meta_tags
+    
+  %body
+    (bop!)
+    = yield

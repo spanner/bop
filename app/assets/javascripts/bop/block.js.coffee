@@ -47,8 +47,9 @@ jQuery ($) ->
 
     show: () =>
       @_container.removeClass('editing')
-      @_editor = $("<a href='/bop/pages/#{$.page_id}/blocks/#{@_id}/edit' class='editor' data-remote='true' data-type='html'>edit</a>").prependTo(@_container).remote_link(@edit)
-      @_remover = $("<a href='/bop/pages/#{$.page_id}/blocks/#{@_id}' class='remover' data-remote='true' data-method='delete' data-remote='true' data-type='html'>remove</a>").prependTo(@_container).remote_link(@destroy)
+      @_controls = $('<div class="controls" />').prependTo(@_container)
+      @_editor = $("<a href='/bop/pages/#{$.page_id}/blocks/#{@_id}/edit' class='editor icon' data-remote='true' data-type='html'>edit</a>").appendTo(@_controls).remote_link(@edit)
+      @_remover = $("<a href='/bop/pages/#{$.page_id}/blocks/#{@_id}' class='remover icon' data-remote='true' data-method='delete' data-remote='true' data-type='html'>remove</a>").appendTo(@_controls).remote_link(@destroy)
       
     edit: (response) =>
       @replaceProvisionallyWith(response)

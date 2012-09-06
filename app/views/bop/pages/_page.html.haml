@@ -1,4 +1,10 @@
-.page
-  %h3
-    = link_to_unless_current page.title, page_url(page)
+- page ||= @page
+
+.page{:"data-bop-id" => page.id}
+  .link
+    - text = page.root? ? "Root" : page.slug
+    = link_to text, page_url(page)
+  - unless page.root?
+    = link_to t(:remove_page), page_url(page), :class => 'remover icon', :remote => true, :data => {:method => 'delete', :confirm => t(:confirm_delete_page, :title => page.title)}
+  = link_to t(:add_page), new_page_url(:page => {:parent_id => page.id}), :class => 'adder icon', :remote => true, :"data-type" => 'html'
   = render :partial => "bop/pages/page", :collection => page.children

@@ -11,6 +11,7 @@ jQuery ($) ->
   $.fn.remote_link = (callback) ->
     @
       .on 'ajax:beforeSend', (event, xhr, settings) ->
+        console.log "remote_link ajax:beforeSend"
         $(@).addClass('waiting')
         xhr.setRequestHeader('X-PJAX', 'true')
       .on 'ajax:error', (event, xhr, status) ->
@@ -24,6 +25,7 @@ jQuery ($) ->
   $.fn.remote_form = (callback) ->
     @
       .on 'ajax:beforeSend', (event, xhr, settings) ->
+        console.log "remote_form ajax:beforeSend"
         $(@).addClass('waiting')
         xhr.setRequestHeader('X-PJAX', 'true')
       .on 'ajax:error', (event, xhr, status) ->

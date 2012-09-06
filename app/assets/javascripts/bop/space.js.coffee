@@ -1,7 +1,7 @@
 jQuery ($) ->
 
   class Space extends Bop.Module
-    constructor: (element, @_page) ->
+    constructor: (element) ->
       @_container = $(element)
       @_name = @_container.attr('data-bop-space')
       @_container.find('[data-bop-block]').bop_block(@)

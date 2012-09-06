@@ -1,4 +1,6 @@
 class Bop::Stylesheet < ActiveRecord::Base
+  attr_accessible :title, :slug, :content
+  
   belongs_to :site
   before_save :ensure_slug
   validate :slug, :presence => true, :uniqueness => true
