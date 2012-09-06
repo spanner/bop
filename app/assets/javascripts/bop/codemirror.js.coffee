@@ -8,7 +8,7 @@ $ ->
   $('textarea').each () ->
     formatter = $('<a href="#" data-function="autoFormat">Pretty</a>').insertAfter(@)
     mode = $(@).attr("data-mode")
-    theme = "monokai"
+    theme = "fellrace"
     editor = CodeMirror.fromTextArea @,
       mode: mode
       lineNumbers: true
