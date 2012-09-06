@@ -14,17 +14,24 @@
   
 
   #bop_tools
-    .pagetree
+    %section.pagetree
       = render :partial => 'bop/pages/pagetree'
-    .admin
+    %section.templates
+      = render :partial => 'bop/templates/index'
+    %section.stylesheets
+      = render :partial => 'bop/stylesheets/index'
+    %section.javascripts
+      = render :partial => 'bop/javascripts/index'
+
+    %section.admin
       %p.tabs
-        = link_to t(:pages), '#', :"data-tab" => pages_url
+        = link_to t(:pages), '#', :"data-tab" => "section.pagetree"
         \|
-        = link_to t(:templates), '#', :"data-tab" => templates_url
+        = link_to t(:templates), '#', :"data-tab" => "section.templates"
         \|
-        = link_to t(:stylesheets), '#', :"data-tab" => stylesheets_url
+        = link_to t(:stylesheets), '#', :"data-tab" => "section.stylesheets"
         \|
-        = link_to t(:javascripts), '#', :"data-tab" => javascripts_url
+        = link_to t(:javascripts), '#', :"data-tab" => "section.javascripts"
       
     %a.boptag{:href => "#"}
       = t(:bop)

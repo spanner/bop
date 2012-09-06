@@ -39,42 +39,26 @@ jQuery ($) ->
   class Tab
     @_tabs = []
     @hideAll: () ->
-      @_tabs.forEach (t)->
+      @_tabs.forEach (t) ->
         t.hide()
         
     constructor: (element) ->
       @_tab = $(element)
-      @_url = $(element).attr('data-tab')
-      @get_body()      
-      Tab._tabs.push(@)
-      @_tab.bind "click", @show
-      
-    get_body: () =>
-      $.ajax
-        url: @_url
-        dataType: 'html'
-        success: (data) =>
-          @_body = $(data).appendTo('.pagetree')
-          @hide()
-          @_adder = $(@_body).find("[data-link='remote']")
-          $(@_adder).on "ajax:success", @add
-    
-    add: (a, b, c) =>
-      $(@_adder).hide()
-      @_new = $(b).insertAfter($(@_body).find('li').last())
-      $(@_new).find('form').on "ajax:success", (a, b, c) =>
-        $(b).insertBefore(@_new)
-        $(@_new).remove()
-        @_new = null
-        $(@_adder).show()        
-        
+      if @_selector = @_tab.attr('data-tab')
+        @_body = $(@_selector)
+        @_tab.bind "click", @show
+        Tab._tabs.push(@)
     
     show: () =>
       Tab.hideAll()
-      $(@_body).show()
+      console.log "show", @_selector
+      @_body.show()
+      @_tab.addClass('selected')
       
     hide: () =>
-      $(@_body).hide()
+      console.log "hide", @_selector
+      @_body.hide()
+      @_tab.removeClass('selected')
  
   $.namespace "Bop", (target, top) ->
     target.Menu = Menu
