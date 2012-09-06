@@ -52,13 +52,15 @@ class Bop::Page < ActiveRecord::Base
 
   ## Rendering
   #
-
+  # is handled by the template. We supply this page object as part of its context and presume that the template
+  # contains page-related tags.
+  #
   def head(additional_context={})
-    find_template.render_head(context.merge(additional_context))
+    find_template.render(:head, context.merge(additional_context))
   end
 
   def body(additional_context={})
-    find_template.render_body(context.merge(additional_context))
+    find_template.render(:body, context.merge(additional_context))
   end
   
   def blocks_for(space)
@@ -76,6 +78,8 @@ class Bop::Page < ActiveRecord::Base
   def to_liquid
     as_json()
   end
+  
+  
   
   
   

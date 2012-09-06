@@ -2,6 +2,7 @@ class Bop::Stylesheet < ActiveRecord::Base
   belongs_to :site
   
   def path
+    "/bop/stylesheets/#{id}"
     # "something/#{slug}"
   end
   
@@ -15,10 +16,11 @@ class Bop::Stylesheet < ActiveRecord::Base
   
   def to_liquid
     {
-      'title' => title,
+      'slug' => title,
       'content' => content
     }
   end
+
   
   
 end

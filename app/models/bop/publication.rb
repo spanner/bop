@@ -6,7 +6,7 @@ class Bop::Publication < ActiveRecord::Base
   after_save :notify_page
 
   validate :title , :presence => true
-  validate :rendered_content, :presence => true
+  validate :rendered_body, :presence => true
   
 protected
 
