@@ -23,7 +23,7 @@ class Bop::Page < ActiveRecord::Base
   scope :other_than, lambda {|these|
     these = [these].flatten
     placeholders = these.map{"?"}.join(',')
-    where(["NOT #{self.table_name}.id IN(#{placeholders})", *these.map(&:id)])
+    where(["NOT #{table_name}.id IN(#{placeholders})", *these.map(&:id)])
   }
 
   def blocks_in(space="main")
@@ -131,7 +131,7 @@ private
       self.route = tree.mount_point + "/"
       self.site = tree.site
     else
-      self.slug ||= title.parameterize
+      ensure_presence_and_uniqueness_of(:slug, title.parameterize, self.site.pages.other_than(self))
       self.tree = parent.tree
       self.site = parent.site
       descent = (ancestors + [self]).map(&:slug).compact.join('/')
@@ -147,5 +147,6 @@ private
       end
     end
   end
+
 end
 

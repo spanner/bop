@@ -73,6 +73,17 @@ module Bop
       @owner_class = options[:belonging_to]
     end
   end
+  
+  module BoppableInstanceMethods
+    def ensure_presence_and_uniqueness_of(column, base, scope=self.class.scoped)
+      unless self.send :"#{column}?"
+        value = base
+        addendum = 0
+        value = "#{base}_#{addendum+=1}" while scope.send :"find_by_#{column}", value
+        self.send :"#{column}=", value
+      end
+    end
+  end
 
   # These class and instance methods are included into specific model classes when has_pages is called.
 
