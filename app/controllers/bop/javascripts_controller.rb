@@ -31,7 +31,11 @@ module Bop
   protected
 
     def get_javascript
-      @javascript = Javascript.find(params[:id])
+      if params[:id]
+        @javascript = @site.javascripts.find(params[:id])
+      else
+        @javascript = @site.javascripts.find_by_slug(params[:slug])
+      end
     end
 
     def get_javascripts

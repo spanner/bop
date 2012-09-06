@@ -14,5 +14,7 @@ Bop::Engine.routes.draw do
   end
   
   match "/" => 'pages#index', :as => :dashboard, :defaults => {:format => 'html'}
+  match "/css/:slug.:format" => 'stylesheets#show', :as => :css, :defaults => {:format => 'css'}
+  match "/js/:slug.:format" => 'javascripts#show', :as => :js, :defaults => {:format => 'js'}
   match "*path" => 'pages#show', :as => :unpublished, :defaults => {:format => 'html'}
 end

@@ -31,7 +31,12 @@ module Bop
   protected
 
     def get_stylesheet
-      @stylesheet = Stylesheet.find(params[:id])
+      Rails.logger.warn "get_stylesheet: #{params.inspect}"
+      if params[:id]
+        @stylesheet = @site.stylesheets.find(params[:id])
+      else
+        @stylesheet = @site.stylesheets.find_by_slug(params[:slug])
+      end
     end
 
     def get_stylesheets

@@ -27,5 +27,5 @@ jQuery ($) ->
 
 $ ->
   $('[data-bop-page]').bop_page()
-  $('#boptools').bop_menu()
+  $('#bop_tools').bop_menu()
   

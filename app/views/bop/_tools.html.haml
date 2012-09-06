@@ -1,5 +1,5 @@
 - if current_user
-  #bopstatus
+  #bop_status
     - if @publication
       = link_to t(:edit_page), page_url(@publication.page)
 
@@ -13,7 +13,7 @@
           
   
 
-  #boptools
+  #bop_tools
     .pagetree
       = render :partial => 'bop/pages/pagetree'
     .files

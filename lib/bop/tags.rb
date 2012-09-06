@@ -33,13 +33,13 @@ module Bop
     class Stylesheet < Liquid::Tag
       def initialize(tag_name, slug, tokens)
          super
-         @slug = slug
-         @stylesheet = Bop.site.stylesheets.find_by_title(slug.rstrip)
+         @slug = slug.strip
+         @stylesheet = Bop.site.stylesheets.find_by_title(@slug)
       end
 
       def render(context)
         if @stylesheet
-          %{<link href="#{@stylesheet.path}.css" media="screen" rel="stylesheet" type="text/css" />}
+          %{<link href="/bop/css/#{@slug}.css" media="screen" rel="stylesheet" type="text/css" />}
         else
           %{<!-- stylesheet '#{@slug}' could not be found -->}
         end
@@ -54,11 +54,16 @@ module Bop
     class Javascript < Liquid::Tag
       def initialize(tag_name, slug, tokens)
          super
-         @javascript = Bop.site.javascripts.find_by_title(slug.rstrip)
+         @slug = slug.strip
+         @javascript = Bop.site.javascripts.find_by_title(@slug)
       end
 
       def render(context)
-        %{<script src="#{@javascript.path}.js" type="text/javascript" ></script>}
+        if @javascript
+          %{<script src="/bop/js/#{@slug}.js" type="text/javascript" ></script>}
+        else
+          %{<!-- javascript '#{@slug}' could not be found -->}
+        end
       end
     end
 
