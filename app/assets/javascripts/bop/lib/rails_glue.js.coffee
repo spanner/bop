@@ -48,6 +48,7 @@ jQuery ($) ->
         stylesheets: ["/assets/application.css", "/assets/bop/wysihtml5.css"],
         toolbar: toolbar.attr('id'),
         parserRules: wysihtml5ParserRules
+        useLineBreaks:  false
       toolbar.show()
 
 
