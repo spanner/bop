@@ -44,17 +44,25 @@ class Bop::Page < ActiveRecord::Base
   def inherited_asset
     asset || parent && parent.inherited_asset
   end
+  
+  def place_block(block, space)
+    placed_block = placed_blocks.find_or_create_by_block_id(block.id, :space_name => space)
+  end
 
-  def render(additional_context={})
-    find_template.render(context.merge(additional_context))
+
+  ## Rendering
+  #
+
+  def head(additional_context={})
+    find_template.render_head(context.merge(additional_context))
+  end
+
+  def body(additional_context={})
+    find_template.render_body(context.merge(additional_context))
   end
   
   def blocks_for(space)
     blocks.in_space(space)
-  end
-  
-  def place_block(block, space)
-    placed_block = placed_blocks.find_or_create_by_block_id(block.id, :space_name => space)
   end
   
   def context
@@ -68,6 +76,8 @@ class Bop::Page < ActiveRecord::Base
   def to_liquid
     as_json()
   end
+  
+  
   
   def as_json(options={})
     {

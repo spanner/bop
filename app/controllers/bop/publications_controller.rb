@@ -1,16 +1,7 @@
 module Bop
   class PublicationsController < EngineController
-    layout "bop/layouts/content"
+    layout "bop/content"
     
-    def index
-      if @site
-        # list of latest updates, in various formats including RSS
-        render
-      else
-        # render bop/home
-      end
-    end
-
     def show
       @path = normalize_path(params[:path])
       @page = @site.find_page(@path)

@@ -1,14 +1,5 @@
-= content_for :title do
-  - if @base
-    = @base.title
-    \::
-  = @page.title
-
 = content_for :head do
-  - @site.stylesheets.each do |s|
-    = stylesheet_link_tag "/bop/stylesheets/#{s.id}"
-  - @site.javascripts.each do |js|
-    = javascript_include_tag "/bop/javascripts/#{js.id}"
+  = @page.head.html_safe
 
-.page.editable{:'data-bop-page' => @page.id}
-  = @page.render.html_safe
+= content_for :body do
+  = @page.body.html_safe

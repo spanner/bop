@@ -1,8 +1,5 @@
-= content_for :title do
-  - if @base
-    = @base.title
-    \::
-  = @publication.title
+= content_for :head do
+  = @publication.rendered_head.html_safe
 
-.publication
-  = @publication.rendered_content.html_safe
+= content_for :body do
+  = @publication.rendered_body.html_safe

@@ -4,12 +4,20 @@ class Bop::Template < ActiveRecord::Base
   belongs_to :user
   has_many :pages
 
-  def render(context)
-    self.renderer.render(context)
+  def render_head(context)
+    self.renderer(head).render(context)
+  end
+  
+  def head_renderer
+    @header ||= render_class.new.prepare(head)
   end
 
-  def renderer
-    @renderer ||= render_class.new.prepare(content)
+  def render_body(context)
+    self.renderer(body).render(context)
+  end
+
+  def body_renderer
+    @bodyer ||= render_class.new.prepare(body)
   end
   
   def render_class

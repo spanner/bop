@@ -1,5 +1,6 @@
 class Bop::PagesController < Bop::EngineController
   respond_to :html, :json
+  layout "bop/content"
 
   before_filter :ensure_admin_user
   before_filter :authenticate_user!
