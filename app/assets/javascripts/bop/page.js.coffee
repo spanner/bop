@@ -14,6 +14,7 @@ jQuery ($) ->
 
   $.fn.bop_page = ->
     @each ->
+      console.log "page!", $(@)
       new Bop.Page(@)
 
 
