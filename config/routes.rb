@@ -4,6 +4,8 @@ Bop::Engine.routes.draw do
   resources :javascripts
   resources :stylesheets
   resources :templates
+  resources :assets
+  resources :users
   resources :pages do
     resources :blocks
     resources :publications

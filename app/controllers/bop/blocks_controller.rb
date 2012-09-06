@@ -11,6 +11,10 @@ class Bop::BlocksController < Bop::EngineController
   
   layout :set_layout
   
+  def index
+    @blocks = @page.blocks
+    render :partial => 'index', :collection => @blocks, :object => @page
+  end
 
   def new
     respond_with @page, @block

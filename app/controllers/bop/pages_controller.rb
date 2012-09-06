@@ -12,7 +12,7 @@ class Bop::PagesController < Bop::EngineController
   before_filter :update_page, :only => [:update, :create]
 
   def index
-    respond_with @pages
+    render :partial => 'index', :collection => @pages      
   end
 
   def show

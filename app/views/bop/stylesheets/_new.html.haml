@@ -1,0 +1,5 @@
+%li
+  = form_for @stylesheet, :remote => true do |f|
+    = f.text_field :title
+    \.css
+    = f.submit

@@ -2,5 +2,6 @@
   - @javascripts.each do |js|
     %li
       = link_to "#{js.title}.js", javascript_url(js)
-= link_to "new javascript", new_javascript_url
+  %br
+  = link_to "new javascript", new_javascript_url, :remote => true, :"data-link" => "remote"
   

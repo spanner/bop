@@ -4,23 +4,24 @@ module Bop
     
     respond_to :html, :css
     before_filter :get_stylesheets, :only => :index
-    before_filter :get_stylesheet, :only => [:show, :update, :create]
+    before_filter :get_stylesheet, :only => [:show, :update]
     
     def index
-      render :partial => 'index', :collection => @stylesheets      
+      render :partial => 'index', :object => @stylesheets      
     end
   
     def show
       respond_with @stylesheet
     end
     
-    def create
-      @stylesheet.update_attributes(params[:stylesheet])
-      respond_with @stylesheet, :location => stylesheet_url(@stylesheet)
-    end
-    
     def new
       @stylesheet = @site.stylesheets.new
+      render :partial => 'new', :object => @stylesheet      
+    end
+    
+    def create
+      @stylesheet = @site.stylesheets.create(params[:stylesheet])
+      render :partial => 'show', :object => @stylesheet
     end
     
     def update
@@ -31,7 +32,6 @@ module Bop
   protected
 
     def get_stylesheet
-      Rails.logger.warn "get_stylesheet: #{params.inspect}"
       if params[:id]
         @stylesheet = @site.stylesheets.find(params[:id])
       else

@@ -4,23 +4,24 @@ module Bop
     
     respond_to :html, :css
     before_filter :get_templates, :only => :index
-    before_filter :get_template, :only => [:show, :update, :create]
+    before_filter :get_template, :only => [:show, :update]
     
     def index
-      render :partial => 'index', :collection => @templates
+      render :partial => 'index', :object => @templates
     end
   
     def show
       respond_with @template
     end
     
-    def create
-      @template.update_attributes(params[:template])
-      respond_with @template, :location => template_url(@template)
-    end
-    
     def new
       @template = @site.templates.new
+      render :partial => 'new', :object => @template      
+    end
+    
+    def create
+      @template = @site.templates.create(params[:template])
+      render :partial => 'show', :object => @template
     end
     
     def update

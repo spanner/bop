@@ -2,4 +2,5 @@
   - @templates.each do |t|
     %li
       = link_to t.title, template_url(t)
-= link_to "new template", new_template_url
+  %br
+  = link_to "new template", new_template_url, :remote => true, :"data-link" => "remote"

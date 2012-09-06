@@ -1,0 +1,4 @@
+%ul
+  - @blocks.each do |block|
+    %li
+      = link_to block.title, page_block_url(@page, block)

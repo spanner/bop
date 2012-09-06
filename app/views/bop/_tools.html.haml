@@ -16,22 +16,15 @@
   #bop_tools
     .pagetree
       = render :partial => 'bop/pages/pagetree'
-    .files
     .admin
-      %p
-        = link_to t(:pages), '#'
+      %p.tabs
+        = link_to t(:pages), '#', :"data-tab" => pages_url
         \|
-        = link_to t(:templates), '#'
+        = link_to t(:templates), '#', :"data-tab" => templates_url
         \|
-        = link_to t(:blocks), '#'
+        = link_to t(:stylesheets), '#', :"data-tab" => stylesheets_url
         \|
-        = link_to t(:assets), '#'
-        \|
-        = link_to t(:users), '#'
-        \|
-        = link_to t(:stylesheets), stylesheets_url, :remote => true, :class => "design"
-        \|
-        = link_to t(:javascripts), javascripts_url, :remote => true, :class => "design"
+        = link_to t(:javascripts), '#', :"data-tab" => javascripts_url
       
     %a.boptag{:href => "#"}
       = t(:bop)

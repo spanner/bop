@@ -22,7 +22,7 @@ class Bop::Stylesheet < ActiveRecord::Base
   
   def to_liquid
     {
-      'slug' => title,
+      'slug' => slug,
       'content' => content
     }
   end
