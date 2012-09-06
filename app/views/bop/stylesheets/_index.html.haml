@@ -2,5 +2,6 @@
   - @stylesheets.each do |s|
     %li
       = link_to "#{s.title}.css", stylesheet_url(s)
-= link_to "new stylesheet", new_stylesheet_url
+  %br
+  = link_to "new stylesheet", new_stylesheet_url, :remote => true, :"data-link" => "remote"
   

@@ -3,10 +3,12 @@ Bop::Engine.routes.draw do
 
   resources :javascripts
   resources :stylesheets
+  resources :templates
+  resources :assets
+  resources :users
   resources :pages do
     resources :blocks
     resources :publications
-  resources :templates
     
     # These will go soon in favour of publication crud
     post "publish", :on => :member, :as => :publish

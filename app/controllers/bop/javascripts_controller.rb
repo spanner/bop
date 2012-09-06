@@ -2,25 +2,27 @@ module Bop
   class JavascriptsController < EngineController
     layout "bop/layouts/editor"
     
-    respond_to :html, :js
+    respond_to :html
+    respond_to :js, :only => :show
     before_filter :get_javascripts, :only => :index
-    before_filter :get_javascript, :only => [:show, :update, :create]
+    before_filter :get_javascript, :only => [:show, :update]
     
     def index
-      render :partial => 'index', :collection => @javascripts      
+      render :partial => 'index', :object => @javascripts      
     end
     
+    def show
+      respond_with @javascript
+    end
+  
     def new
       @javascript = @site.javascripts.new
+      render :partial => 'new', :object => @javascript      
     end
     
     def create
-      @javascript.update_attributes(params[:javascript])
-      respond_with @javascript, :location => javascript_url(@javascript)
-    end
-  
-    def show
-      respond_with @javascript
+      @javascript = @site.javascripts.create(params[:javascript])
+      render :partial => 'show', :object => @javascript
     end
     
     def update

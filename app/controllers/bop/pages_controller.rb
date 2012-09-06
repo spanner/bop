@@ -14,7 +14,7 @@ class Bop::PagesController < Bop::EngineController
   layout :set_layout
 
   def index
-    respond_with @pages
+    render :partial => 'index', :collection => @pages      
   end
 
   def show

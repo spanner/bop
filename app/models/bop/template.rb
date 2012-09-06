@@ -1,5 +1,5 @@
 class Bop::Template < ActiveRecord::Base
-  attr_accessible :title, :content
+  attr_accessible :title, :body, :head
 
   belongs_to :user
   has_many :pages
