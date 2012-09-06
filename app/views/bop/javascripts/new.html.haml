@@ -1,6 +1,6 @@
 = content_for :title do
-  Editing javascript
+  Creating javascript
 
 = form_for @javascript, :html => { :class => "editor" } do |f|
   = f.text_area :content, :"data-mode" => "javascript"
-  = f.submit "Save"
+  = f.submit "Create"

@@ -4,9 +4,11 @@
     \::
   = @page.title
 
-/ = content_for :head do
-/   - @site.javascripts.each do |js|
-/     = js.render()
+= content_for :head do
+  - @site.stylesheets.each do |s|
+    = stylesheet_link_tag "/bop/stylesheets/#{s.id}"
+  - @site.javascripts.each do |js|
+    = javascript_include_tag "/bop/javascripts/#{js.id}"
 
 .page.editable{:'data-bop-page' => @page.id}
   = @page.render.html_safe

@@ -1,5 +1,6 @@
 module Bop
   class PublicationsController < EngineController
+    layout "bop/layouts/content"
     
     def index
       if @site
