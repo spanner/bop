@@ -212,6 +212,10 @@ jQuery ($) ->
       @_container.slideUp()
 
 
+
+
+
+
   # ### ObservedArray
   #
   # This is a minimal array with event bindings that mirrors the google MVCArray interface 

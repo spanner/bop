@@ -46,8 +46,11 @@ jQuery ($) ->
       textarea = $(@)
       toolbar.attr('id', $.makeGuid()) unless toolbar.attr('id')?
       textarea.attr('id', $.makeGuid()) unless textarea.attr('id')?
+      stylesheets = ["/assets/bop/wysihtml5.css"]
+      $("head link[data-wysihtml5='custom_css']").each () ->
+        stylesheets.push $(@).attr('href')
       editor = new wysihtml5.Editor textarea.attr('id'),
-        stylesheets: ["/assets/application.css", "/assets/bop/wysihtml5.css"],
+        stylesheets: stylesheets,
         toolbar: toolbar.attr('id'),
         parserRules: wysihtml5ParserRules
         useLineBreaks:  false

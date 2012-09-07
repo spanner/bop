@@ -1,2 +1,4 @@
-%li
-  = link_to "#{@stylesheet.title}.js", javascript_url(@stylesheet)
+- stylesheet ||= @stylesheet || show
+
+%li.stylesheet{:'data-bop-id' => stylesheet.id}
+  = link_to "#{stylesheet.title}.css", stylesheet_url(stylesheet)

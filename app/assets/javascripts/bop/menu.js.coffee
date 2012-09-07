@@ -17,6 +17,11 @@ jQuery ($) ->
         bottom: 0
       @_tabs.find('a').each ->
         new Tab(@)
+
+      @_container.find('.pagetree').bop_page_tree()
+      @_container.find('section.templates').bop_template_set()
+      @_container.find('section.javascripts').bop_template_set()
+      @_container.find('section.stylesheets').bop_template_set()
       
     toggle: (e) =>
       e.preventDefault()
@@ -36,6 +41,8 @@ jQuery ($) ->
       new Bop.Menu(@)
   
  
+ 
+ 
   class Tab
     @_tabs = []
     @hideAll: () ->
@@ -44,6 +51,7 @@ jQuery ($) ->
         
     constructor: (element) ->
       @_tab = $(element)
+
       if @_selector = @_tab.attr('data-tab')
         @_body = $(@_selector)
         @_tab.bind "click", @show

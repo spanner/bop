@@ -39,7 +39,7 @@ module Bop
 
       def render(context)
         if @stylesheet
-          %{<link href="/bop/css/#{@slug}.css" media="screen" rel="stylesheet" type="text/css" />}
+          %{<link href="/bop/css/#{@slug}.css" media="screen" rel="stylesheet" type="text/css" data-wysihtml5="custom_css"/>}
         else
           %{<!-- stylesheet '#{@slug}' could not be found -->}
         end

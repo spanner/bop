@@ -1,9 +1,7 @@
 - @stylesheets ||= Bop.site.stylesheets
 
 %ul
-  - @stylesheets.each do |s|
-    %li
-      = link_to "#{s.title}.css", stylesheet_url(s)
-  %br
-  = link_to "new stylesheet", new_stylesheet_url, :remote => true, :"data-link" => "remote"
+  = render :partial => 'bop/stylesheets/show', :collection => @stylesheets
+%p
+  = link_to "new stylesheet", new_stylesheet_url, :remote => true, :class => "adder"
   

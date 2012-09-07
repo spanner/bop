@@ -1,2 +1,4 @@
-%li
-  = link_to "#{@template.title}.js", javascript_url(@template)
+- template ||= @template || show
+
+%li.template{:'data-bop-id' => template.id}
+  = link_to "#{template.title}", template_url(template)

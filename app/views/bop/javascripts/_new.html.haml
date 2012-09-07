@@ -1,5 +1,5 @@
 %li
   = form_for @javascript, :remote => true do |f|
-    = f.text_field :title
+    = f.text_field :title, :placeholder => "title"
     \.js
     = f.submit

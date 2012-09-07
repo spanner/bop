@@ -1,6 +1,5 @@
 module Bop
   class JavascriptsController < EngineController
-    layout "bop/layouts/editor"
     
     respond_to :html
     respond_to :js, :only => :show

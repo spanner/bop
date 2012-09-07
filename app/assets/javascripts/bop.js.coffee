@@ -9,6 +9,7 @@
 #= require bop/block
 #= require bop/menu
 #= require bop/pagetree
+#= require bop/template
 #= require_self
 
 jQuery ($) ->
@@ -29,5 +30,3 @@ $ ->
   $.page_id = $('body').attr('data-bop-page')
   $('[data-bop-space]').bop_space()
   $('#bop_tools').bop_menu()
-  $('.pagetree').bop_page_tree()
-  
