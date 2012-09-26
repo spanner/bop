@@ -1,0 +1,9 @@
+- page ||= @page
+.holder
+  = form_for page, :url => page_path(page, :format => :js), :remote => true, :html => {:'data-type' => 'html'} do |f|
+    %span#pagetitle{:contenteditable => true}
+      = page.title
+    = f.hidden_field :title, :"data-field" => "title"
+    = f.submit t(:save)
+    = t :or
+    = link_to t(:cancel), '#', :class => 'cancel'

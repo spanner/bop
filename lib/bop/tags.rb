@@ -5,7 +5,6 @@ module Bop
     
     ## {{ yield [space name] }}
     #
-    #
     class Yield < Liquid::Tag
       include ActionView::Helpers::TagHelper
       
@@ -29,7 +28,6 @@ module Bop
 
     ## {{ stylesheet [name] }}
     #
-    #
     class Stylesheet < Liquid::Tag
       def initialize(tag_name, slug, tokens)
          super
@@ -48,8 +46,17 @@ module Bop
 
     Liquid::Template.register_tag('stylesheet', Bop::Tags::Stylesheet)
 
-    ## {{ javascript [name] }}
+    ## {{ pagetitle }}
     #
+    class Pagetitle < Liquid::Tag
+      def render(context)
+        "<span id='pagetitle' contenteditable='false' class ='editable'>#{Bop::Page.find(context["page"]["id"]).title}</span>"
+      end
+    end
+
+    Liquid::Template.register_tag('pagetitle', Bop::Tags::Pagetitle)
+
+    ## {{ javascript [name] }}
     #
     class Javascript < Liquid::Tag
       def initialize(tag_name, slug, tokens)

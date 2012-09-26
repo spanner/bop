@@ -79,10 +79,6 @@ class Bop::Page < ActiveRecord::Base
     as_json()
   end
   
-  
-  
-  
-  
   def as_json(options={})
     {
       'id' => id,

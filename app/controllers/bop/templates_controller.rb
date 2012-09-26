@@ -26,6 +26,7 @@ module Bop
     
     def update
       @template.update_attributes(params[:template])
+      @template.publish_pages if params[:publish]
       respond_with @template, :location => template_url(@template)
     end
     
@@ -38,6 +39,6 @@ module Bop
     def get_templates
       @templates = @site.templates
     end
-
+    
   end
 end

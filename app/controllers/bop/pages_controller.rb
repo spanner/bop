@@ -1,12 +1,12 @@
 class Bop::PagesController < Bop::EngineController
-  respond_to :html, :json
+  respond_to :html, :json, :js
   layout "bop/editing"
 
   before_filter :ensure_there_is_an_admin_user
   before_filter :authenticate_user!
   
   #todo: These will be replaced with a load_and_authorize_resource call when cancan is hooked up
-  before_filter :get_page, :only => [:edit, :show, :destroy, :publish, :revert]
+  before_filter :get_page, :only => [:edit, :show, :destroy, :publish, :revert, :update]
   before_filter :build_page, :only => [:new, :create]
   before_filter :get_pages, :only => [:index]
   before_filter :update_page, :only => [:update]
@@ -35,11 +35,15 @@ class Bop::PagesController < Bop::EngineController
   end
 
   def edit
-    respond_with @page
+    respond_with @page do |format|
+      format.js {render :partial => 'edit'}
+    end
   end
 
   def update
-    respond_with @page
+    respond_with @page do |format|
+      format.js {render :partial => 'show'}
+    end
   end
 
   def publish

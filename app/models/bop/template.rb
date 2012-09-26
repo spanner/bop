@@ -3,6 +3,7 @@ class Bop::Template < ActiveRecord::Base
 
   belongs_to :user
   has_many :pages
+  # after_update :publish_pages
     
   def render(part=:body, context)
     renderer(part).render(context)
@@ -15,4 +16,11 @@ class Bop::Template < ActiveRecord::Base
   def render_class
     @render_class ||= Bop::Renderer.get(markup_type || 'liquid')
   end
+  
+  def publish_pages
+    pages.each do |page|
+      page.publish!
+    end
+  end
+  
 end

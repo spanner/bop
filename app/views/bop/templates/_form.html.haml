@@ -1,9 +1,12 @@
-= form_for t do |f|
+= form_for t, :remote => true do |f|
   .editor
-    .half
+    .head.edit_region
       = f.label :head
       = f.text_area :head, :"data-mode" => "htmlmixed"
-    .half
+    .body.edit_region
       = f.label :body
       = f.text_area :body, :"data-mode" => "htmlmixed"
   = f.submit :class => "editor_submit"
+  .publish
+    = label_tag :publish, "Publish pages?"
+    = check_box_tag :publish, params[:publish]

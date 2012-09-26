@@ -82,11 +82,24 @@ p.tabs
   bottom: 10px
   right: 10px
   height: $closedheight
-  background-color: white
+  background:
+    color: white
   
 section.space
   position: relative
-  
+
+#content
+  h3
+    .controls
+      position: absolute
+      top: 5px
+      right: 5px
+      height: 24px
+      background-color: white
+      padding: 10px
+      +border-radius
+      
+
 article.block
   position: relative
   margin: 10px 0
