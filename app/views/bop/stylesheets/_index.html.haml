@@ -1,7 +1,8 @@
 - @stylesheets ||= Bop.site.stylesheets
-
 %ul
-  = render :partial => 'bop/stylesheets/show', :collection => @stylesheets
+  - @stylesheets.each do |s|
+    = render 'bop/stylesheets/show', :stylesheet => s
+  / = render :partial => 'bop/stylesheets/show', :collection => @stylesheets
 %p
   = link_to "new stylesheet", new_stylesheet_url, :remote => true, :class => "adder"
   

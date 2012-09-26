@@ -1,8 +1,9 @@
 class Bop::Block < ActiveRecord::Base
-  attr_accessible :title, :content, :type, :asset_id
+  attr_accessible :title, :content, :type, :asset_id, :block_type_name, :asset_attributes
 
   belongs_to :user
   belongs_to :asset
+  accepts_nested_attributes_for :asset
   has_many :block_properties
   has_many :placed_blocks
   has_many :pages, :through => :placed_blocks

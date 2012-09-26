@@ -1,6 +1,8 @@
 - @templates ||= Bop.site.templates
 
 %ul
-  = render :partial => 'bop/templates/show', :collection => @templates
+  - @templates.each do |t|
+    = render 'bop/templates/show', :template => t
+  / = render :partial => 'bop/templates/show', :collection => @templates
 %p
   = link_to "new template", new_template_url, :remote => true, :class => "adder"

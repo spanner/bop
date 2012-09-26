@@ -4,7 +4,7 @@ jQuery ($) ->
       @_container = $(element)
       @_id = @_container.attr('data-bop-block')
       if @_id? then @show() else @new()
-    
+      
     replaceWith: (element) =>
       new_container = $(element)
       @_container.after(new_container).remove()
@@ -33,6 +33,7 @@ jQuery ($) ->
       @_form.find('textarea').html_editable(@_form.siblings('.toolbar'))
       @_container.addClass('editing')
       @_form.remote_form(@create)
+      @listen()
     
     abandon: (e) =>
       e.preventDefault() if e
@@ -57,6 +58,7 @@ jQuery ($) ->
       @_form.remote_form(@update)
       @_form.find('textarea').html_editable(@_form.siblings('.toolbar'))
       @_container.addClass('editing')
+      @listen()
 
     update: (response) =>
       @replaceWith(response)
@@ -65,6 +67,24 @@ jQuery ($) ->
     destroy: () =>
       console.log "destroy"
       @_container.slideUp()
+
+    listen: () =>
+      @_types = @_container.find('.types')
+      @_body_field = @_container.find('.body_field')
+      @_asset_fields = @_container.find('.asset_fields')
+      @_types.find('input').on "change", @toggle_type
+      
+    toggle_type: () =>
+      if @_types.find('input[value="text"]').attr('checked') == "checked"
+        @_body_field.show()
+        @_body_field.find('input').removeAttr('disabled')
+        @_asset_fields.hide()
+        @_asset_fields.find('input').attr('disabled', 'disabled')
+      else
+        @_asset_fields.show()
+        @_asset_fields.find('input').removeAttr('disabled')
+        @_body_field.hide()
+        @_body_field.find('input').attr('disabled', 'disabled')
 
   
   $.fn.bop_block = (space) ->

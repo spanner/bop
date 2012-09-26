@@ -6,7 +6,7 @@ class Bop::BlocksController < Bop::EngineController
   #todo: These will be replaced with a load_and_authorize_resource call when cancan is hooked up
   before_filter :get_page
   before_filter :get_space
-  before_filter :get_block, :only => [:edit, :show, :destroy, :publish, :revert]
+  before_filter :get_block, :only => [:edit, :show, :destroy, :publish, :revert, :update]
   before_filter :build_block, :only => [:new, :create]
   
   layout :set_layout

@@ -1,7 +1,9 @@
 module Bop
   class StylesheetsController < EngineController
+    layout "bop/editor"
     
-    respond_to :html, :css
+    respond_to :html
+    respond_to :css, :only => :show
     before_filter :get_stylesheets, :only => :index
     before_filter :get_stylesheet, :only => [:show, :update]
     

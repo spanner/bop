@@ -5,12 +5,11 @@ class Bop::Template < ActiveRecord::Base
   has_many :pages
     
   def render(part=:body, context)
-    self.renderer(part).render(context)
+    renderer(part).render(context)
   end
 
   def renderer(part)
-    @renderers ||= {}
-    @renderers[part] ||= render_class.new.prepare(send part)
+    render_class.new.prepare(send part)
   end
   
   def render_class

@@ -1,42 +1,54 @@
 %article.block{:'data-bop-block' => @block.id}
-  .toolbar
-    %header
-      %ul.commands
-        %li.command{:"data-wysihtml5-command" => "bold"}
-        %li.command{:"data-wysihtml5-command" => "italic"}
-        %li.command{:"data-wysihtml5-command" => "insertUnorderedList"}
-        %li.command{:"data-wysihtml5-command" => "insertOrderedList"}
-        %li.command{:"data-wysihtml5-command" => "createLink"}
-        %li.command{:"data-wysihtml5-command" => "insertImage"}
-        %li.command{:"data-wysihtml5-command" => "formatBlock", :"data-wysihtml5-command-value" => "h1"}
-        %li.command{:"data-wysihtml5-command" => "formatBlock", :"data-wysihtml5-command-value" => "h2"}
-        %li.command.fore-color{:"data-wysihtml5-command-group" => "foreColor"}
-          %ul
-            %li{:"data-wysihtml5-command" => "foreColor", :"data-wysihtml5-command-value" => "silver"}
-            %li{:"data-wysihtml5-command" => "foreColor", :"data-wysihtml5-command-value" => "gray"}
-            %li{:"data-wysihtml5-command" => "foreColor", :"data-wysihtml5-command-value" => "maroon"}
-            %li{:"data-wysihtml5-command" => "foreColor", :"data-wysihtml5-command-value" => "red"}
-            %li{:"data-wysihtml5-command" => "foreColor", :"data-wysihtml5-command-value" => "purple"}
-            %li{:"data-wysihtml5-command" => "foreColor", :"data-wysihtml5-command-value" => "green"}
-            %li{:"data-wysihtml5-command" => "foreColor", :"data-wysihtml5-command-value" => "olive"}
-            %li{:"data-wysihtml5-command" => "foreColor", :"data-wysihtml5-command-value" => "navy"}
-            %li{:"data-wysihtml5-command" => "foreColor", :"data-wysihtml5-command-value" => "blue"}
-        %li.command{:"data-wysihtml5-command" => "change_view"}
-
-    %div{:"data-wysihtml5-dialog" => "createLink", :style => "display: none"}
-      %label
-        Link:
-        %input{:"data-wysihtml5-dialog-field" => "href", :value => "http://"}
-        %a{:"data-wysihtml5-dialog-action" => "save"} OK
-        %a{:"data-wysihtml5-dialog-action" => "cancel"} cancel
-
   = form_for [@page, @block], :remote => true, :html => {:'data-type' => 'html'} do |f|
+    .toolbar
+      %header
+        .types
+          = f.label "block_type_name_text", "text"
+          = f.radio_button :block_type_name, "text"
+          = f.label "block_type_name_image", "image"
+          = f.radio_button :block_type_name, "image"
+        %ul.commands
+          %li.command{:"data-wysihtml5-command" => "bold"}
+          %li.command{:"data-wysihtml5-command" => "italic"}
+          %li.command{:"data-wysihtml5-command" => "insertUnorderedList"}
+          %li.command{:"data-wysihtml5-command" => "insertOrderedList"}
+          %li.command{:"data-wysihtml5-command" => "createLink"}
+          %li.command{:"data-wysihtml5-command" => "insertImage"}
+          %li.command{:"data-wysihtml5-command" => "formatBlock", :"data-wysihtml5-command-value" => "h1"}
+          %li.command{:"data-wysihtml5-command" => "formatBlock", :"data-wysihtml5-command-value" => "h2"}
+          %li.command.fore-color{:"data-wysihtml5-command-group" => "foreColor"}
+            %ul
+              %li{:"data-wysihtml5-command" => "foreColor", :"data-wysihtml5-command-value" => "silver"}
+              %li{:"data-wysihtml5-command" => "foreColor", :"data-wysihtml5-command-value" => "gray"}
+              %li{:"data-wysihtml5-command" => "foreColor", :"data-wysihtml5-command-value" => "maroon"}
+              %li{:"data-wysihtml5-command" => "foreColor", :"data-wysihtml5-command-value" => "red"}
+              %li{:"data-wysihtml5-command" => "foreColor", :"data-wysihtml5-command-value" => "purple"}
+              %li{:"data-wysihtml5-command" => "foreColor", :"data-wysihtml5-command-value" => "green"}
+              %li{:"data-wysihtml5-command" => "foreColor", :"data-wysihtml5-command-value" => "olive"}
+              %li{:"data-wysihtml5-command" => "foreColor", :"data-wysihtml5-command-value" => "navy"}
+              %li{:"data-wysihtml5-command" => "foreColor", :"data-wysihtml5-command-value" => "blue"}
+          %li.command{:"data-wysihtml5-command" => "change_view"}
+
+      %div{:"data-wysihtml5-dialog" => "createLink", :style => "display: none"}
+        %label
+          Link:
+          %input{:"data-wysihtml5-dialog-field" => "href", :value => "http://"}
+          %a{:"data-wysihtml5-dialog-action" => "save"} OK
+          %a{:"data-wysihtml5-dialog-action" => "cancel"} cancel
+
     = hidden_field_tag :space, @space
-    = f.text_area :content, :placeholder => t(:block_placeholder)
+    .body_field
+      = f.text_area :content, :placeholder => t(:block_placeholder)
+    .asset_fields
+      - asset = @block.asset || @block.build_asset
+      = f.fields_for :asset, asset do |af|
+        = af.label :title
+        = af.text_field :title, :disabled => true
+        = af.label :file
+        = af.file_field :file, :disabled => true
+        = af.hidden_field :user_id, :value => current_user.id, :disabled => true
     .buttons
       = f.submit "Save"
       = t :or
       %a.cancel{:href => "#"}
         = t :cancel
-    
-    

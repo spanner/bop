@@ -1,7 +1,8 @@
 - @javascripts ||= Bop.site.javascripts
-
 %ul
-  = render :partial => 'bop/javascripts/show', :collection => @javascripts
+  - @javascripts.each do |js|
+    = render 'bop/javascripts/show', :javascript => js
+  / = render :partial => 'bop/javascripts/show', :collection => @javascripts
 %p
   = link_to "new javascript", new_javascript_url, :remote => true, :class => "adder"
   
