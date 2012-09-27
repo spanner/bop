@@ -38,9 +38,9 @@ jQuery ($) ->
     listen: () =>
       @_field = @_form.find('[data-field="title"]')
       @_area = @_form.find('#pagetitle')
-      @updating()
+      @transfer()
       
-    updating: () =>
+    transfer: () =>
       @_area
         .bind 'focus', =>
           @_area.data 'before', @_area.html()
@@ -63,15 +63,3 @@ jQuery ($) ->
 
   $.namespace "Bop", (target, top) ->
     target.Content = Content
-
-  $('[contenteditable]')
-      .live 'focus', ->
-          $this = $(this)
-          $this.data 'before', $this.html()
-          return $this
-      .live 'blur keyup paste', ->
-          $this = $(this)
-          if $this.data('before') isnt $this.html()
-              $this.data 'before', $this.html()
-              $this.trigger('change')
-          return $this

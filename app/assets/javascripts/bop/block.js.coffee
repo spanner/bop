@@ -30,7 +30,7 @@ jQuery ($) ->
     new: () =>
       @_form = @_container.find('form.new_block')
       @_form.find('a.cancel').click(@abandon)
-      @_form.find('textarea').html_editable(@_form.siblings('.toolbar'))
+      @_form.html_editable()
       @_container.addClass('editing')
       @_form.remote_form(@create)
       @listen()
@@ -56,7 +56,7 @@ jQuery ($) ->
       @replaceProvisionallyWith(response)
       @_form = @_container.find('form.edit_block')
       @_form.remote_form(@update)
-      @_form.find('textarea').html_editable(@_form.siblings('.toolbar'))
+      @_form.html_editable()
       @_container.addClass('editing')
       @listen()
 
@@ -75,14 +75,17 @@ jQuery ($) ->
       @_types.find('input').on "change", @toggle_type
       
     toggle_type: () =>
+      @_commands = @_form.find('.commands')
       if @_types.find('input[value="text"]').attr('checked') == "checked"
         @_body_field.show()
         @_body_field.find('input').removeAttr('disabled')
+        @_commands.show()
         @_asset_fields.hide()
         @_asset_fields.find('input').attr('disabled', 'disabled')
       else
         @_asset_fields.show()
         @_asset_fields.find('input').removeAttr('disabled')
+        @_commands.hide()
         @_body_field.hide()
         @_body_field.find('input').attr('disabled', 'disabled')
 
