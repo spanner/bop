@@ -2,59 +2,59 @@ jQuery ($) ->
   class Content extends Bop.Module
     constructor: (element) ->
       @_container = $(element)
+      @_page_id = @_container.attr('data-bop-page')
+      @_initial_value = @_container.text()
+      @_data_field = @_container.attr('data-field')
       @show()
 
-    replaceProvisionallyWith: (element) =>
-      new_container = $(element)
-      @_original_container = @_container
-      @_container.after(new_container).hide()
-      @_container = new_container
-      @_container.find('a.cancel').click(@revert)
-      
-    replaceWith: (element) =>
-      new_container = $(element)
-      @_container.after(new_container).remove()
-      @_container = new_container
-      
     revert: (e) =>
       e.preventDefault() if e
-      unless @_container is @_original_container
-        @_container.remove() 
-        @_container = @_original_container
-      @_container.show()
-
-    show: () =>
-      @_container.removeClass('editing')
-      @_controls = $('<div class="controls" />').prependTo(@_container)
-      @_editor = $("<a href='/bop/pages/#{$.page_id}/edit.js' class='editor icon' data-remote='true' data-type='html'>edit</a>").appendTo(@_controls).remote_link(@edit)
-
-    edit: (response) =>
-      @replaceProvisionallyWith(response)
-      @_form = @_container.find('form')
-      @listen()
-      @_form.remote_form(@update)
-      @_container.addClass('editing')
-      
-    listen: () =>
-      @_field = @_form.find('[data-field="title"]')
-      @_area = @_form.find('#pagetitle')
-      @transfer()
-      
-    transfer: () =>
-      @_area
-        .bind 'focus', =>
-          @_area.data 'before', @_area.html()
-          @_area
-        .bind 'blur keyup paste', =>
-            if @_area.data('before') isnt @_area.html()
-                @_area.data 'before', @_area.html()
-                @_area.trigger('change')
-            @_field.val(@_area.text().trim())
-          
-      
-    update: (response) =>
-      @replaceWith(response)
+      @_container.attr('contenteditable', false)
+      @_container.text(@_initial_value)
+      @_controls.remove()
       @show()
+      
+    show: () =>
+      @_container.bind "click", @edit
+      @_container.removeClass('editing')
+
+    edit: (e) =>
+      e.preventDefault()
+      @_container.unbind "click", @edit
+      @_container.attr('contenteditable', true)
+      @_controls = $("<div class='controls'><a href='#' class='submit'>save</a> or <a href='#' class='cancel'>cancel</a></div>").appendTo('#content')
+      @_submitter = @_controls.find('.submit').bind "click", @submit
+      @_canceller = @_controls.find('.cancel').bind "click", @revert
+      @_controls.css
+        position: "absolute"
+        left: @_container.position().left
+      @position_controls()
+      @_container.bind 'keyup', @position_controls
+      @_container.addClass('editing')
+      @_container.focus()
+      
+    position_controls: () =>
+      @_controls.css
+        top: @_container.position().top + @_container.height()
+    
+    submit: () =>
+      data = {}
+      data["page[#{@_data_field}]"] = @_container.text()
+      $.ajax
+        url: "/bop/pages/#{@_page_id}.js"
+        type: "PUT"
+        data: data
+        dataType: "html"
+        success: @update
+        error: @error
+    
+    error: (a, b, c) =>
+      console.log a, b, c
+      @revert()
+              
+    update: () =>
+      @_initial_value = @_container.text()
+      @revert()
       
   $.fn.bop_content = (space) ->
     @each ->
@@ -63,3 +63,5 @@ jQuery ($) ->
 
   $.namespace "Bop", (target, top) ->
     target.Content = Content
+
+

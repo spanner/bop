@@ -48,7 +48,7 @@ jQuery ($) ->
       @_toolbar.attr('id', $.makeGuid()) unless @_toolbar.attr('id')?
       @_original_textarea.attr('id', $.makeGuid()) unless @_original_textarea.attr('id')?
       console.log @_original_textarea.attr('id')
-      @_stylesheets = ["/assets/bop.css"]
+      @_stylesheets = ["/assets/bop.css", "/assets/bop/wysi_iframe.css"]
       $.each $("head link[data-wysihtml5='custom_css']"), (i, link) =>
         @_stylesheets.push $(link).attr('href')
       @_editor = new wysihtml5.Editor @_original_textarea.attr('id'),
@@ -58,37 +58,26 @@ jQuery ($) ->
         useLineBreaks: false
       @_toolbar.show()
       @hideToolbar()
-      @resizeArea()
-      @_original_textarea.bind "keyup", @resizeArea
+      @_original_textarea.autosize()
       @_editor.on "load", () =>
         @_iframe = @_editor.composer.iframe
-        $(@_editor.composer.doc).find('html').css
-          "height": 0
-          "overflow": "hidden"
         @_iframe_body = $(@_editor.composer.doc).find('body')
-        @_iframe_body.css
-          "font-size": "1em"
-        @_textarea = @_original_textarea
-        @resizeIframe()
         @_textarea = @_editor.composer.element
+        @resizeIframe()
         @_textarea.addEventListener("keyup", @resizeIframe, false)
         @_textarea.addEventListener("blur", @resizeIframe, false)
         @_textarea.addEventListener("focus", @resizeIframe, false)
-    
         @_container.bind("mouseenter", @showToolbar)
         @_container.bind("mouseleave", @hideToolbar)
         
-    resizeIframe: () =>
-      @_iframe_body.css
-        "font-size": "1em"
-      if $(@_iframe).height() != @_textarea.offsetHeight
-        $(@_iframe).height @_textarea.offsetHeight
+    resizeIframe: (e) =>
+      e.preventDefault() if e
+      console.log @_editor.composer, @_textarea.clientHeight
+      if $(@_iframe).height() != @_textarea.clientHeight
+        if @_textarea.offsetHeight > 19
+          $(@_iframe).height @_textarea.clientHeight
+        else $(@_iframe).height 19
     
-    resizeArea: () =>
-      if @_original_textarea.height() != @_original_textarea[0].scrollHeight
-        @_original_textarea.height 20
-        @_original_textarea.height @_original_textarea[0].scrollHeight
-          
     showToolbar: () =>
       @_hovered = true
       @_toolbar.fadeTo(200, 1)

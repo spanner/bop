@@ -59,6 +59,7 @@ jQuery ($) ->
       @_form.html_editable()
       @_container.addClass('editing')
       @listen()
+      $('textarea').autosize()
 
     update: (response) =>
       @replaceWith(response)

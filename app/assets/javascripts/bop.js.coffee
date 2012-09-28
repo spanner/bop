@@ -11,6 +11,7 @@
 #= require bop/pagetree
 #= require bop/template
 #= require bop/content_editable
+#= require jquery.autosize-min
 #= require_self
 
 jQuery ($) ->
@@ -31,4 +32,4 @@ $ ->
   $.page_id = $('body').attr('data-bop-page')
   $('[data-bop-space]').bop_space()
   $('#bop_tools').bop_menu()
-  $('#pagetitle.editable').bop_content()
+  $('.contenteditable').bop_content()

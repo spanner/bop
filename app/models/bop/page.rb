@@ -13,8 +13,8 @@ class Bop::Page < ActiveRecord::Base
   has_many :blocks, :through => :placed_blocks
   has_many :publications
 
-  before_save :receive_context
   before_save :slugify_slug
+  before_save :receive_context
   after_save :update_children
 
   # custom validators are defined in lib/bop/validators
@@ -124,7 +124,11 @@ private
   def receive_context
     if root?
       self.slug = ""
-      self.route = tree.mount_point + "/"
+      if tree.mount_point == "/"
+        self.route = "/"
+      else
+        self.route = tree.mount_point + "/"
+      end
       self.site = tree.site
     else
       self.title = slug unless title?
@@ -132,7 +136,11 @@ private
       self.site = parent.site
       ensure_presence_and_uniqueness_of(:slug, title.parameterize, self.siblings)
       descent = (ancestors + [self]).map(&:slug).compact.join('/')
-      self.route = tree.mount_point + descent
+      if tree.mount_point == "/"
+        self.route = descent
+      else
+        self.route = tree.mount_point + descent
+      end
     end
   end
   
