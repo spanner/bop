@@ -1,5 +1,5 @@
 class Bop::Stylesheet < ActiveRecord::Base
-  attr_accessible :title, :slug, :content
+  attr_accessible :title, :slug, :content, :format
   
   belongs_to :site
   before_save :ensure_slug

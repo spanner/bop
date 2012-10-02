@@ -1,1 +1,5 @@
+<% if @javascript.format == "coffeescript" %>
+<%= (render :partial => 'show_coffee').html_safe %>
+<% else %>
 <%= @javascript.content.html_safe %>
+<% end %>

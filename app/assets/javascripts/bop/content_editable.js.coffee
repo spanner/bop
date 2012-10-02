@@ -39,7 +39,7 @@ jQuery ($) ->
     
     submit: () =>
       data = {}
-      data["page[#{@_data_field}]"] = @_container.text()
+      data["page[#{@_data_field}]"] = @_container.text() 
       $.ajax
         url: "/bop/pages/#{@_page_id}.js"
         type: "PUT"

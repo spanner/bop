@@ -82,7 +82,7 @@ module Bop
         collection = anchor.send(collection_name)
         block = []
         collection.each do |object|
-          block.push "<li data-url='/#{collection_name}/#{object.id}'>position: #{object.position}, distance: #{object.distance}, climb: #{object.climb}</li>"
+          block.push "<li class='leg' data-url='/#{collection_name}/#{object.id}'>position: #{object.position}, distance: #{object.distance}, climb: #{object.climb}</li>"
         end
         block
       end

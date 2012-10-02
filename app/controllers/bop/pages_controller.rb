@@ -14,7 +14,7 @@ class Bop::PagesController < Bop::EngineController
   layout :set_layout
 
   def index
-    render :partial => 'index', :collection => @pages      
+    render :partial => 'index', :collection => @pages
   end
 
   def show

@@ -2,4 +2,9 @@
   .editor
     = f.label :content
     = f.text_area :content, :"data-mode" => "javascript"
+  .formats
+    = f.label :"format_javascript", "javascript"
+    = f.radio_button :format, "javascript"
+    = f.label :"format_coffeescript", "coffeescript"
+    = f.radio_button :format, "coffeescript"
   = f.submit :class => "editor_submit"

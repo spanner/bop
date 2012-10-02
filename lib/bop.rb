@@ -7,6 +7,8 @@ require "bop/renderer"
 require "bop/validators"
 
 module Bop
+  mattr_accessor :layout
+  
   class BopError < StandardError; end
   class ConfigurationError < BopError; end
   class SiteNotFound < BopError; end
