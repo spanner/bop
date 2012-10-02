@@ -1,12 +1,9 @@
 !!!
 %head
   = yield :head
-  - if user_signed_in?
-    = stylesheet_link_tag "bop"
-  
+  = bop_header
+    
 %body
   = yield :body
-  - if user_signed_in?
-    = render :partial => 'bop/tools'
-    = javascript_include_tag "published"
+  = bop_footer
     

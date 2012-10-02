@@ -1,2 +1,2 @@
-Bop.user_class = "User"
-Bop.layout = "application"
+# Bop.user_class = "User"
+# Bop.layout = "application"
