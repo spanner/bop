@@ -18,7 +18,7 @@ class Bop::Stylesheet < ActiveRecord::Base
   def as_json(options={})
     {
       :id => id,
-      :name => name,
+      :title => title,
       :content => content,
       :slug => slug
     }
@@ -34,7 +34,7 @@ class Bop::Stylesheet < ActiveRecord::Base
 protected
 
   def ensure_slug
-    ensure_presence_and_uniqueness_of(:slug, name.parameterize, self.site.stylesheets.other_than(self))
+    ensure_presence_and_uniqueness_of(:slug, title.parameterize, self.site.stylesheets.other_than(self))
   end
   
 end

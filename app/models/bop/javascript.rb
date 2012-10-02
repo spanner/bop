@@ -17,7 +17,7 @@ class Bop::Javascript < ActiveRecord::Base
   def as_json(options={})
     {
       :id => id,
-      :name => name,
+      :title => title,
       :content => content,
       :slug => slug
     }
@@ -33,7 +33,7 @@ class Bop::Javascript < ActiveRecord::Base
 protected
 
   def ensure_slug
-    ensure_presence_and_uniqueness_of(:slug, name.parameterize, self.site.javascripts.other_than(self))
+    ensure_presence_and_uniqueness_of(:slug, title.parameterize, self.site.javascripts.other_than(self))
   end
 
 end
