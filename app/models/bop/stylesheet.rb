@@ -2,6 +2,7 @@ class Bop::Stylesheet < ActiveRecord::Base
   attr_accessible :title, :slug, :content, :format
   
   belongs_to :site
+  belongs_to :user, :class_name => Bop.user_class
   before_save :ensure_slug
   validate :slug, :presence => true, :uniqueness => true
   before_validation :ensure_slug
@@ -18,7 +19,8 @@ class Bop::Stylesheet < ActiveRecord::Base
     {
       :id => id,
       :title => title,
-      :content => content
+      :content => content,
+      :slug => slug
     }
   end
   

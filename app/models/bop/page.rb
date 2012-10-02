@@ -6,7 +6,7 @@ class Bop::Page < ActiveRecord::Base
   belongs_to :site
   belongs_to :tree
   belongs_to :template
-  belongs_to :user
+  belongs_to :user, :class_name => Bop.user_class
   belongs_to :asset
   has_ancestry :orphan_strategy => :destroy
   has_many :placed_blocks

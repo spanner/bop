@@ -18,7 +18,8 @@ class Bop::Javascript < ActiveRecord::Base
     {
       :id => id,
       :title => title,
-      :content => content
+      :content => content,
+      :slug => slug
     }
   end
   

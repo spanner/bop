@@ -1,7 +1,7 @@
 class Bop::Block < ActiveRecord::Base
   attr_accessible :title, :content, :type, :asset_id, :block_type_name, :asset_attributes
 
-  belongs_to :user
+  belongs_to :user, :class_name => Bop.user_class
   belongs_to :asset
   accepts_nested_attributes_for :asset
   has_many :block_properties

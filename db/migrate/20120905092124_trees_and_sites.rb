@@ -7,6 +7,7 @@ class TreesAndSites < ActiveRecord::Migration
       t.string :anchor_type
       t.timestamps
     end
+    add_index :bop_sites, :anchor_id
 
     create_table :bop_trees do |t|
       t.integer :site_id
@@ -15,6 +16,8 @@ class TreesAndSites < ActiveRecord::Migration
       t.string :mount_point
       t.timestamps
     end
+    add_index :bop_trees, :site_id
+    add_index :bop_trees, :root_page_id
     
     add_column :bop_pages, :site_id, :integer
     add_column :bop_pages, :tree_id, :integer

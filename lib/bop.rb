@@ -20,6 +20,22 @@ module Bop
   class BlockTypeNotFound < BopError; end
   
   class << self
+    def user_class=(klass)
+      @user_class = klass.to_s
+    end
+    
+    def user_class
+      (@@user_class ||= "User").constantize
+    end
+    
+    def layout=(name)
+      @layout = name
+    end
+    
+    def layout
+      @layout ||= 'bop/standard'
+    end
+    
     def scope
       @scope
     end
@@ -37,15 +53,15 @@ module Bop
       if scoped?
         scope.find_or_create_site
       else
-        # subdomain match and other parameters could be applied here
+        # subdomain match and other parameters can be applied here
         Bop::Site.find_or_create_by_name("Default")
       end
     end
-
+    
     def root_page
       site.root_page
     end
-  
+    
     def owner_class
       if scoped?
         @owner_class ||= scope.class.owner_class || "User".constantize
@@ -53,13 +69,11 @@ module Bop
         @owner_class ||= "User".constantize
       end
     end
-
+    
     def owner_class=(klassname)
       @owner_class = klassname.constantize
     end
   end
-
-
 
   # These class methods are included into ActiveRecord::Base and so available in all model classes.
 

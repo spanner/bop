@@ -1,6 +1,5 @@
 class Bop::PagesController < Bop::EngineController
   respond_to :html, :json, :js
-  layout "bop/editing"
 
   before_filter :ensure_there_is_an_admin_user
   before_filter :authenticate_user!
@@ -11,7 +10,6 @@ class Bop::PagesController < Bop::EngineController
   before_filter :get_pages, :only => [:index]
   before_filter :update_page, :only => [:update]
 
-  layout :set_layout
 
   def index
     render :partial => 'index', :collection => @pages
