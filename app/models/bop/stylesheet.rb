@@ -2,6 +2,7 @@ class Bop::Stylesheet < ActiveRecord::Base
   attr_accessible :title, :slug, :content
   
   belongs_to :site
+  belongs_to :user, :class_name => Bop.user_class
   before_save :ensure_slug
   validate :slug, :presence => true, :uniqueness => true
   before_validation :ensure_slug
@@ -17,8 +18,9 @@ class Bop::Stylesheet < ActiveRecord::Base
   def as_json(options={})
     {
       :id => id,
-      :title => title,
-      :content => content
+      :name => name,
+      :content => content,
+      :slug => slug
     }
   end
   
@@ -32,7 +34,7 @@ class Bop::Stylesheet < ActiveRecord::Base
 protected
 
   def ensure_slug
-    ensure_presence_and_uniqueness_of(:slug, title.parameterize, self.site.stylesheets.other_than(self))
+    ensure_presence_and_uniqueness_of(:slug, name.parameterize, self.site.stylesheets.other_than(self))
   end
   
 end

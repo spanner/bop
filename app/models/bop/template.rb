@@ -1,7 +1,7 @@
 class Bop::Template < ActiveRecord::Base
   attr_accessible :title, :body, :head
 
-  belongs_to :user
+  belongs_to :user, :class_name => Bop.user_class
   has_many :pages
   # after_update :publish_pages
     

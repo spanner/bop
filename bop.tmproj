@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>Gemfile</string>
+	<string>app/views/layouts/bop/published.html.haml</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -34,6 +34,66 @@
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
+		</dict>
+		<key>app/assets/stylesheets/bop.css.sass</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>16</integer>
+				<key>line</key>
+				<integer>0</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>0</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>2</integer>
+			</dict>
+		</dict>
+		<key>app/assets/stylesheets/bop/_definitions.css.sass</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>16</integer>
+				<key>line</key>
+				<integer>8</integer>
+			</dict>
+			<key>columnSelection</key>
+			<false/>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>0</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>21</integer>
+				<key>line</key>
+				<integer>49</integer>
+			</dict>
 		</dict>
 		<key>app/controllers/bop/javascripts_controller.rb</key>
 		<dict>
@@ -96,7 +156,7 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>26</integer>
+				<integer>2</integer>
 				<key>line</key>
 				<integer>11</integer>
 			</dict>
@@ -163,35 +223,19 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>app/views/layouts/bop/content.html.haml</key>
+		<key>app/views/layouts/bop/published.html.haml</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>34</integer>
+				<integer>36</integer>
 				<key>line</key>
-				<integer>8</integer>
+				<integer>9</integer>
 			</dict>
-			<key>columnSelection</key>
-			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>33</integer>
-				<key>line</key>
-				<integer>8</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>34</integer>
-				<key>line</key>
-				<integer>8</integer>
-			</dict>
 		</dict>
 		<key>config/routes.rb</key>
 		<dict>
@@ -206,20 +250,6 @@
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
-		</dict>
-		<key>lib/bop.rb</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>77</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>45</integer>
 		</dict>
 		<key>lib/bop/block_type.rb</key>
 		<dict>
@@ -249,20 +279,6 @@
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>lib/bop/glue.rb</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>5</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
 		<key>lib/bop/renderer.rb</key>
 		<dict>
 			<key>caret</key>
@@ -276,6 +292,20 @@
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>15</integer>
+		</dict>
+		<key>lib/bop/routing.rb</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>19</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
 		</dict>
 		<key>lib/bop/tags.rb</key>
 		<dict>
@@ -299,18 +329,19 @@
 		<string>app/views/bop/pages/show.html.haml</string>
 		<string>lib/bop/tags.rb</string>
 		<string>app/models/bop/template.rb</string>
-		<string>app/views/layouts/bop/content.html.haml</string>
 		<string>app/models/bop/javascript.rb</string>
 		<string>app/controllers/bop/stylesheets_controller.rb</string>
 		<string>app/controllers/bop/javascripts_controller.rb</string>
 		<string>app/models/bop/page.rb</string>
 		<string>app/models/bop/stylesheet.rb</string>
-		<string>lib/bop.rb</string>
-		<string>lib/bop/glue.rb</string>
+		<string>app/assets/stylesheets/bop.css.sass</string>
+		<string>app/assets/stylesheets/bop/_definitions.css.sass</string>
+		<string>lib/bop/routing.rb</string>
+		<string>app/views/layouts/bop/published.html.haml</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{904, 167}, {1131, 1020}}</string>
+	<string>{{586, 210}, {1131, 1020}}</string>
 </dict>
 </plist>

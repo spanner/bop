@@ -18,6 +18,22 @@ module Bop
   class BlockTypeNotFound < BopError; end
   
   class << self
+    def user_class=(klass)
+      @user_class = klass.to_s
+    end
+
+    def user_class
+      (@@user_class ||= "User").constantize
+    end
+    
+    def layout=(name)
+      @layout = name
+    end
+    
+    def layout
+      @layout ||= 'application'
+    end
+    
     def scope
       @scope
     end
@@ -35,7 +51,7 @@ module Bop
       if scoped?
         scope.find_or_create_site
       else
-        # subdomain match and other parameters could be applied here
+        # subdomain match and other parameters can be applied here
         Bop::Site.find_or_create_by_name("Default")
       end
     end
