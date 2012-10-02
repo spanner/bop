@@ -31,7 +31,7 @@ module Bop
     end
     
     def layout
-      @layout ||= 'application'
+      @layout ||= 'bop/standard'
     end
     
     def scope
