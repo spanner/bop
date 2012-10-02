@@ -7,6 +7,7 @@ module Bop
     end
     
     def rake_db
+      rake("bop:install:migrations")
       rake("db:migrate")
     end
     

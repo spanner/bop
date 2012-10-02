@@ -40,8 +40,7 @@ In your gemfile:
 
 To migrate:
 
-    rake bop:install:migrations
-    rake db:migrate
+    rake bop:install
 
 ## Usage
 
