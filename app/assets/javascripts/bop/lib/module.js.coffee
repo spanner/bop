@@ -1,5 +1,18 @@
 jQuery ($) ->
 
+  $.easing.glide = (x, t, b, c, d) ->
+    -c * ((t=t/d-1)*t*t*t - 1) + b
+
+  $.easing.boing = (x, t, b, c, d, s) ->
+    s ?= 1.70158;
+    c*((t=t/d-1)*t*((s+1)*t + s) + 1) + b
+
+  $.add_stylesheet = (path) ->
+    if document.createStyleSheet
+      document.createStyleSheet(path)
+    else
+      $('head').append("<link rel=\"stylesheet\" href=\"#{path}\" type=\"text/css\" />");
+
   $.namespace = (target, name, block) ->
     [target, name, block] = [(if typeof exports isnt 'undefined' then exports else window), arguments...] if arguments.length < 3
     top = target

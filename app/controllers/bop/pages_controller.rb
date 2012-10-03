@@ -81,14 +81,4 @@ protected
     raise Bop::AdminNotFound unless Bop.owner_class.any?
   end
 
-private
-
-  def set_layout
-    if request.headers['X-PJAX']
-      false
-    else
-      "bop/editing"
-    end
-  end
-
 end

@@ -1,11 +1,6 @@
-#= require bop/lib/codemirror/codemirror
-#= require bop/lib/codemirror/xml
-#= require bop/lib/codemirror/css
-# = require bop/lib/codemirror/javascript
-#= require bop/lib/codemirror/coffeescript
-#= require bop/lib/codemirror/formatting
-#= require bop/lib/codemirror/htmlmixed
-#= require bop/lib/codemirror/htmlembedded
+#= require jquery
+#= require jquery_ujs
+#= require_tree ./lib/codemirror
 #= require_self
 
 jQuery ($) ->
@@ -46,4 +41,3 @@ jQuery ($) ->
 
 $ ->
   $('textarea').code_editor()
-  

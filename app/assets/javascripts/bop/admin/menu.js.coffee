@@ -1,3 +1,6 @@
+#= require bop/admin/template
+#= require bop/admin/pagetree
+
 jQuery ($) ->
 
   class Menu extends Bop.Module
@@ -40,9 +43,7 @@ jQuery ($) ->
     @each ->
       new Bop.Menu(@)
   
- 
- 
- 
+
   class Tab
     @_tabs = []
     @hideAll: () ->

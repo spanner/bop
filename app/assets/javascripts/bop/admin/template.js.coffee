@@ -6,7 +6,6 @@ jQuery ($) ->
       @_container.find('.template').bop_template()
       @_container.find('a.adder').remote_link(@addTemplate)
       
-    
     addTemplate: (response) =>
       new_template = $(response)
       $(response).appendTo(@_container.find('ul')).bop_template()

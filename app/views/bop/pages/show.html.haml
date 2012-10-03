@@ -1,3 +1,6 @@
+= content_for :bop_js do
+  = javascript_include_tag "bop/pages"
+
 = content_for :head do
   = @page.head.html_safe
 

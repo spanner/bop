@@ -5,6 +5,7 @@ module Bop
     rescue_from "Bop::AdminNotFound", :with => :rescue_no_admin
     rescue_from "Bop::SiteNotFound", :with => :rescue_no_site
     before_filter :set_context
+    layout :set_layout
 
   protected
 
@@ -29,6 +30,16 @@ module Bop
     def normalize_path(path)
       "/#{path}".gsub(/\/{2,}/, "/")
     end
-    
+
+  private
+
+    def set_layout
+      if request.headers['X-PJAX']
+        false
+      else
+        Bop.layout
+      end
+    end
+
   end
 end

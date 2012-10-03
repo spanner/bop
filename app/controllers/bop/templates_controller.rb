@@ -13,7 +13,7 @@ module Bop
     def show
       respond_with @template
     end
-    
+
     def new
       @template = @site.templates.new
       render :partial => 'new', :object => @template      

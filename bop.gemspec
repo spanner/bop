@@ -22,7 +22,6 @@ Gem::Specification.new do |s|
   # s.add_dependency 'radius'
   s.add_dependency 'redcarpet'
   s.add_dependency 'paperclip'
-  s.add_dependency 'coffeebeans'
   s.add_dependency 'haml_coffee_assets'
 
   s.add_development_dependency "sqlite3"
