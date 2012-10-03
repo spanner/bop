@@ -1,5 +1,5 @@
-#= require bop/admin/template
-#= require bop/admin/pagetree
+#= require bop/interface/template
+#= require bop/interface/pagetree
 
 jQuery ($) ->
 

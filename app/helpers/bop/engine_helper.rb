@@ -5,7 +5,7 @@ module Bop
       output = ""
       if user_signed_in?
         output << render(:partial => 'bop/tools')
-        output << javascript_include_tag("bop")
+        output << javascript_include_tag("bop/bop")
         output << content_for(:bop_js)
       end
       output.html_safe
@@ -16,7 +16,7 @@ module Bop
       output = ""
       output << content_for(:head)
       if user_signed_in?
-        output << stylesheet_link_tag("bop")
+        output << stylesheet_link_tag("bop/bop")
         output << content_for(:bop_css)
       end
       output.html_safe
