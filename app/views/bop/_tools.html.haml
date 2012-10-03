@@ -1,4 +1,8 @@
 - if current_user
+  #flashes
+    %p.notice= notice
+    %p.alert= alert
+
   #bop_status
     - if @publication
       = link_to t(:edit_page), page_url(@publication.page)

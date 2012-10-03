@@ -1,4 +1,4 @@
-#= require bop/lib/rails_glue
+#= require bop/base
 #= require bop/lib/parser_rules/advanced
 #= require bop/lib/wysihtml5
 #= require bop/lib/content_editable
