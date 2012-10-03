@@ -19,10 +19,11 @@ jQuery ($) ->
         error: @error
 
     confirm: (response) =>
-      # get json back, set id if new
+      @_container.flash("#8dd169")
       
 
     error: (a, b, c) =>
+      @_container.flash("#FF0000")
       console.log "Block save error", a, b, c
       
       

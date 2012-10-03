@@ -38,13 +38,14 @@ jQuery ($) ->
         type: "PUT"
         data: data
         dataType: "JSON"
-        success: @confirm
+        success: @updated
         error: @error
       
-    confirm: (response) =>
-      # get json back, set id if new
+    updated: (response) =>
+      @_container.flash("#8dd169")
 
     error: (a, b, c) =>
+      @_container.flash("#ff0000")
       console.log "Block save error", a, b, c
       
     destroy: () =>
