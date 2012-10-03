@@ -5,5 +5,5 @@
   = @page.head.html_safe
 
 = content_for :body do
-  #bop{:'data-pageid' => @page.id}
+  #bop{:'data-bop-page' => @page.id}
     = @page.body.html_safe

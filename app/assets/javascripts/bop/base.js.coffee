@@ -6,5 +6,4 @@
 #= require_self
 
 $ ->
-  $.page_id = $('#bop').attr('data-bop-page')
   $('#bop_tools').bop_menu()

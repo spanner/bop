@@ -1,10 +1,13 @@
-#= require bop/base
 #= require bop/lib/parser_rules/advanced
 #= require bop/lib/wysihtml5
 #= require bop/lib/content_editable
 #= require_tree ./models/
 #= require jquery.autosize-min
 #= require_self
+
+
+# You have to load bop/base separately before you load this file. It is not included automatically
+# because there are also cases where we want to load just that file.
 
 jQuery ($) ->
   $.fn.activate = ->
@@ -63,7 +66,7 @@ jQuery ($) ->
       editor = new Editor @
 
 $ ->
-  $.page_id = $('body').attr('data-bop-page')
+  $.page_id = $('#bop').attr('data-bop-page')
+  console.log "page_id", $.page_id, "from", $('#bop')
   $('[data-bop-space]').bop_space()
-  $('#bop_tools').bop_menu()
   $('.contenteditable').bop_content()

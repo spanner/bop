@@ -38,7 +38,16 @@ class Bop::Page < ActiveRecord::Base
   end
 
   def find_template
-    template || (parent && parent.find_template) || Bop::Template.find_or_create_by_title_and_body("Default","<h1>{{page.title}}</h1>{% yield %}")
+    template || (parent && parent.find_template) || default_template
+  end
+  
+  def default_template
+    template = Bop::Template.find_or_create_by_title("Default")
+    unless template.body?
+      template.body = "<h1>{{page.title}}</h1>{% yield %}")
+      template.save
+    end
+    template
   end
 
   def inherited_asset

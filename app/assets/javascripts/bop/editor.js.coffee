@@ -1,4 +1,3 @@
-#= require bop/base
 #= require_tree ./lib/codemirror
 #= require_self
 
@@ -39,5 +38,4 @@ jQuery ($) ->
       new CodeEditor(@)
 
 $ ->
-  $('#bop_tools').bop_menu()
   $('textarea').code_editor()
