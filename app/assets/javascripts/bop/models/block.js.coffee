@@ -2,99 +2,64 @@ jQuery ($) ->
   class Block extends Bop.Module
     constructor: (element, @_space) ->
       @_container = $(element)
+      @_page = @_space.page()
       @_id = @_container.attr('data-bop-block')
-      if @_id? then @show() else @new()
-      
-    replaceWith: (element) =>
-      new_container = $(element)
-      @_container.after(new_container).remove()
-      @_container = new_container
-
-    replaceProvisionallyWith: (element) =>
-      new_container = $(element)
-      @_original_container = @_container
-      @_container.after(new_container).hide()
-      @_container = new_container
-      @_container.find('a.cancel').click(@revert)
+      @create() unless @_id?
+      @_content = new Bop.Content @_container, @update
     
-    element: () =>
-      @_container
-
-    revert: (e) =>
-      e.preventDefault() if e
-      unless @_container is @_original_container
-        @_container.remove() 
-        @_container = @_original_container
-      @_container.show()
-
-    new: () =>
-      @_form = @_container.find('form.new_block')
-      @_form.find('a.cancel').click(@abandon)
-      @_form.html_editable()
-      @_container.addClass('editing')
-      @_form.remote_form(@create)
-      @listen()
+    id: () => 
+      @_id
     
-    abandon: (e) =>
-      e.preventDefault() if e
-      @_container.slideUp () =>
-        @_container.remove()
-        delete @
-        
-    create: (response) =>
-      @replaceWith(response)
-      @_id = @_container.attr('data-bop-block')
-      @show()
+    create: () =>
+      $.ajax
+        url: "/bop/pages/#{@_page.id()}/blocks"
+        type: "POST"
+        dataType: "JSON"
+        data: 
+          space: @_space.name()
+          block: 
+            content: @_container.html()
+        error: @error
+        success: @created
 
-    show: () =>
-      @_container.removeClass('editing')
-      @_controls = $('<div class="controls" />').prependTo(@_container)
-      @_editor = $("<a href='/bop/pages/#{$.page_id}/blocks/#{@_id}/edit' class='editor icon' data-remote='true' data-type='html'>edit</a>").appendTo(@_controls).remote_link(@edit)
-      @_remover = $("<a href='/bop/pages/#{$.page_id}/blocks/#{@_id}' class='remover icon' data-remote='true' data-method='delete' data-remote='true' data-type='html'>remove</a>").appendTo(@_controls).remote_link(@destroy)
+    created: (response) =>
+      console.log "block created", response
+      @_id = response.id
+      @_container.attr('data-bop-block', @_id)
+
+    update: (content) =>
+      data = 
+        block: 
+          content: content
+
+      data[@_fieldname] = content
+      $.ajax
+        url: "/bop/pages/#{@_page.id()}/blocks/#{@id()}"
+        type: "PUT"
+        data: data
+        dataType: "JSON"
+        success: @confirm
+        error: @error
       
-    edit: (response) =>
-      @replaceProvisionallyWith(response)
-      @_form = @_container.find('form.edit_block')
-      @_form.remote_form(@update)
-      @_form.html_editable()
-      @_container.addClass('editing')
-      @listen()
-      $('textarea').autosize()
+    confirm: (response) =>
+      # get json back, set id if new
 
-    update: (response) =>
-      @replaceWith(response)
-      @show()
+    error: (a, b, c) =>
+      console.log "Block save error", a, b, c
       
     destroy: () =>
-      console.log "destroy"
-      @_container.slideUp()
-
-    listen: () =>
-      @_types = @_container.find('.types')
-      @_body_field = @_container.find('.body_field')
-      @_asset_fields = @_container.find('.asset_fields')
-      @_types.find('input').on "change", @toggle_type
-      
-    toggle_type: () =>
-      @_commands = @_form.find('.commands')
-      if @_types.find('input[value="text"]').attr('checked') == "checked"
-        @_body_field.show()
-        @_body_field.find('input').removeAttr('disabled')
-        @_commands.show()
-        @_asset_fields.hide()
-        @_asset_fields.find('input').attr('disabled', 'disabled')
-      else
-        @_asset_fields.show()
-        @_asset_fields.find('input').removeAttr('disabled')
-        @_commands.hide()
-        @_body_field.hide()
-        @_body_field.find('input').attr('disabled', 'disabled')
+      @_container.slideUp () =>
+        #todo: destroy on server
+        @_container.remove()
+        @_content.destroy()
+        delete @
 
   
   $.fn.bop_block = (space) ->
     @each ->
       new Bop.Block(@, space)
-
+    @
+    
 
   $.namespace "Bop", (target, top) ->
     target.Block = Block

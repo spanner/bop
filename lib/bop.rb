@@ -49,11 +49,14 @@ module Bop
       !!scope
     end
     
+    def site=(site)
+      @site = site
+    end
+    
     def site
-      if scoped?
+      @site ||= if scoped?
         scope.find_or_create_site
       else
-        # subdomain match and other parameters can be applied here
         Bop::Site.find_or_create_by_name("Default")
       end
     end

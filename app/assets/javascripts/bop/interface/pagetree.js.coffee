@@ -5,6 +5,7 @@ jQuery ($) ->
       @_container = $(element)
       @_container.find('.page').bop_page_tree_page()
 
+
   class PageTreePage extends Bop.Editable
     show: () =>
       super

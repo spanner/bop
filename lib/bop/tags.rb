@@ -26,26 +26,6 @@ module Bop
 
     Liquid::Template.register_tag('yield', Bop::Tags::Yield)
 
-    ## {{ stylesheet [name] }}
-    #
-    class Stylesheet < Liquid::Tag
-      def initialize(tag_name, slug, tokens)
-         super
-         @slug = slug.strip
-         @stylesheet = Bop.site.stylesheets.find_by_title(@slug)
-      end
-
-      def render(context)
-        if @stylesheet
-          %{<link href="/bop/css/#{@slug}.css" media="screen" rel="stylesheet" type="text/css" data-wysihtml5="custom_css"/>}
-        else
-          %{<!-- stylesheet '#{@slug}' could not be found -->}
-        end
-      end
-    end
-
-    Liquid::Template.register_tag('stylesheet', Bop::Tags::Stylesheet)
-
     ## {{ pagefield [field] }}
     #
     class Pagefield < Liquid::Tag
@@ -60,7 +40,7 @@ module Bop
         id = page.id
         field = @field
         value = page.send(field)
-        "<span id='page#{field}' contenteditable='false' class='contenteditable' data-bop-page=#{id} data-field=#{field}>#{value}</span>"
+        "<span id='page#{field}' data-bop-field=#{field}>#{value}</span>"
       end
     end
 
@@ -89,6 +69,26 @@ module Bop
     end
 
     Liquid::Template.register_tag('collection', Bop::Tags::Collection)
+
+    ## {{ stylesheet [name] }}
+    #
+    class Stylesheet < Liquid::Tag
+      def initialize(tag_name, slug, tokens)
+         super
+         @slug = slug.strip
+         @stylesheet = Bop.site.stylesheets.find_by_title(@slug)
+      end
+
+      def render(context)
+        if @stylesheet
+          %{<link href="/bop/css/#{@slug}.css" media="screen" rel="stylesheet" type="text/css" />}
+        else
+          %{<!-- stylesheet '#{@slug}' could not be found -->}
+        end
+      end
+    end
+
+    Liquid::Template.register_tag('stylesheet', Bop::Tags::Stylesheet)
 
     ## {{ javascript [name] }}
     #

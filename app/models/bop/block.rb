@@ -6,8 +6,9 @@ class Bop::Block < ActiveRecord::Base
   accepts_nested_attributes_for :asset
   has_many :block_properties
   has_many :placed_blocks
+  accepts_nested_attributes_for :placed_blocks
   has_many :pages, :through => :placed_blocks
-    
+  
   def block_type
     @block_type ||= Bop::BlockType.get(block_type_name || 'text')
   end

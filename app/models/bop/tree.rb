@@ -11,7 +11,7 @@ module Bop
   
     def ensure_root_page
       unless root_page
-        self.root_page = pages.build(:title => "Root")
+        self.root_page = pages.build(:title => "Root", :template => Page.default_template(site))
         self.save
       end
     end

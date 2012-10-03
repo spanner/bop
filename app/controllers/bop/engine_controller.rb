@@ -21,7 +21,10 @@ module Bop
       render :template => 'bop/sites/not_found', :status => :not_found
     end
 
+  private
+
     def set_context
+      get_site_from_subdomain
       raise Bop::SiteNotFound unless @site = Bop.site
       @base = @site.anchor
       @root_page = @site.root_page
@@ -30,9 +33,16 @@ module Bop
     def normalize_path(path)
       "/#{path}".gsub(/\/{2,}/, "/")
     end
-
-  private
-
+  
+    def get_site_from_subdomain
+      unless Bop.scoped?
+        subdomains = request.subdomains
+        stem, tld = request.domain.split('.')
+        subdomains.push(stem) if tld == 'dev'
+        Bop.site = Bop::Site.find_by_slug(subdomains)
+      end
+    end
+  
     def set_layout
       if request.headers['X-PJAX']
         false

@@ -10,6 +10,7 @@ gem "jquery-rails"
 gem "haml"
 gem "haml_coffee_assets"
 gem 'coffee-rails', '~> 3.2.1'
+gem 'aloha-rails'
 
 # Declare any dependencies that are still in development here instead of in
 # your gemspec. These might include edge Rails or gems from your path or

@@ -1,7 +1,7 @@
 require 'ancestry'
 
 class Bop::Page < ActiveRecord::Base
-  attr_accessible :title, :slug, :template_id, :asset_id, :anchor, :site_id, :tree_id, :parent_id
+  attr_accessible :title, :slug, :template_id, :asset_id, :anchor, :site_id, :tree_id, :parent_id, :template
 
   belongs_to :site
   belongs_to :tree
@@ -38,16 +38,7 @@ class Bop::Page < ActiveRecord::Base
   end
 
   def find_template
-    template || (parent && parent.find_template) || default_template
-  end
-  
-  def default_template
-    template = Bop::Template.find_or_create_by_title("Default")
-    unless template.body?
-      template.body = "<h1>{{page.title}}</h1>{% yield %}"
-      template.save
-    end
-    template
+    template || (parent && parent.find_template) || self.class.default_template
   end
 
   def inherited_asset
@@ -58,6 +49,13 @@ class Bop::Page < ActiveRecord::Base
     placed_block = placed_blocks.find_or_create_by_block_id(block.id, :space_name => space)
   end
 
+  def self.default_template(site=nil)
+    template = Bop::Template.find_or_create_by_title("Default")
+    template.body ||= "<h1>{{page.title}}</h1>{% yield %}"
+    template.site ||= site
+    template.save if template.changed?
+    template
+  end
 
   ## Rendering
   #

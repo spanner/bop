@@ -22,7 +22,7 @@ class Bop::BlocksController < Bop::EngineController
 
   def create
     @block.save!
-    @block.place_on_page(@page, @space)
+    @block.place_on_page(@page, @space) if @page && @space
     respond_with @page, @block
   end
 

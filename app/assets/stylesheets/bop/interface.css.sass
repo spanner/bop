@@ -91,8 +91,10 @@ section.space
 article.block
   position: relative
   margin: 10px 0
+  min-height: 2em
   .controls
     position: absolute
+    display: none
     top: 5px
     right: 5px
     height: 24px
@@ -311,3 +313,12 @@ a.editor
     color: $pale
     &:hover
       color: $hover
+
+.editable
+  background:
+    repeat: repeat
+    position: top left
+    image: image-url('bop/editable_bg.png')
+  &.editing
+    background-image: image-url('bop/editing_bg.png')
+  

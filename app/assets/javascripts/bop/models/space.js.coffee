@@ -1,19 +1,23 @@
 jQuery ($) ->
 
   class Space extends Bop.Module
-    constructor: (element) ->
+    constructor: (element, @_page) ->
       @_container = $(element)
       @_name = @_container.attr('data-bop-space')
       @_container.find('[data-bop-block]').bop_block(@)
-      @_adder = $("<div class='holder'><a href='/bop/pages/#{$.page_id}/blocks/new?space=#{@_name}' class='adder' data-remote='true' data-type='html'>Add block</a></div>").appendTo(@_container).remote_link(@addBlock)
+      @_adder = $("<a href='#' class='adder'>Add block</a>").appendTo(@_container)
+      @_adder.click @addBlock
+    
+    name: () =>
+      @_name
       
-    element: () =>
-      @_container
+    page: () =>
+      @_page
       
-    addBlock: (response) =>
-      console.log $(response)
-      $(response).hide().insertBefore(@_adder).bop_block(@).slideDown()
-      
+    addBlock: (e) =>
+      e.preventDefault() if e
+      block_element = $('<article class="block" />').insertBefore(@_adder).html("<p>Double-click to edit!</p>").bop_block(@)
+
 
   $.fn.bop_space = (page) ->
     @each ->
