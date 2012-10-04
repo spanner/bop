@@ -5,9 +5,15 @@ jQuery ($) ->
       @_container = $(element)
       @_name = @_container.attr('data-bop-space')
       @_container.find('[data-bop-block]').bop_block(@)
+      @_container.sortable
+        items: 'article'
+        cursor: 'crosshair'
+        containment: @_container
+        start: (event, ui) =>
+          ui.placeholder.height(ui.item.height())
       @_adder = $("<a href='#' class='adder'>Add block</a>").appendTo(@_container)
       @_adder.click @addBlock
-    
+        
     name: () =>
       @_name
       

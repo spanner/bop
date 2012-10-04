@@ -5,6 +5,12 @@ jQuery ($) ->
       @_submitter = callback
       @_initial_content = @_container.html()
       @_container.bind "dblclick", @edit
+      @_container.hallo(
+        editable: false,
+        plugins: {
+          'halloformat': {"formattings": {"bold": true, "italic": true, "strikeThough": false, "underline": false}},
+          'halloheadings': {headers: [1,2,3]}
+        })
       @ready()
       
     revert: (e) =>
@@ -12,12 +18,14 @@ jQuery ($) ->
       @_container.attr('contenteditable', false)
       @_container.html(@_initial_content)
       @_controls?.remove()
+      @_controls = null
       @ready()
       
     ready: () =>
       @_container.bind "dblclick", @edit
       @_container.removeClass('editing')
       @_container.addClass('editable')
+      @_container.hallo({editable: false})
 
     edit: (e) =>
       e.preventDefault()
@@ -27,6 +35,7 @@ jQuery ($) ->
       @_container.bind 'keyup', @position_controls
       @_container.addClass('editing')
       @_container.focus()
+      @_container.hallo({editable: true})
       
     show_controls: () =>
       unless @_controls?
