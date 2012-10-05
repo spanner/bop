@@ -1,3 +1,4 @@
+//= require bop/font-awesome/font-awesome
 //= require bop/hallo
 //= require_tree ./jquery
 @import compass/css3
@@ -6,6 +7,9 @@
 body.bop_page
   margin-bottom: $closedheight + 20px
 
+b
+  font-weight: bold
+  
 #bop_tools
   position: fixed
   bottom: $closedheight - $openheight
@@ -323,4 +327,11 @@ a.editor
     image: image-url('bop/editable_bg.png')
   &.editing
     background-image: image-url('bop/editing_bg.png')
+
+.ui-sortable
+  cursor: move
   
+.ui-sortable-placeholder
+  visibility: visible !important
+  background: none
+  border: 1px dashed #ccc

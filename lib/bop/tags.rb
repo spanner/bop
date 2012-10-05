@@ -17,7 +17,8 @@ module Bop
       def render(context)
         if page = Bop::Page.find(context["page"]["id"])
           output = page.blocks_in(@space.downcase).each_with_object(''.html_safe) do |block, op|
-            op << content_tag(:article, block.render(context), :class => 'block', :"data-bop-block" => block.id)
+            id = Bop::PlacedBlock.find_by_space_name_and_block_id(@space, block.id).id
+            op << content_tag(:article, block.render(context), :class => 'block', :"data-bop-block" => block.id, :id => "placed_block_#{id}")
           end
           content_tag :section, output, :class => 'space', :"data-bop-space" => @space
         end

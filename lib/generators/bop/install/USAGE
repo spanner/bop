@@ -2,7 +2,7 @@ Description:
     Creates a droom initializer and copies across the necessary migrations.
 
 Example:
-    rails generate droom:install
+    rails generate bop:install
 
     This will create:
         config/initializers/droom.rb

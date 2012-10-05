@@ -3,14 +3,21 @@ jQuery ($) ->
     constructor: (element, callback) ->
       @_container = $(element)
       @_submitter = callback
+      @_space = @_container.parent()
       @_initial_content = @_container.html()
       @_container.bind "dblclick", @edit
-      @_container.hallo(
-        editable: false,
-        plugins: {
-          'halloformat': {"formattings": {"bold": true, "italic": true, "strikeThough": false, "underline": false}},
-          'halloheadings': {headers: [1,2,3]}
-        })
+      if @_container.attr('data-bop-block')
+        @_container.hallo
+          editable: false,
+          plugins:
+            halloreundo: true
+            hallolists: true
+            halloformat: 
+              formattings:
+                bold: true
+                italic: true
+            halloheadings: 
+              headers: [1,2,3]
       @ready()
       
     revert: (e) =>
@@ -26,6 +33,7 @@ jQuery ($) ->
       @_container.removeClass('editing')
       @_container.addClass('editable')
       @_container.hallo({editable: false})
+      @_space.sortable( "option", "disabled", false )
 
     edit: (e) =>
       e.preventDefault()
@@ -35,6 +43,7 @@ jQuery ($) ->
       @_container.bind 'keyup', @position_controls
       @_container.addClass('editing')
       @_container.focus()
+      @_space.sortable( "option", "disabled", true )
       @_container.hallo({editable: true})
       
     show_controls: () =>
