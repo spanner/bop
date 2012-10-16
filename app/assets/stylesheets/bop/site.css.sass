@@ -1,0 +1,86 @@
+@import compass/css3
+@import base
+
+body.bop_page
+  margin-bottom: $closedheight + 20px
+
+#bop_tools
+  position: fixed
+  bottom: $closedheight - $openheight
+  left: $closedwidth - $openwidth
+  height: $openheight
+  width: $openwidth
+  color: white
+  background:
+    color: $menubg
+    image: image-url('bop/bg.jpg')
+    position: right top
+    repeat: no-repeat
+  z-index: 999
+  &.showing
+    +box-shadow
+  a
+    color: white
+  a.boptag
+    display: block
+    position: absolute
+    right: 0
+    top: 0
+    width: $closedwidth
+    height: $closedheight
+    text-indent: $closedwidth
+    overflow: hidden
+  .pagetree
+    position: relative
+    width: $openwidth
+    height: $openheight - 30px
+    overflow: auto
+    font-size: 1em
+    margin-left: 20px
+    margin-top: 40px
+    .page
+      position: relative
+      .link
+        display: inline-block
+        height: 18px
+        line-height: 18px
+      .page
+        padding-left: 20px
+        background:
+          image: image-url('bop/descent.png')
+          repeat: no-repeat
+          position: 0 0
+    
+  .files
+    position: absolute
+    top: 50px
+    left: 20px
+    right: 10px
+    bottom: 60px
+    
+  .admin
+    position: absolute
+    left: 20px
+    bottom: 5px
+
+  a.adder
+    background-position: 0 -120px
+    &:hover, &:active
+      background-position: 0 -144px
+
+  a.remover
+    background-position: 0 -624px
+    &:hover, &:active
+      background-position: 0 -648px
+
+p.tabs
+  a.selected
+    +bold
+    
+#bop_status
+  position: fixed
+  bottom: 10px
+  right: 10px
+  height: $closedheight
+  background:
+    color: white

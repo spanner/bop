@@ -1,11 +1,10 @@
+#= require bop/base
 #= require bop/lib/jquery.animate-colors
+#= require rangy-core-1.2.3
+#= require_tree ../../../../vendor/assets/javascripts/hallo
 #= require bop/lib/content
 #= require_tree ./models/
 #= require_self
-
-
-# You have to load bop/base separately before you load this file. It is not included automatically
-# because there are also cases where we want to load just that file.
 
 jQuery ($) ->
   $.fn.activate = ->
