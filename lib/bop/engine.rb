@@ -4,6 +4,7 @@ module Bop
 
     initializer "bop.integration" do |config|
       ActiveRecord::Base.send(:include, Bop::Glue)
+      ActiveRecord::Base.send :include, Bop::Helpers
     end
 
     initializer "bop.assets" do |config|

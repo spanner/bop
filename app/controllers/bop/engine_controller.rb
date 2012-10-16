@@ -5,7 +5,7 @@ module Bop
     rescue_from "Bop::AdminNotFound", :with => :rescue_no_admin
     rescue_from "Bop::SiteNotFound", :with => :rescue_no_site
     before_filter :set_context
-    layout :set_layout
+    layout :bop_layout
 
   protected
 

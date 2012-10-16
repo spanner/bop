@@ -3,12 +3,11 @@
   %title 
     = yield :title
   = yield :head
-  = stylesheet_link_tag "bop/editor"
+  = stylesheet_link_tag "bop_code"
   = csrf_meta_tags
   
 %body
   = yield
   = render :partial => 'bop/tools'
-  = javascript_include_tag "bop/base"
-  = javascript_include_tag "bop/editor"
+  = javascript_include_tag "bop_code"
   

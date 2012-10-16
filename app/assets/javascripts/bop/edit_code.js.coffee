@@ -1,4 +1,4 @@
-#= require_tree ./lib/codemirror
+#= require codemirror
 #= require_self
 
 jQuery ($) ->
