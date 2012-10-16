@@ -8,6 +8,7 @@ Bop::Engine.routes.draw do
   resources :users
   resources :pages do
     resources :blocks
+    resources :placed_blocks
     resources :publications
     
     # These will go soon in favour of publication crud

@@ -21,3 +21,4 @@ jQuery ($) ->
 
 $ ->
   $('[data-bop-page]').bop_page()
+  

@@ -6,7 +6,7 @@ class Bop::Block < ActiveRecord::Base
   accepts_nested_attributes_for :asset
   has_many :block_properties
   has_many :placed_blocks
-  accepts_nested_attributes_for :placed_blocks
+  accepts_nested_attributes_for :placed_blocks, :allow_destroy => true
   has_many :pages, :through => :placed_blocks
   
   def block_type
