@@ -1,5 +1,6 @@
 require "bop/engine"
 require "bop/routing"
+require "bop/helpers"
 require "bop/tags"
 require "bop/glue"
 require "bop/block_type"
@@ -79,27 +80,26 @@ module Bop
   # These class methods are included into ActiveRecord::Base and so available in all model classes.
 
   module BoppableClassMethods
-    def has_pages?
+    def has_bop_pages?
+      false
+    end
+
+    def has_bop_blocks?
       false
     end
     
-    def has_pages(options={})
+    def has_bop_pages(options={})
       include BoppedInstanceMethods
       extend BoppedClassMethods
-      has_one :site, :class_name => "Bop::Site", :as => "anchor"
+      has_one :site, :class_name => "Bop::Site", :as => :anchor
+    end
+
+    def has_bop_blocks(options={})
+      has_many :placed_blocks, :class_name => "Bop::PlacedBlock", :as => :place
+      has_many :blocks, :through => :placed_blocks, :class_name => "Bop::Block"
     end
   end
   
-  module BoppableInstanceMethods
-    def ensure_presence_and_uniqueness_of(column, base, scope=self.class.scoped)
-      unless self.send :"#{column}?"
-        value = base
-        addendum = 0
-        value = "#{base}_#{addendum+=1}" while scope.send :"find_by_#{column}", value
-        self.send :"#{column}=", value
-      end
-    end
-  end
 
   # These class and instance methods are included into specific model classes when has_pages is called.
 

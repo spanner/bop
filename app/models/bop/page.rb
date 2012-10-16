@@ -9,8 +9,7 @@ class Bop::Page < ActiveRecord::Base
   belongs_to :user, :class_name => Bop.user_class
   belongs_to :asset
   has_ancestry :orphan_strategy => :destroy
-  has_many :placed_blocks
-  has_many :blocks, :through => :placed_blocks
+  has_bop_blocks
   has_many :publications
 
   before_save :slugify_slug
