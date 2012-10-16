@@ -55,7 +55,15 @@ module Bop
       if request.headers['X-PJAX']
         false
       else
-        Bop.editing_layout
+        Bop.editor_layout
+      end
+    end
+
+    def dashboard_layout
+      if request.headers['X-PJAX']
+        false
+      else
+        Bop.dashboard_layout
       end
     end
 

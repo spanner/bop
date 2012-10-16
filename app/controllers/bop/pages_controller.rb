@@ -79,7 +79,7 @@ protected
   end
   
   def ensure_there_is_an_admin_user
-    raise Bop::AdminNotFound unless Bop.owner_class.any?
+    raise Bop::AdminNotFound unless Bop.user_class.any?
   end
 
 end

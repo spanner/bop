@@ -19,34 +19,39 @@ module Bop
   class MarkupNotFound < BopError; end
   class BlockTypeNotFound < BopError; end
   
+  
+  ## Configuration
+  #
+  # These settings are structural and usually set from an initializer in the host app.
+  #
   class << self
     def user_class=(klass)
-      @user_class = klass.to_s
+      @@user_class = klass.to_s
     end
     
     def user_class
-      (@user_class ||= "User").constantize
+      (@@user_class ||= "User").constantize
     end
 
     def layout
-      @layout ||= 'bop/wrapper'
+      @@layout ||= 'bop/wrapper'
     end
     
     def editor_layout
-      @editor_layout ||= 'bop/editor'
+      @@editor_layout ||= 'bop/editor'
     end
     
     def dashboard_layout
-      @dashboard_layout ||= 'bop/dashboard'
+      @@dashboard_layout ||= 'bop/dashboard'
     end
     
     def scope
-      @scope
+      @@scope
     end
     
     def scope=(instance)
       raise Bop::ConfigurationError unless instance.class.has_pages?
-      @scope = instance
+      @@scope = instance
     end
     
     def scoped?
@@ -54,11 +59,11 @@ module Bop
     end
     
     def site=(site)
-      @site = site
+      @@site = site
     end
     
     def site
-      @site ||= if scoped?
+      @@site ||= if scoped?
         scope.find_or_create_site
       else
         Bop::Site.find_or_create_by_name("Default")
@@ -81,7 +86,6 @@ module Bop
       include BoppedInstanceMethods
       extend BoppedClassMethods
       has_one :site, :class_name => "Bop::Site", :as => "anchor"
-      @owner_class = options[:belonging_to]
     end
   end
   
@@ -101,10 +105,6 @@ module Bop
   module BoppedClassMethods
     def has_pages?
       true
-    end
-    
-    def owner_class
-      @owner_class
     end
   end
 
