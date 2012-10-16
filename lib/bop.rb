@@ -8,6 +8,7 @@ require "bop/validators"
 
 module Bop
   mattr_accessor :layout, :editor_layout, :dashboard_layout
+  @@scope ||= nil
   
   class BopError < StandardError; end
   class ConfigurationError < BopError; end
