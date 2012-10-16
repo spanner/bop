@@ -1,15 +1,21 @@
 jQuery ($) ->
   class Block extends Bop.Module
-    constructor: (element, @_space) ->
+    constructor: (element, @_space, @_type) ->
       @_container = $(element)
       @_page = @_space.page()
       @_id = @_container.attr('data-bop-block')
+      @_type ?= 'text'
       @create() unless @_id?
       @_content = new Bop.Content @_container, @update
     
     id: () => 
       @_id
     
+    default_content: () =>
+      switch @_type
+        when "text" then $("<p>Double-click to edit!</p>")
+        when "image" then $('<div class="uploader" />')
+      
     create: () =>
       $.ajax
         url: "/bop/pages/#{@_page.id()}/blocks"
@@ -23,20 +29,17 @@ jQuery ($) ->
         success: @created
 
     created: (response) =>
-      console.log "block created", response
       @_id = response.id
       @_container.attr('data-bop-block', @_id)
+      @_container.flash("#8dd169")
 
     update: (content) =>
-      data = 
-        block: 
-          content: content
-
-      data[@_fieldname] = content
       $.ajax
         url: "/bop/pages/#{@_page.id()}/blocks/#{@id()}"
         type: "PUT"
-        data: data
+        data: 
+          block: 
+            content: content
         dataType: "JSON"
         success: @updated
         error: @error

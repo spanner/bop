@@ -6,13 +6,16 @@ jQuery ($) ->
       @_name = @_container.attr('data-bop-space')
       @_container.find('[data-bop-block]').bop_block(@)
       @_adder = $("<a href='#' class='adder'>Add block</a>").appendTo(@_container)
-      @_adder.click @addBlock
+      @_adder.click @chooseBlockType
     
     name: () =>
       @_name
       
     page: () =>
       @_page
+    
+    chooseBlockType: () =>
+      @_chooser = $('<div class=""')
       
     addBlock: (e) =>
       e.preventDefault() if e

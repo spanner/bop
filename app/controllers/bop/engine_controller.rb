@@ -43,11 +43,19 @@ module Bop
       end
     end
   
-    def set_layout
+    def bop_layout
       if request.headers['X-PJAX']
         false
       else
         Bop.layout
+      end
+    end
+    
+    def editor_layout
+      if request.headers['X-PJAX']
+        false
+      else
+        Bop.editing_layout
       end
     end
 

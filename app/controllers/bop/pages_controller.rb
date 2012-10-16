@@ -1,6 +1,7 @@
 class Bop::PagesController < Bop::EngineController
   respond_to :html, :json, :js
-
+  layout :bop_layout
+  
   before_filter :ensure_there_is_an_admin_user
   before_filter :authenticate_user!
   
@@ -12,7 +13,7 @@ class Bop::PagesController < Bop::EngineController
 
 
   def index
-    render :partial => 'index', :collection => @pages
+    respond_with $pages
   end
 
   def show

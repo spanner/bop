@@ -10,7 +10,6 @@ gem "jquery-rails"
 gem "haml"
 gem "haml_coffee_assets"
 gem 'coffee-rails', '~> 3.2.1'
-gem 'aloha-rails'
 
 # Declare any dependencies that are still in development here instead of in
 # your gemspec. These might include edge Rails or gems from your path or
@@ -24,6 +23,7 @@ group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
   gem 'compass-rails'
+  gem 'jquery-ui-rails'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby

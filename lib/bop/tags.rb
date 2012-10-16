@@ -46,6 +46,41 @@ module Bop
 
     Liquid::Template.register_tag('pagefield', Bop::Tags::Pagefield)
 
+
+
+
+    class Image < Liquid::Tag
+      
+      def initialize(tag_name, geometry, tokens)
+         super
+         @field = field.strip
+      end
+      
+      def render(context)
+        page = Bop::Page.find(context["page"]["id"])
+        id = page.id
+        field = @field
+        value = page.send(field)
+        "<span id='page#{field}' data-bop-field=#{field}>#{value}</span>"
+      end
+    end
+
+    Liquid::Template.register_tag('pagefield', Bop::Tags::Pagefield)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     ## {{ collection [class_name] }}
     #
     class Collection < Liquid::Tag

@@ -22,7 +22,6 @@ Gem::Specification.new do |s|
   # s.add_dependency 'radius'
   s.add_dependency 'redcarpet'
   s.add_dependency 'paperclip'
-  s.add_dependency 'aloha-rails'
 
   s.add_development_dependency "sqlite3"
 end

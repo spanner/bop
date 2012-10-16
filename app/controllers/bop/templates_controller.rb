@@ -1,6 +1,6 @@
 module Bop
   class TemplatesController < EngineController
-    layout "bop/editor"
+    layout :editor_layout
     
     respond_to :html, :css
     before_filter :get_templates, :only => :index

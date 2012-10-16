@@ -1,5 +1,6 @@
 class Bop::BlocksController < Bop::EngineController
   respond_to :html, :json, :js
+  layout :bop_layout
 
   before_filter :authenticate_user!
   
@@ -8,8 +9,6 @@ class Bop::BlocksController < Bop::EngineController
   before_filter :get_space
   before_filter :get_block, :only => [:edit, :show, :destroy, :publish, :revert, :update]
   before_filter :build_block, :only => [:new, :create]
-  
-  layout :set_layout
   
   def index
     @blocks = @page.blocks

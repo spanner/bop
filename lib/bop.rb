@@ -7,7 +7,7 @@ require "bop/renderer"
 require "bop/validators"
 
 module Bop
-  mattr_accessor :layout
+  mattr_accessor :layout, :editor_layout, :dashboard_layout
   
   class BopError < StandardError; end
   class ConfigurationError < BopError; end
@@ -25,15 +25,19 @@ module Bop
     end
     
     def user_class
-      (@@user_class ||= "User").constantize
+      (@user_class ||= "User").constantize
     end
-    
-    def layout=(name)
-      @layout = name
-    end
-    
+
     def layout
-      @layout ||= 'bop/standard'
+      @layout ||= 'bop/wrapper'
+    end
+    
+    def editor_layout
+      @editor_layout ||= 'bop/editor'
+    end
+    
+    def dashboard_layout
+      @dashboard_layout ||= 'bop/dashboard'
     end
     
     def scope
@@ -63,18 +67,6 @@ module Bop
     
     def root_page
       site.root_page
-    end
-    
-    def owner_class
-      if scoped?
-        @owner_class ||= scope.class.owner_class || "User".constantize
-      else
-        @owner_class ||= "User".constantize
-      end
-    end
-    
-    def owner_class=(klassname)
-      @owner_class = klassname.constantize
     end
   end
 
