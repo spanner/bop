@@ -1,9 +1,3 @@
-= content_for :bop_js do
-  = javascript_include_tag "bop/page"
-
-= content_for :bop_css do
-  = stylesheet_link_tag "bop/page"
-
 = content_for :head do
   = @page.head.html_safe
 

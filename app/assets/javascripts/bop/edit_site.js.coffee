@@ -1,4 +1,4 @@
-#= require_tree ./bop/interface
+#= require_tree ./interface
 #= require_self
 
 $ ->
