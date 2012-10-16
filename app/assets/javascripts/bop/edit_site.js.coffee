@@ -1,7 +1,6 @@
-#= require bop/base
-#= require bop/interface/menu
-
+#= require_tree ./bop/interface
 #= require_self
 
 $ ->
   $('#bop_tools').bop_menu()
+

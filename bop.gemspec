@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.summary     = "HTML5 CMS engine for Rails 3.2+"
   s.description = "Blocks on Pages. Very simple, very lovely html5 CMS designed from the ground up as a rails engine."
 
-  s.files = Dir["{app,config,db,lib}/**/*"] + ["Rakefile", "README.md", "LICENSE"]
+  s.files = Dir["{app,config,db,lib,vendor}/**/*"] + ["Rakefile", "README.md", "LICENSE"]
 
   s.add_dependency "rails", '~> 3.2.0'
 

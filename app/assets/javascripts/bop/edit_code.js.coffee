@@ -1,4 +1,3 @@
-#= require bop/base
 #= require_tree ./lib/codemirror
 #= require_self
 

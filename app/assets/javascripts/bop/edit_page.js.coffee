@@ -1,7 +1,7 @@
-#= require bop/base
+#= require jquery-ui
 #= require bop/lib/jquery.animate-colors
 #= require rangy-core-1.2.3
-#= require_tree ../../../../vendor/assets/javascripts/hallo
+#= require_tree ./bop/lib/hallo
 #= require bop/lib/content
 #= require_tree ./models/
 #= require_self
