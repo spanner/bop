@@ -33,6 +33,10 @@
         widthToAdd += parseFloat el.css('border-right-width')
         widthToAdd += (parseFloat el.css('outline-width')) * 2
         widthToAdd += (parseFloat el.css('outline-offset')) * 2
+        widthToAdd -= parseFloat jQuery(@toolbar).css("padding-left")
+        widthToAdd -= parseFloat jQuery(@toolbar).css("padding-right")
+        widthToAdd -= parseFloat jQuery(@toolbar).css("border-left")
+        widthToAdd -= parseFloat jQuery(@toolbar).css("border-right")
         jQuery(@toolbar).css "width", el.width() + widthToAdd
 
     _getPosition: (event, selection) ->
@@ -60,7 +64,7 @@
       return unless @options.parentElement is 'body'
       @toolbar.css 'position', 'absolute'
       @toolbar.css 'top', @element.offset().top - @toolbar.outerHeight()
-      @toolbar.css 'left', @element.offset().left + 10
+      @toolbar.css 'left', @element.offset().left
 
     _updatePosition: (position) ->
       return
@@ -73,5 +77,5 @@
 
       # catch deactivate -> hide
       @element.bind 'hallodeactivated', (event, data) =>
-        @toolbar.hide()
+        # @toolbar.hide()
 ) jQuery

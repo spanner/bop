@@ -1,7 +1,7 @@
 require "bop/engine"
 require "bop/routing"
 require "bop/helpers"
-require "bop/tags"
+require "bop/liquid_tags"
 require "bop/glue"
 require "bop/block_type"
 require "bop/renderer"

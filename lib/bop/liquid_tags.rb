@@ -1,7 +1,7 @@
 require "liquid"
 
 module Bop
-  module Tags
+  module LiquidTags
     
     ## {{ yield [space name] }}
     #
@@ -18,14 +18,14 @@ module Bop
         if page = Bop::Page.find(context["page"]["id"])
           output = page.blocks_in(@space.downcase).each_with_object(''.html_safe) do |block, op|
             id = Bop::PlacedBlock.find_by_space_name_and_block_id(@space, block.id).id
-            op << content_tag(:article, block.render(context), :class => 'block', :"data-bop-block" => block.id, :id => "placed_block_#{id}")
+            op << content_tag(:article, block.render(context), :class => 'block', :"data-bop-block" => block.id, :"data-bop-blocktype" => block.block_type, :id => "placed_block_#{id}")
           end
           content_tag :section, output, :class => 'space', :"data-bop-space" => @space
         end
       end
     end
 
-    Liquid::Template.register_tag('yield', Bop::Tags::Yield)
+    Liquid::Template.register_tag('yield', Bop::LiquidTags::Yield)
 
     ## {{ pagefield [field] }}
     #
@@ -45,7 +45,7 @@ module Bop
       end
     end
 
-    Liquid::Template.register_tag('pagefield', Bop::Tags::Pagefield)
+    Liquid::Template.register_tag('pagefield', Bop::LiquidTags::Pagefield)
 
 
 
@@ -66,7 +66,7 @@ module Bop
       end
     end
 
-    Liquid::Template.register_tag('pagefield', Bop::Tags::Pagefield)
+    Liquid::Template.register_tag('pagefield', Bop::LiquidTags::Pagefield)
 
 
 
@@ -104,7 +104,7 @@ module Bop
       end
     end
 
-    Liquid::Template.register_tag('collection', Bop::Tags::Collection)
+    Liquid::Template.register_tag('collection', Bop::LiquidTags::Collection)
 
     ## {{ stylesheet [name] }}
     #
@@ -124,7 +124,7 @@ module Bop
       end
     end
 
-    Liquid::Template.register_tag('stylesheet', Bop::Tags::Stylesheet)
+    Liquid::Template.register_tag('stylesheet', Bop::LiquidTags::Stylesheet)
 
     ## {{ javascript [name] }}
     #
@@ -144,7 +144,7 @@ module Bop
       end
     end
 
-    Liquid::Template.register_tag('javascript', Bop::Tags::Javascript)
+    Liquid::Template.register_tag('javascript', Bop::LiquidTags::Javascript)
 
   end
 end

@@ -4,6 +4,10 @@
 module Bop
   class BlockType
     attr_reader :name
+    
+    def to_s
+      name
+    end
 
     def initialize(name, options = {})
       options = options.symbolize_keys

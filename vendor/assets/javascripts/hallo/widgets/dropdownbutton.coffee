@@ -42,19 +42,23 @@
       target = jQuery @options.target
       @_updateTargetPosition()
       target.addClass 'open'
+      console.log "showtarget", @button, target
+      @button.find('.icon-caret-right').removeClass('icon-caret-right').addClass('icon-caret-down')
       target.show()
     
     _hideTarget: ->
       target = jQuery @options.target
       target.removeClass 'open'
+      @button.find('.icon-caret-down').removeClass('icon-caret-down').addClass('icon-caret-right')
       target.hide()
 
     _updateTargetPosition: ->
       target = jQuery @options.target
       {top, left} = @button.position()
-      top += @button.outerHeight()
+      top += @button.outerHeight() - 4
       target.css 'top', top
-      target.css 'left', left - 20
+      target.css 'left', left
+      target.css 'width', @button.outerWidth() - 2
 
     _prepareButton: ->
       id = "#{@options.uuid}-#{@options.label}"
@@ -66,8 +70,8 @@
         'ui-button-text-only'
       ]
       buttonEl = jQuery "<button id=\"#{id}\"
-        class=\"#{classes.join(' ')}\" title=\"#{@options.label}\">
-         <i class=\"#{@options.icon}\"></i>
+        class=\"#{classes.join(' ')}\">
+         <span class=\"#{@options.icon}\">#{@options.label}</span>
        </button>"
       buttonEl.addClass @options.cssClass if @options.cssClass
       buttonEl.button()

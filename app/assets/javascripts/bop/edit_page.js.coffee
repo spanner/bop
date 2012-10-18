@@ -2,7 +2,7 @@
 #= require jquery.animate-colors
 #= require rangy
 #= require hallo
-#= require bop/lib/editable_content
+#= require bop/lib/hallo/blocktype
 #= require_tree ./models/
 #= require_self
 

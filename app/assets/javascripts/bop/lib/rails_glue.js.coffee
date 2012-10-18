@@ -52,3 +52,24 @@ jQuery ($) ->
         container.fadeOut "fast"
         container.parent().removeClass "erratic"
 
+  $.fn.editable = ->
+    @each ->
+      container = $(@).parents('.editing').first()
+      $(@).hallo
+        editable: true
+        toolbar: 'halloToolbarFixed'
+        parentElement: container
+        plugins:
+          halloreundo: true
+          hallolists: true
+          hallolink: true
+          halloformat: 
+            formattings:
+              bold: true
+              italic: true
+          halloheadings: 
+            headers: [1,2,3]
+
+  $.fn.ineditable = ->
+    @hallo
+      editable: false
