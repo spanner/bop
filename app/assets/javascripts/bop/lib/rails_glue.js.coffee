@@ -54,11 +54,11 @@ jQuery ($) ->
 
   $.fn.editable = ->
     @each ->
+      console.log "editable", @
       container = $(@).parents('.editing').first()
-      $(@).hallo
+      $(@).attr('contentEditable', true).hallo
         editable: true
         toolbar: 'halloToolbarFixed'
-        parentElement: container
         plugins:
           halloreundo: true
           hallolists: true
@@ -71,5 +71,6 @@ jQuery ($) ->
             headers: [1,2,3]
 
   $.fn.ineditable = ->
-    @hallo
-      editable: false
+    @each ->
+      $(@).attr('contentEditable', false).hallo
+        editable: false

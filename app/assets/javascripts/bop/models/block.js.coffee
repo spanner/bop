@@ -14,7 +14,7 @@ jQuery ($) ->
     
     ready: (e) =>
       @_container.bind "dblclick", @edit
-      @_space.unsortable()
+      @_space.sortable()
       
     default_content: () =>
       switch @_type
@@ -41,7 +41,7 @@ jQuery ($) ->
     edit: (e) =>
       e.preventDefault()
       @_container.unbind "dblclick", @edit
-      @_space.sortable( "option", "disabled", true )
+      @_space.unsortable()
       @_editor = new BlockEditor @_container, @
       
     update: (content) =>
@@ -97,10 +97,13 @@ jQuery ($) ->
       # show the appropriate interface: content editor, uploader, picker
       switch blocktype
         when "text"
-          # make editable and hook up callbacks
+          @_editable.editable()
+          @bind "complete", () =>
+            @_editable.ineditable()
         when "image"
-          # set up uploader
-          # any existing asset will be in the frame
+          console.log "that'll need an uploader"
+
+      @trigger('set_type', blocktype)
 
 
 
@@ -113,6 +116,8 @@ jQuery ($) ->
       @_editable.unwrap()
       @_editable.html(@_initial_content)
       @_block.ready()
+      @trigger('complete')
+      @trigger('revert')
       # stand down the various editors that might be in play
 
     submit: () =>
@@ -121,6 +126,8 @@ jQuery ($) ->
       @_chooser.destroy()
       @_editable.unwrap()
       @_block.update()
+      @trigger('complete')
+      @trigger('submit')
 
     show: () =>
       unless @_controls?
@@ -182,8 +189,6 @@ jQuery ($) ->
       el
 
     showBlockType: (blocktype) =>
-      console.log "showBlockType", blocktype
-      console.log "icons", @_options.icons
       for bt in @_options.blocktypes
         @_indicator.removeClass("icon-#{@_options.icons[bt]}")
       @_indicator.addClass("icon-#{@_options.icons[blocktype]}")
