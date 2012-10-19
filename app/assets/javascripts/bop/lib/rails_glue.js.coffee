@@ -74,3 +74,8 @@ jQuery ($) ->
     @each ->
       $(@).attr('contentEditable', false).hallo
         editable: false
+
+  $.fn.click_proxy = (target_selector) ->
+    this.bind "click", (e) ->
+      e.preventDefault()
+      $(target_selector).click()
