@@ -5,9 +5,9 @@ jQuery ($) ->
       @_container = $(element)
       @_name = @_container.attr('data-bop-space')
       @sortable()
-      @_container.find('[data-bop-block]').bop_block(@)
-      @_adder = $("<a href='#' class='adder'>Add block</a>").appendTo(@_container)
-      @_adder.click @addBlock
+      @_container.find('[data-bop-item]').bop_placement(@)
+      @_adder = $("<a href='#' class='adder'>Add something</a>").appendTo(@_container)
+      @_adder.click @addItem
     
     element: () =>
       @_container
@@ -18,7 +18,7 @@ jQuery ($) ->
     page: () =>
       @_page
       
-    addBlock: (e) =>
+    addItem: (e) =>
       e.preventDefault() if e
       block_element = $('<article class="block" />').insertBefore(@_adder).html("<p>Double-click to edit!</p>").bop_block(@)
 

@@ -13,11 +13,10 @@ module Bop
       output.html_safe
     end
 
-    #todo: sanitize
+    #todo: sanitize?
     #
     def bop_body
-      output = content_for(:body)
-      output.html_safe
+      space(:body)
     end
 
     def bop_foot
@@ -30,16 +29,17 @@ module Bop
       output.html_safe
     end
 
+
+
+
     # Places on a page the html contents of every block in the named space
     #
     def space(space_name)
-      @page.placements.in_space(space_name).each do |placement|
-        
-      end
+      render :partial => "bop/placements/space", :object => space_name.to_s
     end
     
-    def field
-      = content_tag "span"
+    def field(field_name)
+      content_tag "span", @page.send(field_name.to_s.strip.to_sym), :class => "editable", :'data-bop-field' => field_name
     end
 
   end

@@ -10,8 +10,4 @@ class Bop::Placement < ActiveRecord::Base
     where(["space_name = ?", space]).includes(:item)
   }
   
-  def render
-    item.render
-  end
-  
 end

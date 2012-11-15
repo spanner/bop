@@ -1,0 +1,7 @@
+- placement ||= placed
+- if item = placement.item
+  - template_path = item.class.to_s.underscore
+  - object_type = template_path.gsub(/^bop\//, '')
+
+  %article.placed{:'data-bop-item' => item.id, :'data-bop-type' => object_type}
+    = render :partial => "#{template_path.pluralize}/placed", :locals => {object_type.to_sym => item}

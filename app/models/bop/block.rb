@@ -1,5 +1,5 @@
 class Bop::Block < ActiveRecord::Base
-  attr_accessible :title, :content, :type, :asset_id, :block_type_name, :asset_attributes
+  attr_accessible :title, :content, :type, :asset_id, :asset_attributes
 
   belongs_to :user, :class_name => Bop.user_class
   belongs_to :asset
@@ -12,6 +12,10 @@ class Bop::Block < ActiveRecord::Base
   def place_on_page(page, space)
     space ||= 'main'
     placements.create(:page => page, :space_name => space)
+  end
+  
+  def render
+    content
   end
 
   def as_json(options={})

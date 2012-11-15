@@ -1,0 +1,5 @@
+- space ||= "main"
+
+%section.space{:'data-bop-space' => space}
+  = render :partial => "bop/placements/placed", :collection => @page.placements.in_space(space)
+  

@@ -15,9 +15,7 @@ module Bop
   class RootPageNotFound < BopError; end
   class PageNotFound < BopError; end
   class AdminNotFound < BopError; end
-  class TemplateNotFound < BopError; end
   class MarkupNotFound < BopError; end
-  class BlockTypeNotFound < BopError; end
   
   
   ## Configuration
@@ -98,7 +96,6 @@ module Bop
     end
 
     def has_bop_blocks(options={})
-      include BlockedInstanceMethods
       extend BlockedClassMethods
       has_many :placements, :class_name => "Bop::Placement", :as => :place
       has_many :items, :through => :placements
@@ -142,20 +139,5 @@ module Bop
       true
     end
   end
-
-  module BlockedInstanceMethods
-  #   def placements_in(space)
-  #     placements.in_space(space)
-  #   end
-  # 
-  #   def render_blocks(space="main")
-  #     Rails.logger.warn ">>> rendering blocks in #{space} on page #{self.inspect}. Items: #{items_in(space).inspect}"
-  #     output = items_in(space).each_with_object(''.html_safe) do |item, op|
-  #       op << item.render(context)
-  #     end
-  #     #todo: I hate having this content_tag here. Put it in a haml template somewhere.
-  #     content_tag :section, output, :class => 'space', :"data-bop-space" => @space
-  #   end
-  # end
 end
 

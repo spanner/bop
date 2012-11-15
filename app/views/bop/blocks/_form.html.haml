@@ -3,11 +3,6 @@
     .wysihtml
       .toolbar
         %header
-          .types
-            = f.label "block_type_name_text", "text"
-            = f.radio_button :block_type_name, "text"
-            = f.label "block_type_name_image", "image"
-            = f.radio_button :block_type_name, "image"
           %ul.commands
             %li.command{:"data-wysihtml5-command" => "bold"}
             %li.command{:"data-wysihtml5-command" => "italic"}
