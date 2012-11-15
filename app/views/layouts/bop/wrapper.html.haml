@@ -3,11 +3,13 @@
   // user-supplied head content
   // and standard bop stylesheets 
   = bop_head
-    
+  = csrf_meta_tags
+  %meta{:charset => "utf-8"}
+  
 %body
-  // user-supplied body content
-  = bop_body
+  %h1
+    = field :title
 
-  // user-supplied footer content
-  // and standard bop javascripts
+  = space :main
+
   = bop_foot

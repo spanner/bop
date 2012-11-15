@@ -34,59 +34,12 @@ class Bop::Page < ActiveRecord::Base
     self.base_class.other_than(self).scoped :conditions => sibling_conditions
   end
 
-  def find_template
-    template || (parent && parent.find_template) || self.class.default_template
-  end
-
   def inherited_asset
     asset || parent && parent.inherited_asset
   end
-  
-  def self.default_template(site=nil)
-    template = Bop::Template.find_or_create_by_title("Default")
-    template.body = "<h1>{% field title %}</h1>{% space %}" unless template.body?
-    template.site ||= site
-    template.save if template.changed?
-    template
-  end
 
-  ## Rendering
-  #
-  # is handled by the template. We supply this page object as part of its context and presume that the template
-  # contains page-related tags.
-  #
-  # The has_bop_blocks call above also gives us a render_space method. It's usually only called from the {%space %}
-  # tags in liquid templates but you can bypass all that by calling render_space from your view templates.
-  
-  def render_head(additional_context={})
-    find_template.render(:head, context.merge(additional_context))
-  end
-
-  def render_body(additional_context={})
-    find_template.render(:body, context.merge(additional_context))
-  end
-  
-  def renderable?(fieldname)
+  def renderable_field?(fieldname)
     self.class.renderable_fields.include?(fieldname)
-  end
-  
-  def render_field(fieldname)
-    if renderable?(fieldname)
-      value = send fieldname.to_sym
-      "<span data-bop-field=#{fieldname}>#{value}</span>"
-    end
-  end
-  
-  def context
-    @context ||= {
-      'page' => self,
-      'site' => site,
-      'asset' => inherited_asset
-    }
-  end
-  
-  def to_liquid
-    as_json()
   end
   
   def as_json(options={})
@@ -96,14 +49,14 @@ class Bop::Page < ActiveRecord::Base
     }
   end
   
+  
+  
+  
+  
   ## Publishing
   #
-  # Publications are frozen pages. Here we just create a publication object: it will call back to the page
-  # to get the rendered head and body, which it saves as readymade blocks for quick delivery.
+  # Publications are frozen pages. 
   #
-  def publish!
-    publications.create
-  end
   
   def published?
     publications.any?

@@ -30,6 +30,18 @@ module Bop
       output.html_safe
     end
 
+    # Places on a page the html contents of every block in the named space
+    #
+    def space(space_name)
+      @page.placements.in_space(space_name).each do |placement|
+        
+      end
+    end
+    
+    def field
+      = content_tag "span"
+    end
+
   end
 end
 

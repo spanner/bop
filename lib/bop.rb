@@ -1,9 +1,7 @@
 require "bop/engine"
 require "bop/routing"
 require "bop/helpers"
-require "bop/liquid_tags"
 require "bop/glue"
-require "bop/block_type"
 require "bop/renderer"
 require "bop/validators"
 
@@ -146,19 +144,18 @@ module Bop
   end
 
   module BlockedInstanceMethods
-    def items_in(space="main")
-      placements.in_space(space).map(&:item).compact
-    end
-
-    def render_space(space)
-      Rails.logger.warn ">>> rendering space #{space} on page #{self.inspect}. Items: #{items_in(space).inspect}"
-      output = items_in(space).each_with_object(''.html_safe) do |item, op|
-        Rails.logger.warn ">>> rendering item #{item.inspect}"
-        op << item.render(context)
-      end
-      #todo: I hate having this content_tag here. Put it in a haml template somewhere.
-      content_tag :section, output, :class => 'space', :"data-bop-space" => @space
-    end
-  end
+  #   def placements_in(space)
+  #     placements.in_space(space)
+  #   end
+  # 
+  #   def render_blocks(space="main")
+  #     Rails.logger.warn ">>> rendering blocks in #{space} on page #{self.inspect}. Items: #{items_in(space).inspect}"
+  #     output = items_in(space).each_with_object(''.html_safe) do |item, op|
+  #       op << item.render(context)
+  #     end
+  #     #todo: I hate having this content_tag here. Put it in a haml template somewhere.
+  #     content_tag :section, output, :class => 'space', :"data-bop-space" => @space
+  #   end
+  # end
 end
 
