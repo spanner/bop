@@ -4,6 +4,7 @@ module Bop
 
     belongs_to :anchor, :polymorphic => true
     has_many :trees
+    has_many :publications
     has_many :pages
     has_many :javascripts
     has_many :stylesheets
@@ -19,6 +20,10 @@ module Bop
       primary_tree.root_page
     end
         
+    def find_publication(path)
+      publications.active.find_by_route(path)
+    end
+
     def find_page(path)
       pages.find_by_route(path)
     end

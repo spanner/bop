@@ -20,7 +20,7 @@ jQuery ($) ->
       switch @_type
         when "text" then $("<p>Double-click to edit!</p>")
         when "image" then $('<div class="uploader" />')
-      
+
     create: () =>
       $.ajax
         url: "/bop/pages/#{@_page.id()}/blocks"
@@ -54,7 +54,10 @@ jQuery ($) ->
         dataType: "JSON"
         success: @updated
         error: @error
+
+    setType: () =>
       
+
     updated: (response) =>
       @_container.flash("#8dd169")
       @ready()
@@ -77,9 +80,6 @@ jQuery ($) ->
       new Bop.Block(@, space)
     @
 
-
-
-
   class BlockEditor extends Bop.Module
     constructor: (element, @_block) ->
       @_editable = $(element)
@@ -94,15 +94,7 @@ jQuery ($) ->
     setBlockType: (blocktype) =>
       console.log ">>> set block type to #{blocktype}"
       @_blocktype = blocktype
-      # show the appropriate interface: content editor, uploader, picker
-      switch blocktype
-        when "text"
-          @_editable.editable()
-          @bind "complete", () =>
-            @_editable.ineditable()
-        when "image"
-          console.log "that'll need an uploader"
-
+      @_block.setType(blocktype)
       @trigger('set_type', blocktype)
 
 
@@ -125,10 +117,13 @@ jQuery ($) ->
       @_controls.remove()
       @_chooser.destroy()
       @_editable.unwrap()
-      @_block.update()
+      @_block.update
+        content: @_editable.html
       @trigger('complete')
       @trigger('submit')
-
+    
+    # don't show controls until we change something.
+    # but do show the typechooser
     show: () =>
       unless @_controls?
         @_controls = $("<div class='controls'><button class='submit ui-button ui-corner-all'>save</button><button class='cancel ui-button ui-corner-all'>cancel</a></div>")

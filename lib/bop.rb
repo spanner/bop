@@ -8,7 +8,7 @@ require "bop/renderer"
 require "bop/validators"
 
 module Bop
-  mattr_accessor :layout, :editor_layout, :dashboard_layout
+  mattr_accessor :layout, :editor_layout, :dashboard_layout, :editable_head
   @@scope ||= nil
   
   class BopError < StandardError; end
@@ -47,6 +47,10 @@ module Bop
       @@dashboard_layout ||= 'bop/dashboard'
     end
     
+    def editable_head
+      !!@@editable_head
+    end
+    
     def scope
       @@scope
     end
@@ -75,10 +79,11 @@ module Bop
     def root_page
       site.root_page
     end
+    
   end
 
   # These class methods are included into ActiveRecord::Base and so available in all model classes.
-
+  #
   module BoppableClassMethods
     def has_bop_pages?
       false
@@ -89,28 +94,31 @@ module Bop
     end
     
     def has_bop_pages(options={})
-      include BoppedInstanceMethods
-      extend BoppedClassMethods
+      include PagedInstanceMethods
+      extend PagedClassMethods
       has_one :site, :class_name => "Bop::Site", :as => :anchor
     end
 
     def has_bop_blocks(options={})
-      has_many :placed_blocks, :class_name => "Bop::PlacedBlock", :as => :place
-      has_many :blocks, :through => :placed_blocks, :class_name => "Bop::Block"
+      include BlockedInstanceMethods
+      extend BlockedClassMethods
+      has_many :placements, :class_name => "Bop::Placement", :as => :place
+      has_many :items, :through => :placements
     end
   end
   
 
-  # These class and instance methods are included into specific model classes when has_pages is called.
-
-  module BoppedClassMethods
-    def has_pages?
+  # These class and instance methods are included into model classes where `has_bop_pages` is called.
+  # They provide the connection between objects of that class and the site associated with each.
+  # Each site will have one or more trees, and each tree with have a number of pages.
+  #
+  module PagedClassMethods
+    def has_bop_pages?
       true
     end
   end
 
-  module BoppedInstanceMethods
-
+  module PagedInstanceMethods
     def find_or_create_site
       self.site ||= self.create_site
     end
@@ -123,7 +131,34 @@ module Bop
       find_or_create_site.find_page(route)
     end
 
+    def find_publication(route)
+      find_or_create_site.find_publication(route)
+    end
   end
 
+  # These class and instance methods are included into model classes where `has_bop_blocks` is called.
+  # They provide the mechanisms for retrieving and rendering blocks.
+  #
+  module BlockedClassMethods
+    def has_bop_blocks?
+      true
+    end
+  end
+
+  module BlockedInstanceMethods
+    def items_in(space="main")
+      placements.in_space(space).map(&:item).compact
+    end
+
+    def render_space(space)
+      Rails.logger.warn ">>> rendering space #{space} on page #{self.inspect}. Items: #{items_in(space).inspect}"
+      output = items_in(space).each_with_object(''.html_safe) do |item, op|
+        Rails.logger.warn ">>> rendering item #{item.inspect}"
+        op << item.render(context)
+      end
+      #todo: I hate having this content_tag here. Put it in a haml template somewhere.
+      content_tag :section, output, :class => 'space', :"data-bop-space" => @space
+    end
+  end
 end
 

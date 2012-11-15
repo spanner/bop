@@ -3,7 +3,7 @@ module Bop
 
     # Views that require extra javascripts or stylesheets should declare them in a :bop_js or :bop_css block.
     # NB. Code editor views have their own layout and don't use this mechanism at all.
-    
+    #
     def bop_head
       output = content_for(:head)
       if user_signed_in?
@@ -13,6 +13,8 @@ module Bop
       output.html_safe
     end
 
+    #todo: sanitize
+    #
     def bop_body
       output = content_for(:body)
       output.html_safe

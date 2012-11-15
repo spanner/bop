@@ -1,6 +1,8 @@
 require 'ancestry'
 
 class Bop::Page < ActiveRecord::Base
+  @@renderable_fields = %w{title slug}
+  cattr_accessor :renderable_fields
   attr_accessible :title, :slug, :template_id, :asset_id, :anchor, :site_id, :tree_id, :parent_id, :template
 
   belongs_to :site
@@ -9,7 +11,9 @@ class Bop::Page < ActiveRecord::Base
   belongs_to :user, :class_name => Bop.user_class
   belongs_to :asset
   has_ancestry :orphan_strategy => :destroy
+
   has_bop_blocks
+  
   has_many :publications
 
   before_save :slugify_slug
@@ -25,12 +29,6 @@ class Bop::Page < ActiveRecord::Base
     where(["NOT #{table_name}.id IN(#{placeholders})", *these.map(&:id)])
   }
 
-  def blocks_in(space="main")
-    # the :through association to blocks already joins to bop_placed_blocks 
-    # so we can add a condition on that table. It's a bit fragile but it works.
-    blocks.where(["bop_placed_blocks.space_name = ?", space])
-  end
-
   # Override the usual ancestry method so that siblings don't include self, because that's silly.
   def siblings
     self.base_class.other_than(self).scoped :conditions => sibling_conditions
@@ -44,13 +42,9 @@ class Bop::Page < ActiveRecord::Base
     asset || parent && parent.inherited_asset
   end
   
-  def place_block(block, space)
-    placed_block = placed_blocks.find_or_create_by_block_id(block.id, :space_name => space)
-  end
-
   def self.default_template(site=nil)
     template = Bop::Template.find_or_create_by_title("Default")
-    template.body ||= "<h1>{{page.title}}</h1>{% yield %}"
+    template.body = "<h1>{% field title %}</h1>{% space %}" unless template.body?
     template.site ||= site
     template.save if template.changed?
     template
@@ -61,16 +55,26 @@ class Bop::Page < ActiveRecord::Base
   # is handled by the template. We supply this page object as part of its context and presume that the template
   # contains page-related tags.
   #
-  def head(additional_context={})
+  # The has_bop_blocks call above also gives us a render_space method. It's usually only called from the {%space %}
+  # tags in liquid templates but you can bypass all that by calling render_space from your view templates.
+  
+  def render_head(additional_context={})
     find_template.render(:head, context.merge(additional_context))
   end
 
-  def body(additional_context={})
+  def render_body(additional_context={})
     find_template.render(:body, context.merge(additional_context))
   end
   
-  def blocks_for(space)
-    blocks.in_space(space)
+  def renderable?(fieldname)
+    self.class.renderable_fields.include?(fieldname)
+  end
+  
+  def render_field(fieldname)
+    if renderable?(fieldname)
+      value = send fieldname.to_sym
+      "<span data-bop-field=#{fieldname}>#{value}</span>"
+    end
   end
   
   def context
@@ -92,6 +96,11 @@ class Bop::Page < ActiveRecord::Base
     }
   end
   
+  ## Publishing
+  #
+  # Publications are frozen pages. Here we just create a publication object: it will call back to the page
+  # to get the rendered head and body, which it saves as readymade blocks for quick delivery.
+  #
   def publish!
     publications.create
   end

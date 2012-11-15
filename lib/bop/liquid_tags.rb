@@ -3,33 +3,29 @@ require "liquid"
 module Bop
   module LiquidTags
     
-    ## {{ yield [space name] }}
+    ## {{ space [space name] }}
     #
-    class Yield < Liquid::Tag
+    class Space < Liquid::Tag
       include ActionView::Helpers::TagHelper
       
       def initialize(tag_name, space_name, tokens)
          super
          space_name = "main" if !space_name || space_name.blank?
-         @space = space_name.rstrip
+         @space = space_name.strip
       end
 
       def render(context)
         if page = Bop::Page.find(context["page"]["id"])
-          output = page.blocks_in(@space.downcase).each_with_object(''.html_safe) do |block, op|
-            id = Bop::PlacedBlock.find_by_space_name_and_block_id(@space, block.id).id
-            op << content_tag(:article, block.render(context), :class => 'block', :"data-bop-block" => block.id, :"data-bop-blocktype" => block.block_type, :id => "placed_block_#{id}")
-          end
-          content_tag :section, output, :class => 'space', :"data-bop-space" => @space
+          output = page.render_space(@space)
         end
       end
     end
 
-    Liquid::Template.register_tag('yield', Bop::LiquidTags::Yield)
+    Liquid::Template.register_tag('space', Bop::LiquidTags::Space)
 
-    ## {{ pagefield [field] }}
+    ## {{ field [field] }}
     #
-    class Pagefield < Liquid::Tag
+    class Field < Liquid::Tag
       
       def initialize(tag_name, field, tokens)
          super
@@ -38,35 +34,11 @@ module Bop
       
       def render(context)
         page = Bop::Page.find(context["page"]["id"])
-        id = page.id
-        field = @field
-        value = page.send(field)
-        "<span id='page#{field}' data-bop-field=#{field}>#{value}</span>"
+        page.render_field(@field)
       end
     end
 
-    Liquid::Template.register_tag('pagefield', Bop::LiquidTags::Pagefield)
-
-
-
-
-    class Image < Liquid::Tag
-      
-      def initialize(tag_name, geometry, tokens)
-         super
-         @field = field.strip
-      end
-      
-      def render(context)
-        page = Bop::Page.find(context["page"]["id"])
-        id = page.id
-        field = @field
-        value = page.send(field)
-        "<span id='page#{field}' data-bop-field=#{field}>#{value}</span>"
-      end
-    end
-
-    Liquid::Template.register_tag('pagefield', Bop::LiquidTags::Pagefield)
+    Liquid::Template.register_tag('field', Bop::LiquidTags::Field)
 
 
 

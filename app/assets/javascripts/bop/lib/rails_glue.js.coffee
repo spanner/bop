@@ -62,13 +62,13 @@ jQuery ($) ->
         plugins:
           halloreundo: true
           hallolists: true
-          hallolink: true
           halloformat: 
             formattings:
               bold: true
               italic: true
           halloheadings: 
             headers: [1,2,3]
+          hallolink: true
 
   $.fn.ineditable = ->
     @each ->

@@ -1,5 +1,6 @@
-= content_for :head do
-  = @publication.rendered_head.html_safe
+- if Bop.editable_head
+  = content_for :head do
+    = @publication.rendered_head.html_safe
 
 = content_for :body do
   = @publication.rendered_body.html_safe

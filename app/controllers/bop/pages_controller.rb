@@ -44,11 +44,6 @@ class Bop::PagesController < Bop::EngineController
       format.js {render :partial => 'show'}
     end
   end
-
-  def publish
-    publication = @page.publish!
-    redirect_to @page.route
-  end
   
   def destroy
     head(:ok) if @page.destroy

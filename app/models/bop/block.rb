@@ -3,11 +3,11 @@ class Bop::Block < ActiveRecord::Base
 
   belongs_to :user, :class_name => Bop.user_class
   belongs_to :asset
+  
   accepts_nested_attributes_for :asset
-  has_many :block_properties
-  has_many :placed_blocks
-  accepts_nested_attributes_for :placed_blocks, :allow_destroy => true
-  has_many :pages, :through => :placed_blocks
+  has_many :placements, :as => :item
+  has_many :pages, :through => :placements
+  accepts_nested_attributes_for :placements, :allow_destroy => true
   
   def block_type
     @block_type ||= Bop::BlockType.get(block_type_name || 'text')
@@ -29,7 +29,9 @@ class Bop::Block < ActiveRecord::Base
   def render(context, view="show")
     block_template = template(view)
     block_context = context.dup.merge("block" => self)
-    self.renderer(block_template).render(block_context).html_safe
+    content = self.renderer(block_template).render(block_context).html_safe
+    
+    content_tag(:article, content, :class => 'block', :"data-bop-block" => id)
   end
   
   def as_json(options={})

@@ -1,7 +1,7 @@
 = content_for :head do
-  = @page.head.html_safe
+  = @page.render_head.html_safe
 
 = content_for :body do
   #bop{:'data-bop-page' => @page.id}
-    = @page.body.html_safe
+    = @page.render_body.html_safe
   #mask

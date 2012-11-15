@@ -1,8 +1,13 @@
 !!!
 %head
-  = yield :head
-  = bop_head.html_safe
+  // user-supplied head content
+  // and standard bop stylesheets 
+  = bop_head
     
 %body
-  = yield :body
-  = bop_foot.html_safe
+  // user-supplied body content
+  = bop_body
+
+  // user-supplied footer content
+  // and standard bop javascripts
+  = bop_foot

@@ -11,15 +11,14 @@
 # 6. Submit the cropping form (which is just data) over xmlhttp
 # 7. Display the response, which will be the scaled, cropped image tag.
 #
-# This only works in modern browsers with support for XMLHttpRequest 2 (ie that have FormData).
-# Explorer 9 does not. Explorer 10 is supposed to. Firefox, Chrome and Safari should all be fine.
-
-
-# *** We're also going to need an existing-asset-picker in here ***
+# This only works in modern browsers with support for XMLHttpRequest 2 (ie that give us FormData).
+# Explorer 9 does not. Explorer 10 is supposed to. Firefox, Chrome and Safari should all be ok.
+#
+# *** We're also going to need an existing-asset-picker in here too ***
 
 jQuery ($) ->
   
-  # The Uploader class is just an event-handling wrapper around a standard rails new-asset form.
+  # The Uploader class is an event-handling wrapper around a standard rails new-asset form.
   # It attaches a change binding to the file field and sets up drop and pick bindings that will 
   # cause it to change. The effect is to trigger an immediate form submission over xhr.
   #
@@ -44,6 +43,9 @@ jQuery ($) ->
         .bind("drop", @drop)
       @_filefield.bind("change", @pick)
       @_file = null
+    
+    # *dragEnter* and *dragLeave* just give us visual signals when a suitable file is in a droppable
+    # position. Really we should also be looking at the file to see if we like it.
     
     dragEnter: () =>
       @_dropbox.addClass("hover")
